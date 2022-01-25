@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Carbon\Carbon;
+use App\Jobs\SendEmailJob;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,9 +15,16 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    protected $commands = [
+        Commands\WordOfTheDay::class,
+        Commands\CronTest::class,
+    ];
+    
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('word:day')->daily();
+        $schedule->command('test:send-email')->everyMinute();
     }
 
     /**

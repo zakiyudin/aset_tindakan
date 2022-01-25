@@ -4,6 +4,11 @@
     Tipe Aset
 @endsection
 
+@section('validate_source')
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -113,7 +118,7 @@
             serverSide: true,
             ajax: "{{ route('tipe-aset.index') }}",
             columns: [
-                { data: 'id_tipe_asset', name: 'id_tipe_asset' },
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data: 'nama_tipe_asset', name: 'nama_tipe_asset' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
@@ -127,37 +132,54 @@
         });
 
 
-        if($("#form-tambah-edit").length > 0){
-            $("#form-tambah-edit").validate({
-            submitHandler: function(form){
-                var actionType = $("#tambah-tipe-aset").val();
-                $("#tambah-tipe-aset").html('Sending..');
 
+        if($("#form-tambah-edit").length > 0){
+            $("#form-tambah-edit").validate();
+        }
+
+        $('body').on('click', '.edit_data', function(){
+            var id_tipe_asset = $(this).data("id");
+            console.log(id_tipe_asset);
+            $.ajax({
+                type: "GET",
+                url: "/tipe-aset/"+id_tipe_asset+"/edit",
+                data:{
+                    id_tipe_asset: id_tipe_asset
+                },
+                success: function(data){
+                    console.log(data);
+                    $("#id_tipe_asset").val(data.id_tipe_asset);
+                    $("#nama_tipe_asset").val(data.nama_tipe_asset);
+                    $("#tambah-tipe-aset").val("edit-post");
+                    $("#tambah-tipe-aset").html("Update");
+                    $("#exampleModal2").modal("show");
+                }
+            })
+        });
+
+
+        $('body').on('click','.hapus_data', function(){
+            var id_tipe_asset = $(this).data("id");
+            console.log(id_tipe_asset);
+            $("#konfirmasi-modal-hapus").modal("show");
+
+            $("#btn-hapus").click(function(){
                 $.ajax({
-                    type: "POST",
-                    url: "{{ route('tipe-aset.store') }}",
-                    data: $("#form-tambah-edit").serialize(),
-                    dataType: 'json',
+                    type: "DELETE",
+                    url: "{{ url('tipe-aset') }}"+'/'+id_tipe_asset,
                     success: function(data){
-                        $("#exampleModal2").modal("hide");
-                        $("#form-tambah-edit").trigger("reset");
+                        $("#konfirmasi-modal-hapus").modal("hide");
                         swal({
                             title: "Success!",
-                            text: "Data Berhasil Ditambahkan",
+                            text: "Data Berhasil Dihapus",
                             icon: "success",
                             button: "OK",
                         });
-                        var table = $("#tabel-tipe-aset").DataTable();
-                        table.reload();
-                    },
+                        var table = $(".tabel-tipe-aset").DataTable();
+                        table.ajax.reload();
+                    }
                 })
-            }
-        })
-        }
-
-        $('body').on('click', '.edit_data_tipe', function(){
-            var id_tipe_asset = $(this).data('id_tipe_asset');
-            console.log(id_tipe_asset);
+            })
         })
     });
 </script>

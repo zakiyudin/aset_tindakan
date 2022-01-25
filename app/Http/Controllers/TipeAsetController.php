@@ -7,6 +7,10 @@ use App\Models\TipeAsetModel;
 
 class TipeAsetController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +23,9 @@ class TipeAsetController extends Controller
         if($request->ajax()){
             return datatables()->of($data_tipe_aset)
             ->addColumn('action', function($data_tipe_aset){
-                $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data_tipe_aset->id_tipe_asset.'" data-original-title="Edit" class="edit btn btn-warning btn-sm edit_data_tipe">Edit</a>';
+                $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data_tipe_aset->id_tipe_asset.'" data-original-title="Edit" class="edit btn btn-warning btn-sm edit_data">Edit</a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data_tipe_aset->id_tipe_asset.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data_tipe">Hapus</a>' ;
+                $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data_tipe_aset->id_tipe_asset.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data">Hapus</a>' ;
                 return $button;
             })
             ->rawColumns(['action'])
@@ -50,14 +54,31 @@ class TipeAsetController extends Controller
      */
     public function store(Request $request)
     {
-        $updateOrCreate = TipeAsetModel::updateOrCreate([
-            'id_tipe_asset' => $request->id_tipe_asset
-        ],
-        [
-            'nama_tipe_asset' => $request->nama_tipe_asset
-        ]);
-
-        return \response()->json($updateOrCreate);
+       $cekTipeAset = TipeAsetModel::where('nama_tipe_asset', $request->nama_tipe_asset)->first();
+       if(empty($cekTipeAset)){
+           if(empty($request->id_tipe_asset)){
+               $tipe_aset = new TipeAsetModel;
+               $tipe_aset->nama_tipe_asset = $request->nama_tipe_asset;
+               $tipe_aset->save();
+               return response()->json([
+                     'status' => 'success',
+                     'message' => 'Data berhasil disimpan'
+                ]);
+           }else{
+               $tipe_aset = TipeAsetModel::find($request->id_tipe_asset);
+               $tipe_aset->nama_tipe_asset = $request->nama_tipe_asset;
+               $tipe_aset->save();
+               return response()->json([
+                      'status' => 'success',
+                      'message' => 'Data berhasil disimpan'
+               ]);
+           }
+       }else{
+           return response()->json([
+                'status' => 'error',
+                'message' => 'Data sudah ada'
+           ]);
+       }
     }
 
     /**
@@ -79,7 +100,8 @@ class TipeAsetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = TipeAsetModel::findOrFail($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -91,7 +113,13 @@ class TipeAsetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = TipeAsetModel::findOrFail($id);
+        $data->nama_tipe_asset = $request->nama_tipe_asset;
+        $data->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diubah'
+        ]);
     }
 
     /**
@@ -102,6 +130,9 @@ class TipeAsetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = TipeAsetModel::findOrFail($id);
+        $data->delete();
+
+        return response()->json($data);
     }
 }

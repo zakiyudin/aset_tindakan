@@ -4,6 +4,11 @@
     Divisi
 @endsection
 
+@section('validate_source')
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -120,7 +125,7 @@
                 serverSide: true,
                 ajax: "{{ route('divisi.index') }}",
                 columns: [
-                    { data: 'id_divisi', name: 'id_divisi' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'nama_divisi', name: 'nama_divisi' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
@@ -137,24 +142,36 @@
         if($("#form-tambah-edit").length > 0){
             $("#form-tambah-edit").validate({
                 submitHandler: function(form){
-                    var actionType = $("#tambah-divisi").val();
-                    $("#tambah-divisi").html('Sending..');
-
+                    // var actionType = $("#tambah-divisi").val();
+                    // $("#tambah-divisi").html('Sending..');
                     $.ajax({
                         type: "POST",
                         url: "{{ route('divisi.store') }}",
                         data: $("#form-tambah-edit").serialize(),
                         success: function(data){
-                            $("#exampleModal").modal("hide");
-                            $("#form-tambah-edit").trigger("reset");
-                            swal({
-                                title: "Success!",
-                                text: "Data Berhasil Ditambahkan",
-                                icon: "success",
-                                button: "OK",
-                            });
-                            var table = $("#tabel-divisi").DataTable();
-                            table.reload();
+                            console.log(data.status === 'error');
+                            if(data.status === 'error'){
+                                swal({
+                                    title: "Gagal",
+                                    text: "Data Divisi Sudah Ada",
+                                    icon: "error",
+                                    button: "OK",
+                                })
+                                $("#exampleModal").modal("hide");
+                                $("#form-tambah-edit").trigger("reset");
+                                $('.tabel-divisi').DataTable().ajax.reload();
+                            }
+                            if(data.status === 'success'){
+                                swal({
+                                    title: "Berhasil",
+                                    text: "Data Divisi Berhasil Ditambahkan",
+                                    icon: "success",
+                                    button: "OK",
+                                })
+                                $("#exampleModal").modal("hide");
+                                $("#form-tambah-edit").trigger("reset");
+                                $('.tabel-divisi').DataTable().ajax.reload();
+                            }                          
                         },
                     })
                 }
@@ -173,6 +190,7 @@
                     $("#id_divisi").val(data.id_divisi);
                     $("#nama_divisi").val(data.nama_divisi);
                     $("#tambah-divisi").val("edit-post");
+                    $("#tambah-divisi").html('Update Data');
                     $("#exampleModal").modal("show");
                 },
                 error: function(data){

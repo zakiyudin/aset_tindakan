@@ -75,19 +75,19 @@
             </div>
             <div class="form-group">
                 <label for="nama_divisi" class="form-label"><b>Divisi</b></label>
-                <select class="form-control" name="nama_divisi" id="nama_divisi">
+                <select class="form-control" name="id_divisi" id="nama_divisi">
                     <option value="">.: Pilih Divisi :.</option>
                     @foreach ($divisi as $div)
-                        <option value="{{ $div->nama_divisi }}">{{ $div->nama_divisi }}</option>
+                        <option value="{{ $div->id_divisi }}">{{ $div->nama_divisi }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label for="nama_tipe_asset" class="form-label"><b>Tipe Aset</b></label>
-                <select class="form-control" name="nama_tipe_asset" id="nama_tipe_asset">
+                <select class="form-control" name="id_tipe_asset" id="nama_tipe_asset">
                     <option value="">.: Pilih Tipe Aset :.</option>
                     @foreach ($tipe_aset as $item)
-                        <option value="{{ $item->nama_tipe_asset }}">{{ $item->nama_tipe_asset }}</option>
+                        <option value="{{ $item->id_tipe_asset }}">{{ $item->nama_tipe_asset }}</option>
                     @endforeach
                 </select>
             </div>
@@ -123,16 +123,62 @@
             searching: true,
             ajax: "{{ route('tindakan-aset.index') }}",
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'nama_aset', name: 'nama_aset'},
                 {data: 'nama_divisi', name: 'nama_divisi'},
                 {data: 'tanggal_pembelian', name: 'tanggal_pembelian'},
                 {data: 'nama_tipe_asset', name: 'nama_tipe_asset'},
                 {data: 'nama_tindakan', name: 'nama_tindakan'},
+                // {data: 'status', name: 'status'},
                 {data: 'tanggal_tindakan', name: 'tanggal_tindakan'},
                 {data: 'action', name: 'action', orderable: true, searchable: true},
             ]
         });
+
+        $("#tombol-tambah").click(function(){
+            $("#tambah-tindakan").val("create-post");
+            $("#id").val('');
+            $("#form-tambah-edit").trigger("reset");
+            $("#exampleModal").modal("show");
+        });
+
+        if($("#form-tambah-edit").length > 0){
+            $("#form-tambah-edit").validate({
+                submitHandler: function(form){
+                    var actionType = $("#tambah-tindakan").val();
+                    $("#tambah-tindakan").html("Sending...");
+                    
+                    $.ajax({
+                        data: $('#form-tambah-edit').serialize(),
+                        url: "{{ route('tindakan-aset.store') }}",
+                        type: "POST",
+                        dataType: 'json',
+                        success: function (data) {
+                            $('#exampleModal').modal('hide');
+                            $('#form-tambah-edit').trigger("reset");
+                            $('#tambah-tindakan').html("Tambah");
+                            $('.tabel-aset-tindakan').DataTable().ajax.reload();
+                            swal({
+                                title: "Berhasil!",
+                                text: "Data Berhasil Ditambahkan",
+                                icon: "success",
+                                button: "OK",
+                            });
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                            $('#tambah-tindakan').html('Tambah');
+                            swal({
+                                title: "Gagal!",
+                                text: "Data Gagal Ditambahkan",
+                                icon: "error",
+                                button: "OK",
+                            });
+                        }
+                    })
+                }
+            })
+        }
     })
 </script>
 @endsection

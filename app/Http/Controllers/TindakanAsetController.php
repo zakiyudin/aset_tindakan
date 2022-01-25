@@ -11,6 +11,11 @@ use DataTables;
 
 class TindakanAsetController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +37,7 @@ class TindakanAsetController extends Controller
             'table_tindakan_aset.tanggal_pembelian',
             'tipe_asset.nama_tipe_asset as nama_tipe_asset', 
             'divisi.nama_divisi as nama_divisi'
-            ]);
+            ])->get();
         // dd($data);
         if($request->ajax()){
             return DataTables::of($data)
@@ -67,7 +72,19 @@ class TindakanAsetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = TindakanAsetModel::updateOrCreate([
+            'id' => $request->id
+        ],
+        [
+            'nama_aset' => $request->nama_aset,
+            'tanggal_tindakan' => $request->tanggal_tindakan,
+            'nama_tindakan' => $request->nama_tindakan,
+            'tanggal_pembelian' => $request->tanggal_pembelian,
+            'id_tipe_asset' => $request->id_tipe_asset,
+            'id_divisi' => $request->id_divisi
+        ]);
+
+        return response()->json($data, 200);
     }
 
     /**

@@ -8,6 +8,10 @@ use DataTables;
 
 class DivisiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +33,6 @@ class DivisiController extends Controller
            ->addIndexColumn()
            ->make(true);
        }
-
        return view('divisi.index');
     }
 
@@ -51,14 +54,33 @@ class DivisiController extends Controller
      */
     public function store(Request $request)
     {
-        $updateOrCreate = DivisiModel::updateOrCreate([
-            'id_divisi' => $request->id_divisi
-        ],
-        [
-            'nama_divisi' => $request->nama_divisi
-        ]);
 
-        return \response()->json($updateOrCreate);
+        $cekDivisi = DivisiModel::where('nama_divisi', $request->nama_divisi)->first();
+        if(empty($cekDivisi)){
+            if(empty($request->id_divisi)){
+                $divisi = new DivisiModel;
+                $divisi->nama_divisi = $request->nama_divisi;
+                $divisi->save();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Data Divisi Berhasil Ditambahkan'
+                ]);
+            }else{
+                $divisi = DivisiModel::find($request->id_divisi);
+                $divisi->nama_divisi = $request->nama_divisi;
+                $divisi->save();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Data Divisi Berhasil Diubah'
+                ]);
+            }
+
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data Divisi Sudah Ada'
+            ]);
+        }
     }
 
     /**

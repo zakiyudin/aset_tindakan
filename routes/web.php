@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/send', [App\Http\Controllers\HomeController::class, 'send'])->name('send');
 
 Route::prefix('divisi')->group(function () {
     Route::get('/', [App\Http\Controllers\DivisiController::class, 'index'])->name('divisi.index');

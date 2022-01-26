@@ -55,11 +55,6 @@ class CronTest extends Command
                         # code...
                         $user->notify(new NotifyExpiredDate($value));
                     }
-                    // \Mail::raw('Halooooooo Cron job is working', function ($message) {
-                    //     $message->from('tindakanasset@gmail.com');
-                    //     $message->to('zakikamil@gmail.com');
-                    //     $message->subject('Trying Cron Job Task Schedule');
-                    // });
                 }else{
                     \Log::info("not expired");
                 }

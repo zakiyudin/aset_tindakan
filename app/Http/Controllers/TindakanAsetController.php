@@ -35,6 +35,7 @@ class TindakanAsetController extends Controller
             'table_tindakan_aset.tanggal_tindakan',
             'table_tindakan_aset.nama_tindakan',
             'table_tindakan_aset.tanggal_pembelian',
+            'table_tindakan_aset.status',
             'tipe_asset.nama_tipe_asset as nama_tipe_asset', 
             'divisi.nama_divisi as nama_divisi'
             ])->get();
@@ -42,9 +43,9 @@ class TindakanAsetController extends Controller
         if($request->ajax()){
             return DataTables::of($data)
                 ->addColumn('action', function($data){
-                    $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-warning btn-sm edit_data_tindakan">Edit</a>';
+                    $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-warning btn-sm edit_data">Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data_tindakan">Hapus</a>' ;
+                    $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data">Hapus</a>' ;
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -106,7 +107,10 @@ class TindakanAsetController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $data = TindakanAsetModel::findOrFail($id);
+        $data = TindakanAsetModel::where('id', $id)->first();
+        // dd($data);
+        return response()->json($data, 200);
     }
 
     /**

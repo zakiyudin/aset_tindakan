@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -28,7 +28,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table class="table tabel-aset-tindakan">
+                    <table class="table tabel-aset-tindakan hover stripe table-bordered table-striped cell-border">
                         <thead class="thead-light">
                             <tr>
                                 <th>#</th>
@@ -37,6 +37,7 @@
                                 <th>Tanggal Beli</th>
                                 <th>Tipe Aset</th>
                                 <th>Nama Tindakan</th>
+                                <th>Status</th>
                                 <th>Tanggal Tindakan</th>
                                 <th>Action</th>
                             </tr>
@@ -129,11 +130,12 @@
                 {data: 'tanggal_pembelian', name: 'tanggal_pembelian'},
                 {data: 'nama_tipe_asset', name: 'nama_tipe_asset'},
                 {data: 'nama_tindakan', name: 'nama_tindakan'},
-                // {data: 'status', name: 'status'},
+                {data: 'status', name: 'status'},
                 {data: 'tanggal_tindakan', name: 'tanggal_tindakan'},
                 {data: 'action', name: 'action', orderable: true, searchable: true},
             ]
         });
+    })
 
         $("#tombol-tambah").click(function(){
             $("#tambah-tindakan").val("create-post");
@@ -179,6 +181,34 @@
                 }
             })
         }
-    })
+
+
+        $("body").on("click", ".edit_data", function() {
+            var id = $(this).data("id");
+            console.log(id);
+
+            $.ajax({
+                type: "GET",
+                url: "/tindakan-aset/" + id + "/edit",
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(data){
+                    // console.log(data.id);
+                    $("#id").val(data.id);
+                    $("#nama_aset").val(data.nama_aset);
+                    $("#nama_divisi").val(data.id_divisi);
+                    $("#nama_tipe_asset").val(data.id_tipe_asset);
+                    $("#tanggal_tindakan").val(data.tanggal_tindakan);
+                    $("#tanggal_beli").val(data.tanggal_pembelian);
+                    $("#nama_tindakan").val(data.nama_tindakan);
+                    $("#exampleModalLabel").html("Edit Data");
+                    $("#tambah-tindakan").html("Update Tindakan");
+                    $("#tambah-tindakan").toggleClass("btn-primary btn-warning");
+                    $("#exampleModal").modal("show");
+                }
+            })
+        })
 </script>
 @endsection

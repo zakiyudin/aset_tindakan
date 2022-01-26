@@ -1,16 +1,10 @@
 @extends('layouts.app')
 
 @section('judul')
-    Tipe Aset
-@endsection
-
-@section('validate_source')
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    Tipe Asset
 @endsection
 
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -29,21 +23,21 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            {{ __('TPE ASET') }}
+                                            {{ __('TIPE ASSET') }}
                                         </div>
                                         <div class="col-sm-6 float-right">
-                                            <button type="button" id="tombol-tambah2" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                            <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Tambah
                                               </button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table tabel-tipe-aset">
+                                    <table class="table tabel-tipe-aset hover stripe table-bordered table-striped cell-border">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Nama Aset</th>
+                                                <th>#</th>
+                                                <th>Tipe Asset</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -59,19 +53,18 @@
 </div>
 
 
-{{-- modal tipe-aset --}}
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">TAMBAH TIPE ASET</h5>
+          <h5 class="modal-title" id="exampleModalLabel">TAMBAH TIPE ASSET</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
         <form action="{{ route('tipe-aset.store') }}" class="form-group" id="form-tambah-edit" method="POST">
             @csrf
               <input type="hidden" name="id_tipe_asset" id="id_tipe_asset">
-              <label for="nama_divisi" class="form-label"><b>Nama Tipe Aset</b></label>
+              <label for="nama_tipe_asset" class="form-label"><b>Tipe Aset</b></label>
               <input type="text" name="nama_tipe_asset" id="nama_tipe_asset" class="form-control">
             </div>
             <div class="modal-footer">
@@ -84,103 +77,124 @@
   </div>
 
 
-   {{-- modal hapus data Tipe Aset --}}
-   <div class="modal fade" tabindex="-1" role="dialog" id="konfirmasi-modal-hapus" data-backdrop="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">PERHATIAN</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p><b>APAKAH ANDA YAKIN INGIN MENGHAPUS ??</b></p>
-            </div>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" name="btn_hapus" id="btn_hapus">Hapus
-                    Data</button>
-            </div>
-        </div>
-    </div>
-  </div>
 
-   {{-- ajax & jquery tipe aset --}}
-  <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
         $.ajaxSetup({
-            'headers': {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'headers' : {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content'),
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
+
         $('.tabel-tipe-aset').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('tipe-aset.index') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'nama_tipe_asset', name: 'nama_tipe_asset' },
+                { data: 'nama_tipe_asset', name: 'nama_divisi' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });
-
-        $("#tombol-tambah2").click(function(){
-            $("#tambah-tipe-aset").val("create-post2");
-            $("#id_tipe_asset").val("");
-            $("#form-tambah-edit").trigger("reset");
-            $("#exampleModal2").modal("show");
-        });
+    });
 
 
-
-        if($("#form-tambah-edit").length > 0){
-            $("#form-tambah-edit").validate();
-        }
-
-        $('body').on('click', '.edit_data', function(){
-            var id_tipe_asset = $(this).data("id");
-            console.log(id_tipe_asset);
-            $.ajax({
-                type: "GET",
-                url: "/tipe-aset/"+id_tipe_asset+"/edit",
-                data:{
-                    id_tipe_asset: id_tipe_asset
-                },
-                success: function(data){
-                    console.log(data);
-                    $("#id_tipe_asset").val(data.id_tipe_asset);
-                    $("#nama_tipe_asset").val(data.nama_tipe_asset);
-                    $("#tambah-tipe-aset").val("edit-post");
-                    $("#tambah-tipe-aset").html("Update");
-                    $("#exampleModal2").modal("show");
-                }
-            })
-        });
+    $("#tombol-tambah").click(function(){
+        $("#form-tambah-edit").trigger("reset");
+        $("#id_tipe_asset").val("");
+        $("#tambah-tipe-aset").val("create");
+        $("#tambah-tipe-aset").html("Tambah");
+        $("#exampleModalLabel").html("TAMBAH TIPE ASSET");
+        $("#exampleModal").modal("show");
+    });
 
 
-        $('body').on('click','.hapus_data', function(){
-            var id_tipe_asset = $(this).data("id");
-            console.log(id_tipe_asset);
-            $("#konfirmasi-modal-hapus").modal("show");
-
-            $("#btn-hapus").click(function(){
+    if($("#form-tambah-edit").length > 0){
+        $("#form-tambah-edit").validate({
+            submitHandler: function(form){
                 $.ajax({
-                    type: "DELETE",
-                    url: "{{ url('tipe-aset') }}"+'/'+id_tipe_asset,
+                    url: "{{ route('tipe-aset.store') }}",
+                    method: "POST",
+                    data: $(form).serialize(),
+                    beforeSend: function(){
+                        $("#tambah-tipe-aset").html('kirim...');
+                    },
                     success: function(data){
-                        $("#konfirmasi-modal-hapus").modal("hide");
                         swal({
-                            title: "Success!",
-                            text: "Data Berhasil Dihapus",
+                            title: "Berhasil!",
+                            text: "Data berhasil disimpan",
                             icon: "success",
                             button: "OK",
                         });
-                        var table = $(".tabel-tipe-aset").DataTable();
-                        table.ajax.reload();
+                        $(".tabel-tipe-aset").DataTable().ajax.reload();
+                        // $("#exampleModal").modal("hide");
+                    },
+                    error: function(data){
+                        console.log(data);
                     }
                 })
-            })
+            }
+        });
+    }
+
+
+    $("body").on("click", ".edit_data", function(){
+        var id_tipe_asset = $(this).data("id");
+        // console.log(id_tipe_asset);
+        $.ajax({
+            url: "/tipe-aset/"+id_tipe_asset+"/edit",
+            type: "GET",
+            dataType: "JSON",
+            data: {
+                id_tipe_asset: id_tipe_asset
+            },
+            success: function(data){
+                $("#id_tipe_asset").val(data.id_tipe_asset);
+                $("#nama_tipe_asset").val(data.nama_tipe_asset);
+                $("#tambah-tipe-aset").html("Update");
+                $("#exampleModalLabel").html("EDIT TIPE ASSET");
+                $("#tambah-tipe-aset").toggleClass("btn-primary btn-warning");
+                $("#exampleModal").modal("show");
+            }
         })
-    });
+    })
+
+
+    $("body").on("click", ".hapus_data", function(e){
+        e.preventDefault();
+        var id_tipe_asset = $(this).data("id");
+        console.log(id_tipe_asset);
+        swal({
+            title: "Apakah anda yakin?",
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "/tipe-aset/"+id_tipe_asset+"/delete",
+                    type: "DELETE",
+                    dataType: "JSON",
+                    data: {
+                        id_tipe_asset: id_tipe_asset
+                    },
+                    success: function(data){
+                        swal({
+                            title: "Berhasil!",
+                            text: "Data berhasil dihapus",
+                            icon: "success",
+                            button: "OK",
+                        });
+                        $(".tabel-tipe-aset").DataTable().ajax.reload();
+                    }
+                })
+            }
+        });
+    })
+
+
+    
 </script>
 @endsection

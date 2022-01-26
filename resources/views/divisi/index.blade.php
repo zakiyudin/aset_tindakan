@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table tabel-divisi">
+                                    <table class="table tabel-divisi hover stripe table-bordered table-striped cell-border">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>ID</th>
@@ -57,57 +57,30 @@
     </div>
 </div>
 
-
-
-
-
   
   <!-- Modal Tambah Divisi-->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">TAMBAH DIVISI</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        <form action="{{ route('divisi.store') }}" class="form-group" id="form-tambah-edit" method="POST">
-            @csrf
-              <input type="hidden" name="id_divisi" id="id_divisi">
-              <label for="nama_divisi" class="form-label"><b>Nama Divisi</b></label>
-              <input type="text" name="nama_divisi" id="nama_divisi" class="form-control">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="tambah-divisi" value="create">Tambah</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-
-  {{-- modal hapus data Divisi --}}
-  <div class="modal fade" tabindex="-1" role="dialog" id="konfirmasi-modal-hapus" data-backdrop="false">
-    <div class="modal-dialog" role="document">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">PERHATIAN</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="exampleModalLabel">TAMBAH DIVISI</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><b>APAKAH ANDA YAKIN INGIN MENGHAPUS ??</b></p>
-            </div>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" name="btn_hapus" id="btn_hapus">Hapus
-                    Data</button>
-            </div>
+            <form action="{{ route('divisi.store') }}" class="form-group" id="form-tambah-edit" method="POST">
+                @csrf
+                <input type="hidden" name="id_divisi" id="id_divisi">
+                <label for="nama_divisi" class="form-label"><b>Nama Divisi</b></label>
+                <input type="text" name="nama_divisi" id="nama_divisi" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="tambah-divisi" value="create">Tambah</button>
+                </div>
+            </form>
+        </div>
         </div>
     </div>
-  </div>
-
-
 
 
   {{-- ajax & jquery Divisi --}}
@@ -149,29 +122,14 @@
                         url: "{{ route('divisi.store') }}",
                         data: $("#form-tambah-edit").serialize(),
                         success: function(data){
-                            console.log(data.status === 'error');
-                            if(data.status === 'error'){
-                                swal({
-                                    title: "Gagal",
-                                    text: "Data Divisi Sudah Ada",
-                                    icon: "error",
-                                    button: "OK",
-                                })
-                                $("#exampleModal").modal("hide");
-                                $("#form-tambah-edit").trigger("reset");
-                                $('.tabel-divisi').DataTable().ajax.reload();
-                            }
-                            if(data.status === 'success'){
-                                swal({
-                                    title: "Berhasil",
-                                    text: "Data Divisi Berhasil Ditambahkan",
-                                    icon: "success",
-                                    button: "OK",
-                                })
-                                $("#exampleModal").modal("hide");
-                                $("#form-tambah-edit").trigger("reset");
-                                $('.tabel-divisi').DataTable().ajax.reload();
-                            }                          
+                            swal({
+                                title: "Berhasil!",
+                                text: "Data berhasil disimpan",
+                                icon: "success",
+                                button: "OK",
+                            });
+                            $("#exampleModal").modal("hide");
+                            $(".tabel-divisi").DataTable().ajax.reload();                         
                         },
                     })
                 }
@@ -191,6 +149,8 @@
                     $("#nama_divisi").val(data.nama_divisi);
                     $("#tambah-divisi").val("edit-post");
                     $("#tambah-divisi").html('Update Data');
+                    $("#exampleModalLabel").html("EDIT DIVISI");
+                    $("#tambah-divisi").toggleClass("btn-primary btn-warning");
                     $("#exampleModal").modal("show");
                 },
                 error: function(data){
@@ -201,28 +161,35 @@
 
         $('body').on('click', '.hapus_data', function(){
             var id_divisi = $(this).data("id");
-            $("#konfirmasi-modal-hapus").modal("show");
+            // $("#konfirmasi-modal-hapus").modal("show");
 
-            $("#btn_hapus").click(function(){
+            swal({
+            title: "Apakah anda yakin?",
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
                 $.ajax({
-                    type: "DELETE",
                     url: "/divisi/"+id_divisi+"/delete",
+                    type: "DELETE",
+                    dataType: "JSON",
+                    data: {
+                        id_divisi: id_divisi
+                    },
                     success: function(data){
-                        $("#konfirmasi-modal-hapus").modal("hide");
                         swal({
-                            title: "Success!",
-                            text: "Data Berhasil Dihapus",
+                            title: "Berhasil!",
+                            text: "Data berhasil dihapus",
                             icon: "success",
                             button: "OK",
                         });
-                        var table = $("#tabel-divisi").DataTable();
-                        table.draw();
-                    },
-                    error: function(data){
-                        console.log('Error:', data);
+                        $(".tabel-divisi").DataTable().ajax.reload();
                     }
                 })
-            })
+            }
+        });
         })
   </script>
 

@@ -41,9 +41,9 @@ class NotifyExpiredDate extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('Ada Asset yang musti di maintenance guysss  😄😄')
+                    ->action('Langsung ke Asset', url('http://localhost:8000/tindakan-aset'))
+                    ->line('TERIMA KASIH !! 😃');
     }
 
     /**

@@ -41,7 +41,8 @@
                                     <table class="table tabel-divisi hover stripe table-bordered table-striped cell-border">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>ID</th>
+                                                {{-- <th>ID</th> --}}
+                                                <th width="">Code Divisi</th>
                                                 <th>Nama Divisi</th>
                                                 <th>Action</th>
                                             </tr>
@@ -98,7 +99,8 @@
                 serverSide: true,
                 ajax: "{{ route('divisi.index') }}",
                 columns: [
-                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    // { data: 'DT_RowIndex', name: 'DT_RowIndex', width: "5%" },
+                    { data: 'code_divisi', name: 'code_divisi', width: "10%" },
                     { data: 'nama_divisi', name: 'nama_divisi' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
@@ -164,12 +166,12 @@
             // $("#konfirmasi-modal-hapus").modal("show");
 
             swal({
-            title: "Apakah anda yakin?",
-            text: "Data yang dihapus tidak dapat dikembalikan!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
+                title: "Apakah anda yakin?",
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
             if (willDelete) {
                 $.ajax({
                     url: "/divisi/"+id_divisi+"/delete",

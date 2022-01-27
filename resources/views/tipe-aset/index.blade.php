@@ -92,8 +92,8 @@
             serverSide: true,
             ajax: "{{ route('tipe-aset.index') }}",
             columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'nama_tipe_asset', name: 'nama_divisi' },
+                { data: 'code_tipe_asset', name: 'code_tipe_asset', width: "10%" },
+                { data: 'nama_tipe_asset', name: 'nama_tipe_asset' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });

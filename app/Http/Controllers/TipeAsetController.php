@@ -50,10 +50,12 @@ class TipeAsetController extends Controller
      */
     public function store(Request $request)
     {
+        $code = TipeAsetModel::orderBy('id_tipe_asset', 'DESC')->first();
         $cekTipeAset = TipeAsetModel::where('nama_tipe_asset', $request->nama_tipe_asset)->first();
         if(empty($cekTipeAset)){
             if(empty($request->id_tipe_asset)){
                 $tipe_aset = new TipeAsetModel;
+                $tipe_aset->code_tipe_asset = "TA" . str_pad($code->id_tipe_asset + 1, 3, "0", STR_PAD_LEFT);
                 $tipe_aset->nama_tipe_asset = $request->nama_tipe_asset;
                 $tipe_aset->save();
                 return response()->json([

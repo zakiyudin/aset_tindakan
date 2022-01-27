@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6">
-                            {{ __('Tindakan Aset') }}
+                            {{ __('Aset') }}
                         </div>
                         <div class="col-sm-6 float-right">
                             <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -36,9 +36,6 @@
                                 <th>Divisi</th>
                                 <th>Tanggal Beli</th>
                                 <th>Tipe Aset</th>
-                                <th>Nama Tindakan</th>
-                                <th>Status</th>
-                                <th>Tanggal Tindakan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -71,8 +68,8 @@
                 <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control">
             </div>
             <div class="form-group">
-                <label for="nama_tindakan" class="form-label"><b>Nama Tindakan</b></label>
-                <input type="text" name="nama_tindakan" id="nama_tindakan" class="form-control">
+                <label for="tanggal_expired" class="form-label"><b>Tanggal Expired</b></label>
+                <input type="date" name="tanggal_expired" id="tanggal_expired" class="form-control">
             </div>
             <div class="form-group">
                 <label for="nama_divisi" class="form-label"><b>Divisi</b></label>
@@ -91,10 +88,6 @@
                         <option value="{{ $item->id_tipe_asset }}">{{ $item->nama_tipe_asset }}</option>
                     @endforeach
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="tanggal_tindakan" class="form-label"><b>Tanggal Tindakan</b></label>
-                <input type="date" name="tanggal_tindakan" id="tanggal_tindakan" class="form-control">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -122,6 +115,7 @@
             processing: true,
             serverSide: true,
             searching: true,
+            order: [],
             ajax: "{{ route('tindakan-aset.index') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
@@ -129,9 +123,6 @@
                 {data: 'nama_divisi', name: 'nama_divisi'},
                 {data: 'tanggal_pembelian', name: 'tanggal_pembelian'},
                 {data: 'nama_tipe_asset', name: 'nama_tipe_asset'},
-                {data: 'nama_tindakan', name: 'nama_tindakan'},
-                {data: 'status', name: 'status'},
-                {data: 'tanggal_tindakan', name: 'tanggal_tindakan'},
                 {data: 'action', name: 'action', orderable: true, searchable: true},
             ]
         });
@@ -200,15 +191,48 @@
                     $("#nama_aset").val(data.nama_aset);
                     $("#nama_divisi").val(data.id_divisi);
                     $("#nama_tipe_asset").val(data.id_tipe_asset);
-                    $("#tanggal_tindakan").val(data.tanggal_tindakan);
-                    $("#tanggal_beli").val(data.tanggal_pembelian);
-                    $("#nama_tindakan").val(data.nama_tindakan);
+                    $("#tanggal_pembelian").val(data.tanggal_pembelian);
+                    $("#tanggal_expired").val(data.tanggal_expired);
                     $("#exampleModalLabel").html("Edit Data");
                     $("#tambah-tindakan").html("Update Tindakan");
                     $("#tambah-tindakan").toggleClass("btn-primary btn-warning");
                     $("#exampleModal").modal("show");
                 }
             })
+        })
+
+
+        $("body").on("click", ".hapus_data", function(){
+            var id = $(this).data("id");
+            console.log(id);
+
+            swal({
+                title: "Apakah anda yakin?",
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "/tindakan-aset/"+id+"/delete",
+                    type: "DELETE",
+                    dataType: "JSON",
+                    data: {
+                        id: id
+                    },
+                    success: function(data){
+                        swal({
+                            title: "Berhasil!",
+                            text: "Data berhasil dihapus",
+                            icon: "success",
+                            button: "OK",
+                        });
+                        $(".tabel-aset-tindakan").DataTable().ajax.reload();
+                    }
+                })
+            }
+        });
         })
 </script>
 @endsection

@@ -44,21 +44,34 @@ class CronTest extends Command
         // $users = User::all();
         // foreach ($users as $user) {
             $date_now = Carbon::now();
-            $tanggal_expired = TindakanAsetModel::where('tanggal_expired', '>', $date_now)->get();
-            foreach ($tanggal_expired as $tgl => $value) {
-                # code...
-                // return $value->tanggal_expired;
-                if($value->tanggal_pembelian < $value->tanggal_expired){
-                    \Log::info("expired");
+            $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
+            foreach ($tanggal_expired as $expired) {
+                if($expired < $date_now){
+                    \Log::info('Expired');
                     $users = User::all();
                     foreach ($users as $user) {
                         # code...
-                        $user->notify(new NotifyExpiredDate($value));
+                        $user->notify(new NotifyExpiredDate($expired));
                     }
                 }else{
-                    \Log::info("not expired");
+                    \Log::info('Not Expired');
                 }
             }
+
+            // foreach ($tanggal_expired as $tgl => $value) {
+            //     # code...
+            //     // return $value->tanggal_expired;
+            //     if($value->tanggal_pembelian < $value->tanggal_expired){
+            //         \Log::info("expired");
+            //         $users = User::all();
+            //         foreach ($users as $user) {
+            //             # code...
+            //             $user->notify(new NotifyExpiredDate($value));
+            //         }
+            //     }else{
+            //         \Log::info("not expired");
+            //     }
+            // }
            
             
         

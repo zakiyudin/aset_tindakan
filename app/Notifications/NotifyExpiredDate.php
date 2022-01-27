@@ -42,7 +42,7 @@ class NotifyExpiredDate extends Notification
     {
         return (new MailMessage)
                     ->line('Ada Asset yang musti di maintenance guysss  😄😄')
-                    ->action('Langsung ke Asset', url('http://localhost:8000/tindakan-aset'))
+                    ->action('Langsung ke Asset', url('http://localhost:8000/tindakan'))
                     ->line('TERIMA KASIH !! 😃');
     }
 

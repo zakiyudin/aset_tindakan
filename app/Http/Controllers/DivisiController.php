@@ -54,11 +54,12 @@ class DivisiController extends Controller
      */
     public function store(Request $request)
     {
-
+        $get_id = DivisiModel::orderBy('id_divisi', 'DESC')->first();
         $cekDivisi = DivisiModel::where('nama_divisi', $request->nama_divisi)->first();
         if(empty($cekDivisi)){
             if(empty($request->id_divisi)){
                 $divisi = new DivisiModel;
+                $divisi->code_divisi = "DIV" . str_pad($get_id->id_divisi + 1, 3, "0", STR_PAD_LEFT);
                 $divisi->nama_divisi = $request->nama_divisi;
                 $divisi->save();
                 return response()->json([

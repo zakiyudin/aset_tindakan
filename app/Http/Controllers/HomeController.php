@@ -47,19 +47,27 @@ class HomeController extends Controller
         // $result = $date_now > $expired_date;
         // return $result;
 
-
-
-        $tanggal_expired = TindakanAsetModel::where('tanggal_expired', '>', $date_now)->get();
-        dd($tanggal_expired);
-        foreach ($tanggal_expired as $tgl => $value) {
-            # code...
-            // return $value->tanggal_expired;
-            if($value->tanggal_pembelian > $value->tanggal_expired){
-                return 'expired';
+        $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
+        foreach ($tanggal_expired as $expired) {
+            if($expired < $date_now){
+                //membuat unique code generator pengganti ID misalnya (DIV002) 
+                echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
             }else{
-                return 'not expired';
+                echo $expired . " ini belum expired" . '<br>';
             }
         }
+
+        // $tanggal_expired = TindakanAsetModel::where('tanggal_expired', '>', $date_now)->get();
+        // dd($tanggal_expired);
+        // foreach ($tanggal_expired as $tgl => $value) {
+        //     # code...
+        //     // return $value->tanggal_expired;
+        //     if($value->tanggal_pembelian > $value->tanggal_expired){
+        //         return 'expired';
+        //     }else{
+        //         return 'not expired';
+        //     }
+        // }
 
 
 

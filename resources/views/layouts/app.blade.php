@@ -54,7 +54,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tindakan-aset.index') }}">Aset Tindakan</a>
+                            <a class="nav-link" href="{{ route('tindakan-aset.index') }}">Aset</a>
                         </li>
 
                         <div class="nav-item dropdown">

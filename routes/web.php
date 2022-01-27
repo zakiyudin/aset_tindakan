@@ -50,3 +50,9 @@ Route::prefix('tindakan-aset')->group(function () {
     Route::put('/{id}/update', [App\Http\Controllers\TindakanAsetController::class, 'update'])->name('tindakan-aset.update');
     ROute::delete('/{id}/delete', [App\Http\Controllers\TindakanAsetController::class, 'destroy'])->name('tindakan-aset.delete');
 });
+
+Route::prefix('tindakan')->group(function(){
+    Route::get('/', [App\Http\Controllers\TindakanController::class, 'index'])->name('tindakan.index');
+    Route::get('{di}/edit', [App\Http\Controllers\TindakanController::class, 'edit'])->name('tindakan.edit');
+    Route::post('/store', [App\Http\Controllers\TindakanController::class, 'store'])->name('tindakan.store');
+});

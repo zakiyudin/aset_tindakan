@@ -4,18 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TindakanAsetModel;
-use App\Models\TipeAsetModel;
-use App\Models\DivisiModel;
+use Carbon\Carbon;
 use DB;
-use DataTables;
+use App\Models\User;
 
-class TindakanAsetController extends Controller
+class TindakanController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +17,7 @@ class TindakanAsetController extends Controller
      */
     public function index(Request $request)
     {
-        $divisi = DivisiModel::all();
-        $tipe_aset = TipeAsetModel::all();
-
+        $users = User::all();
         $data = DB::table('table_tindakan_aset')
         ->join('tipe_asset', 'table_tindakan_aset.id_tipe_asset', '=', 'tipe_asset.id_tipe_asset')
         ->join('divisi', 'table_tindakan_aset.id_divisi', '=', 'divisi.id_divisi')
@@ -36,22 +28,19 @@ class TindakanAsetController extends Controller
             'tipe_asset.nama_tipe_asset as nama_tipe_asset', 
             'divisi.nama_divisi as nama_divisi'
             ])
-            ->orderBy('id', 'desc')
-            ->get();
+        ->where('tanggal_expired', '<=' ,Carbon::now())->orderBy('id', 'desc')->get();
         // dd($data);
         if($request->ajax()){
-            return DataTables::of($data)
+            return datatables()->of($data)
                 ->addColumn('action', function($data){
-                    $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-warning btn-sm edit_data">Edit</a>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data">Hapus</a>' ;
-                    return $button;
+                    return $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-warning btn-sm tindak_data">Tindak</a>';
                 })
                 ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('tindakan-aset.index', \compact('divisi', 'tipe_aset'));
+
+        return view('tindakan-aset.tindak.index', \compact('users'));
     }
 
     /**
@@ -76,16 +65,12 @@ class TindakanAsetController extends Controller
             'id' => $request->id
         ],
         [
-            'nama_aset' => $request->nama_aset,
+            'user_id' => $request->user_id,
             'tanggal_tindakan' => $request->tanggal_tindakan,
             'nama_tindakan' => $request->nama_tindakan,
-            'tanggal_pembelian' => $request->tanggal_pembelian,
-            'id_tipe_asset' => $request->id_tipe_asset,
-            'id_divisi' => $request->id_divisi,
-            'tanggal_expired' => $request->tanggal_expired,
         ]);
 
-        return response()->json($data, 200);
+        return response()->json($data);
     }
 
     /**
@@ -96,7 +81,7 @@ class TindakanAsetController extends Controller
      */
     public function show($id)
     {
-        //
+        // 
     }
 
     /**
@@ -107,9 +92,7 @@ class TindakanAsetController extends Controller
      */
     public function edit($id)
     {
-        // $data = TindakanAsetModel::findOrFail($id);
         $data = TindakanAsetModel::where('id', $id)->first();
-        // dd($data);
         return response()->json($data, 200);
     }
 
@@ -133,9 +116,6 @@ class TindakanAsetController extends Controller
      */
     public function destroy($id)
     {
-        // $data = TindakanAsetModel::find($id);
-        $data = TindakanAsetModel::where('id', $id)->delete();
-
-        return response()->json($data, 200);
+        //
     }
 }

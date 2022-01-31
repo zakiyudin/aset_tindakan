@@ -65,12 +65,8 @@
                 <input type="date" name="tanggal_tindakan" id="tanggal_tindakan" class="form-control">
             </div>
             <div class="form-group">
-                <label for="user_id" class="form-label"><b>Penindak</b></label>
-                <select class="form-control" name="user_id" id="user_id">
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
+                <label for="keterangan" class="form-label"><b>Keterangan</b></label>
+                <textarea name="keterangan" id="keterangan" rows="3" class="form-control"></textarea>
             </div>
             </div>
             <div class="modal-footer">

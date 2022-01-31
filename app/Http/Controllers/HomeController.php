@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\MyFirstNotification;
 use Carbon\Carbon;
+use DB;
 
 class HomeController extends Controller
 {
@@ -34,9 +35,20 @@ class HomeController extends Controller
     {
         $tipe_aset = TipeAsetModel::count();
         $divisi = DivisiModel::count();
-        $tindakan_aset = TindakanAsetModel::count();
+        $expired_aset = DB::table('table_tindakan_aset')
+        ->join('tipe_asset', 'table_tindakan_aset.id_tipe_asset', '=', 'tipe_asset.id_tipe_asset')
+        ->join('divisi', 'table_tindakan_aset.id_divisi', '=', 'divisi.id_divisi')
+        ->select([
+            'table_tindakan_aset.id',
+            'table_tindakan_aset.nama_aset',
+            'table_tindakan_aset.tanggal_pembelian',
+            'tipe_asset.nama_tipe_asset as nama_tipe_asset', 
+            'divisi.nama_divisi as nama_divisi'
+            ])
+        ->where('tanggal_expired', '<=' ,Carbon::now())
+        ->count();
 
-        return view('home', \compact('tipe_aset', 'divisi', 'tindakan_aset'));
+        return view('home', \compact('tipe_aset', 'divisi', 'expired_aset'));
     }
 
     public function send(){

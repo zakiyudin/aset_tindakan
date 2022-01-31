@@ -9,13 +9,13 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-danger bg-opacity-50">
                     <div class="row">
                         <div class="col-sm-6">
-                            {{ __('Aset') }}
+                            <b>{{ __('ASET') }}</b>
                         </div>
                         <div class="col-sm-6 float-right">
-                            <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Tambah
                               </button>
                         </div>
@@ -76,7 +76,7 @@
                 <select class="form-control" name="id_divisi" id="nama_divisi">
                     <option value="">.: Pilih Divisi :.</option>
                     @foreach ($divisi as $div)
-                        <option value="{{ $div->id_divisi }}">{{ $div->nama_divisi }}</option>
+                        <option value="{{ $div->id_divisi }}">{{ $div->code_divisi }} - {{ $div->nama_divisi }}</option>
                     @endforeach
                 </select>
             </div>
@@ -85,7 +85,7 @@
                 <select class="form-control" name="id_tipe_asset" id="nama_tipe_asset">
                     <option value="">.: Pilih Tipe Aset :.</option>
                     @foreach ($tipe_aset as $item)
-                        <option value="{{ $item->id_tipe_asset }}">{{ $item->nama_tipe_asset }}</option>
+                        <option value="{{ $item->id_tipe_asset }}">{{ $item->code_tipe_asset }} - {{ $item->nama_tipe_asset }}</option>
                     @endforeach
                 </select>
             </div>

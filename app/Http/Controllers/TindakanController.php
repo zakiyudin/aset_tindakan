@@ -7,6 +7,7 @@ use App\Models\TindakanAsetModel;
 use Carbon\Carbon;
 use DB;
 use App\Models\User;
+use App\Models\TindakanModel;
 
 class TindakanController extends Controller
 {
@@ -28,7 +29,8 @@ class TindakanController extends Controller
             'tipe_asset.nama_tipe_asset as nama_tipe_asset', 
             'divisi.nama_divisi as nama_divisi'
             ])
-        ->where('tanggal_expired', '<=' ,Carbon::now())->orderBy('id', 'desc')->get();
+        ->where('tanggal_expired', '<=' ,Carbon::now())
+        ->orderBy('id', 'desc')->get();
         // dd($data);
         if($request->ajax()){
             return datatables()->of($data)
@@ -40,7 +42,7 @@ class TindakanController extends Controller
                 ->make(true);
         }
 
-        return view('tindakan-aset.tindak.index', \compact('users'));
+        return view('tindakan.tindakan', \compact('users'));
     }
 
     /**
@@ -61,16 +63,18 @@ class TindakanController extends Controller
      */
     public function store(Request $request)
     {
-        $data = TindakanAsetModel::updateOrCreate([
-            'id' => $request->id
-        ],
-        [
-            'user_id' => $request->user_id,
-            'tanggal_tindakan' => $request->tanggal_tindakan,
-            'nama_tindakan' => $request->nama_tindakan,
-        ]);
+        $tindak = new TindakanModel();
+        $tindak->nama_tindakan = $request->nama_tindakan;
+        $tindak->tanggal_tindakan = $request->tanggal_tindakan;
+        $tindak->keterangan = $request->keterangan;
+        $tindak->id = $request->id;
+        $tindak->save();
 
-        return response()->json($data);
+        $id_tindak = TindakanAsetModel::find($request->id);
+        $id_tindak->tanggal_expired = Carbon::now()->addDays(30);
+        $id_tindak->save();
+
+        return response()->json();
     }
 
     /**

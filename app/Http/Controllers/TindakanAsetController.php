@@ -77,8 +77,6 @@ class TindakanAsetController extends Controller
         ],
         [
             'nama_aset' => $request->nama_aset,
-            'tanggal_tindakan' => $request->tanggal_tindakan,
-            'nama_tindakan' => $request->nama_tindakan,
             'tanggal_pembelian' => $request->tanggal_pembelian,
             'id_tipe_asset' => $request->id_tipe_asset,
             'id_divisi' => $request->id_divisi,

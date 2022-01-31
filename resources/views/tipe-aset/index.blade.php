@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('MASTER') }}</div>
+                <div class="card-header bg-success bg-opacity-50">{{ __('MASTER') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -20,13 +20,13 @@
                     <div class="row">
                         <div class="col-md-12 mx-auto">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header bg-warning bg-opacity-50">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            {{ __('TIPE ASSET') }}
+                                            <b>{{ __('TIPE ASSET') }}</b>
                                         </div>
                                         <div class="col-sm-6 float-right">
-                                            <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Tambah
                                               </button>
                                         </div>
@@ -34,9 +34,9 @@
                                 </div>
                                 <div class="card-body">
                                     <table class="table tabel-tipe-aset hover stripe table-bordered table-striped cell-border">
-                                        <thead class="thead-light">
+                                        <thead class="thead-light  bg-warning bg-opacity-50">
                                             <tr>
-                                                <th>#</th>
+                                                <th>Code Tipe Aset</th>
                                                 <th>Tipe Asset</th>
                                                 <th>Action</th>
                                             </tr>
@@ -56,7 +56,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header bg-warning bg-opacity-50">
           <h5 class="modal-title" id="exampleModalLabel">TAMBAH TIPE ASSET</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -92,7 +92,7 @@
             serverSide: true,
             ajax: "{{ route('tipe-aset.index') }}",
             columns: [
-                { data: 'code_tipe_asset', name: 'code_tipe_asset', width: "10%" },
+                { data: 'code_tipe_asset', name: 'code_tipe_asset' },
                 { data: 'nama_tipe_asset', name: 'nama_tipe_asset' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]

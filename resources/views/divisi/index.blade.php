@@ -14,9 +14,9 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('MASTER') }}</div>
+                <div class="card-header bg-success bg-opacity-50">{{ __('MASTER') }}</div>
 
-                <div class="card-body">
+                <div class="card-body ">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -25,13 +25,13 @@
                     <div class="row">
                         <div class="col-md-12 mx-auto">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header bg-primary bg-opacity-50">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            {{ __('DIVISI') }}
+                                            <b>{{ __('DIVISI') }}</b>
                                         </div>
                                         <div class="col-sm-6 float-right">
-                                            <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Tambah
                                               </button>
                                         </div>
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="card-body">
                                     <table class="table tabel-divisi hover stripe table-bordered table-striped cell-border">
-                                        <thead class="thead-light">
+                                        <thead class="thead-light  bg-primary bg-opacity-50">
                                             <tr>
                                                 {{-- <th>ID</th> --}}
                                                 <th width="">Code Divisi</th>
@@ -63,7 +63,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header  bg-primary bg-opacity-50">
             <h5 class="modal-title" id="exampleModalLabel">TAMBAH DIVISI</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -100,7 +100,7 @@
                 ajax: "{{ route('divisi.index') }}",
                 columns: [
                     // { data: 'DT_RowIndex', name: 'DT_RowIndex', width: "5%" },
-                    { data: 'code_divisi', name: 'code_divisi', width: "10%" },
+                    { data: 'code_divisi', name: 'code_divisi' },
                     { data: 'nama_divisi', name: 'nama_divisi' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]

@@ -22,6 +22,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/send', [App\Http\Controllers\HomeController::class, 'send'])->name('send');
 
+Route::prefix('laporan')->group(function () {
+    Route::get('/', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/export_pdf', [App\Http\Controllers\LaporanController::class, 'export_pdf'])->name('laporan.export_pdf');
+    Route::get('/export_csv', [App\Http\Controllers\LaporanController::class, 'export_csv'])->name('laporan.export_csv');
+});
+
 Route::prefix('tipe-aset')->group(function () {
     Route::get('/', [App\Http\Controllers\TipeAsetController::class, 'index'])->name('tipe-aset.index');
     Route::get('/create', [App\Http\Controllers\TipeAsetController::class, 'create'])->name('tipe-aset.create');

@@ -16,6 +16,7 @@
             text-align: center;
             vertical-align: middle;
             line-height: 1.4;
+            width: 100%;
         }
         th, td{
             padding: 10px;
@@ -42,6 +43,7 @@
     </style>
 </head>
 <body>
+    {{-- {{ dd($data) }} --}}
     <table>
         <caption>Report Maintenance Asset</caption>
         <thead>
@@ -51,6 +53,7 @@
                 <th>Nama Tindakan</th>
                 <th>Tgl. Tindakan</th>
                 <th>Tgl. Pembelian</th>
+                <th>Penindak</th>
                 <th>Ket.</th>
             </tr>
         </thead>
@@ -62,6 +65,7 @@
                     <td>{{ $item->nama_tindakan }}</td>
                     <td>{{ $item->tanggal_tindakan }}</td>
                     <td>{{ $item->tanggal_pembelian }}</td>
+                    <td>{{ $item->name }}</td>
                     <td>{{ $item->keterangan }}</td>
                 </tr>
             @endforeach

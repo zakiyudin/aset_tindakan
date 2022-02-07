@@ -124,12 +124,23 @@
                         url: "{{ route('divisi.store') }}",
                         data: $("#form-tambah-edit").serialize(),
                         success: function(data){
-                            swal({
-                                title: "Berhasil!",
-                                text: "Data berhasil disimpan",
-                                icon: "success",
-                                button: "OK",
-                            });
+                            if(data.status === 'success'){
+                                $("#exampleModal").modal("hide");
+                                $('.tabel-divisi').DataTable().ajax.reload();
+                                swal({
+                                    title: "Success!",
+                                    text: "Data Divisi Berhasil Ditambahkan",
+                                    icon: "success",
+                                    button: "OK",
+                                });
+                            }else if(data.status === 'error'){
+                                swal({
+                                    title: "Error!",
+                                    text: "Data Divisi Gagal Ditambahkan",
+                                    icon: "error",
+                                    button: "OK",
+                                });
+                            }
                             $("#exampleModal").modal("hide");
                             $(".tabel-divisi").DataTable().ajax.reload();                         
                         },

@@ -121,14 +121,23 @@
                         $("#tambah-tipe-aset").html('kirim...');
                     },
                     success: function(data){
-                        swal({
-                            title: "Berhasil!",
-                            text: "Data berhasil disimpan",
-                            icon: "success",
-                            button: "OK",
-                        });
-                        $(".tabel-tipe-aset").DataTable().ajax.reload();
-                        // $("#exampleModal").modal("hide");
+                        if(data.status === 'success'){
+                            swal({
+                                title: "Berhasil!",
+                                text: "Data berhasil disimpan",
+                                icon: "success",
+                                button: "OK",
+                            });
+                            $(".tabel-tipe-aset").DataTable().ajax.reload();
+                            $("#exampleModal").modal("hide");
+                        }else if(data.status === 'error'){
+                            swal({
+                                title: "Error!",
+                                text: "Data Divisi Gagal Ditambahkan",
+                                icon: "error",
+                                button: "OK",
+                            });
+                        }    
                     },
                     error: function(data){
                         console.log(data);

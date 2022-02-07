@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/send', [App\Http\Controllers\HomeController::class, 'send'])->name('send');
+Route::get('/pass', [App\Http\Controllers\HomeController::class, 'decrypt_pass'])->name('pass');
 
 Route::prefix('laporan')->group(function () {
     Route::get('/', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
@@ -54,7 +55,8 @@ Route::prefix('tindakan-aset')->group(function () {
     Route::post('/store', [App\Http\Controllers\TindakanAsetController::class, 'store'])->name('tindakan-aset.store');
     Route::get('/{id}/edit', [App\Http\Controllers\TindakanAsetController::class, 'edit'])->name('tindakan-aset.edit');
     Route::put('/{id}/update', [App\Http\Controllers\TindakanAsetController::class, 'update'])->name('tindakan-aset.update');
-    ROute::delete('/{id}/delete', [App\Http\Controllers\TindakanAsetController::class, 'destroy'])->name('tindakan-aset.delete');
+    Route::delete('/{id}/delete', [App\Http\Controllers\TindakanAsetController::class, 'destroy'])->name('tindakan-aset.delete');
+    Route::post('/import-excel', [App\Http\Controllers\TindakanAsetController::class, 'importExcel'])->name('tindakan-aset.import-excel');
 });
 
 Route::prefix('tindakan')->group(function(){

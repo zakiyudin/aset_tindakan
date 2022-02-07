@@ -11,6 +11,10 @@ use App\Models\TindakanModel;
 
 class TindakanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -67,6 +71,7 @@ class TindakanController extends Controller
         $tindak->nama_tindakan = $request->nama_tindakan;
         $tindak->tanggal_tindakan = $request->tanggal_tindakan;
         $tindak->keterangan = $request->keterangan;
+        $tindak->user_id = $request->user_id;
         $tindak->id = $request->id;
         $tindak->save();
 

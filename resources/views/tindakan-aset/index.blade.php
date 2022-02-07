@@ -17,7 +17,8 @@
                         <div class="col-sm-6 float-right">
                             <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Tambah
-                              </button>
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm float-end" id="btn-import">Import <i class="fas fa-file-upload"></i></button>
                         </div>
                     </div>
                 </div>
@@ -46,6 +47,33 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="modal-import" tabindex="-1" aria-labelledby="modal-import" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Import File</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ route('tindakan-aset.import-excel') }}" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+                @csrf
+                <div class="form-group">
+                    <label for="" class="form-label"><b>Import File</b></label>
+                    <input type="file" name="file_excel" id="file_excel" class="form-control">
+                    <span>.xlsx|.xlx|.csv</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-md btn-opacity-50">Import</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
 
 <!-- Modal Tambah Tindakan-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,6 +117,10 @@
                     @endforeach
                 </select>
             </div>
+            <div class="form-group">
+                <label for="spesifikasi" class="form-label"><b>Spek</b></label>
+                <textarea class="form-control" name="spesifikasi" id="spesifikasi" cols="20" rows="5"></textarea>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" id="tambah-tindakan" value="create">Tambah</button>
@@ -126,6 +158,12 @@
                 {data: 'action', name: 'action', orderable: true, searchable: true},
             ]
         });
+    })
+
+    $("#btn-import").click(function(e){
+        e.preventDefault();
+        $("#modal-import").modal("show");
+        // $("#form-filter-tanggal").form("reset");
     })
 
         $("#tombol-tambah").click(function(){
@@ -191,6 +229,7 @@
                     $("#nama_aset").val(data.nama_aset);
                     $("#nama_divisi").val(data.id_divisi);
                     $("#nama_tipe_asset").val(data.id_tipe_asset);
+                    $("#spesifikasi").val(data.spesifikasi);
                     $("#tanggal_pembelian").val(data.tanggal_pembelian);
                     $("#tanggal_expired").val(data.tanggal_expired);
                     $("#exampleModalLabel").html("Edit Data");

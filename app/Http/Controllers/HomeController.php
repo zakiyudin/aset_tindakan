@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\MyFirstNotification;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Crypt;
 
 class HomeController extends Controller
 {
@@ -51,6 +52,20 @@ class HomeController extends Controller
         return view('home', \compact('tipe_aset', 'divisi', 'expired_aset'));
     }
 
+    public function decrypt_pass()
+    {
+        $password = User::where('id', 1)->first();
+        // dd($password->password);
+        try {
+            //code...
+            $decrypted = Crypt::decryptString($password->password);
+            dd($decrypted);
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+        }
+    }
+
     public function send(){
         // $tanggal_beli = TindakanAsetModel::where('tanggal_pembelian', '=', '2022-01-01')->first();
         $date_now = Carbon::now();
@@ -62,8 +77,9 @@ class HomeController extends Controller
         $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
         foreach ($tanggal_expired as $expired) {
             if($expired < $date_now){
-                //membuat unique code generator pengganti ID misalnya (DIV002) 
-                echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
+                //membuat unique code generator pengganti ID misalnya (DIV002)
+                echo $expired . " expired" . '<br>'; 
+                // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
             }else{
                 echo $expired . " ini belum expired" . '<br>';
             }

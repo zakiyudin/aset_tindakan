@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\TindakanAsetModel;
 use App\Models\TipeAsetModel;
 use App\Models\DivisiModel;
+use App\Imports\TindakanAsetImport;
 use DB;
 use DataTables;
+use Excel;
 
 class TindakanAsetController extends Controller
 {
@@ -72,6 +74,7 @@ class TindakanAsetController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->spesifikasi);
         $data = TindakanAsetModel::updateOrCreate([
             'id' => $request->id
         ],
@@ -81,6 +84,7 @@ class TindakanAsetController extends Controller
             'id_tipe_asset' => $request->id_tipe_asset,
             'id_divisi' => $request->id_divisi,
             'tanggal_expired' => $request->tanggal_expired,
+            'spesifikasi' => $request->spesifikasi
         ]);
 
         return response()->json($data, 200);
@@ -135,5 +139,20 @@ class TindakanAsetController extends Controller
         $data = TindakanAsetModel::where('id', $id)->delete();
 
         return response()->json($data, 200);
+    }
+
+    public function importExcel(Request $request)
+    {
+        $validation = $request->validate([
+            'file_excel' => 'required|mimes:xls,xlsx'
+        ]);
+        
+        $file = $request->file('file_excel');
+        $nama_file = rand().$file->getClientOriginalName();
+        $file->move('file_excel', $nama_file);
+
+        Excel::import(new TindakanAsetImport, public_path('/file_excel/'.$nama_file));
+
+
     }
 }

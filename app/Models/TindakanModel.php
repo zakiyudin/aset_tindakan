@@ -11,5 +11,5 @@ class TindakanModel extends Model
 
     protected $table = 'tindakan';
     protected $primaryKey = 'id_tindakan';
-    protected $fillable = ['nama_tindakan', 'keterangan', 'tanggal_tindakan', 'id'];
+    protected $fillable = ['nama_tindakan', 'keterangan', 'tanggal_tindakan', 'id',  'user_id'];
 }

@@ -19,6 +19,7 @@ class TindakanAsetModel extends Model
         'id_divisi',
         'id_tipe_asset',
         'user_id',
+        'spesifikasi',
         'tanggal_expired'
     ];
 }

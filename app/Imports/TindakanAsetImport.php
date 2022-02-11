@@ -16,13 +16,12 @@ class TindakanAsetImport implements ToCollection
         foreach ($collection as $row) {
             # code...
             TindakanAsetModel::create([
-                'nama_aset' => $row[1],
-                'tanggal_pembelian' => $row[2],
-                'tanggal_expired' => $row[3],
-                'id_tipe_asset' => $row[4],
-                'id_divisi' => $row[5],
-                'id_user' => $row[6],
-                'spesifikasi' => $row[7],
+                'nama_aset'         => $row[0],
+                'tanggal_pembelian' => $row[1],
+                'tanggal_expired'   => $row[2],
+                'id_tipe_asset'     => $row[3],
+                'id_divisi'         => $row[4],
+                'spesifikasi'       => $row[5],
             ]);
         }
     }

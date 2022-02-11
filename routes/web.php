@@ -52,6 +52,7 @@ Route::prefix('divisi')->group(function () {
 Route::prefix('tindakan-aset')->group(function () {
     Route::get('/', [App\Http\Controllers\TindakanAsetController::class, 'index'])->name('tindakan-aset.index');
     Route::get('/create', [App\Http\Controllers\TindakanAsetController::class, 'create'])->name('tindakan-aset.create');
+    Route::get('/{id}/detail', [App\Http\Controllers\TindakanAsetController::class, 'show'])->name('tindakan-aset.detail');
     Route::post('/store', [App\Http\Controllers\TindakanAsetController::class, 'store'])->name('tindakan-aset.store');
     Route::get('/{id}/edit', [App\Http\Controllers\TindakanAsetController::class, 'edit'])->name('tindakan-aset.edit');
     Route::put('/{id}/update', [App\Http\Controllers\TindakanAsetController::class, 'update'])->name('tindakan-aset.update');

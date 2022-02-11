@@ -7,9 +7,11 @@ use App\Models\TindakanAsetModel;
 use App\Models\TipeAsetModel;
 use App\Models\DivisiModel;
 use App\Imports\TindakanAsetImport;
+use Illuminate\Support\Facades\Storage;
 use DB;
 use DataTables;
 use Excel;
+use Validator;
 
 class TindakanAsetController extends Controller
 {
@@ -27,6 +29,8 @@ class TindakanAsetController extends Controller
     {
         $divisi = DivisiModel::all();
         $tipe_aset = TipeAsetModel::all();
+        $file_image = TindakanAsetModel::pluck('gambar_aset')->first();
+        // dd($file_image);
 
         $data = DB::table('table_tindakan_aset')
         ->join('tipe_asset', 'table_tindakan_aset.id_tipe_asset', '=', 'tipe_asset.id_tipe_asset')
@@ -46,6 +50,8 @@ class TindakanAsetController extends Controller
                 ->addColumn('action', function($data){
                     $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-warning btn-sm edit_data">Edit</a>';
                     $button .= '&nbsp;&nbsp;';
+                    $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Deatil" class="detail btn btn-success btn-sm detail_data">Detail</a>' ;
+                    $button .= '&nbsp;&nbsp;';
                     $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data">Hapus</a>' ;
                     return $button;
                 })
@@ -53,7 +59,7 @@ class TindakanAsetController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('tindakan-aset.index', \compact('divisi', 'tipe_aset'));
+        return view('tindakan-aset.index', \compact('divisi', 'tipe_aset', 'file_image'));
     }
 
     /**
@@ -74,20 +80,47 @@ class TindakanAsetController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->spesifikasi);
-        $data = TindakanAsetModel::updateOrCreate([
-            'id' => $request->id
-        ],
-        [
-            'nama_aset' => $request->nama_aset,
-            'tanggal_pembelian' => $request->tanggal_pembelian,
-            'id_tipe_asset' => $request->id_tipe_asset,
-            'id_divisi' => $request->id_divisi,
-            'tanggal_expired' => $request->tanggal_expired,
-            'spesifikasi' => $request->spesifikasi
-        ]);
+        // $path = Storage::putFile('public/gambar_aset', $request->file('gambar_aset'));
+        // dd($path);
 
-        return response()->json($data, 200);
+            if(empty($request->id)){
+                $tindakanAset                    = new TindakanAsetModel;
+                $tindakanAset->nama_aset         = $request->nama_aset;
+                $tindakanAset->tanggal_pembelian = $request->tanggal_pembelian;
+                $tindakanAset->id_tipe_asset     = $request->id_tipe_asset;
+                $tindakanAset->id_divisi         = $request->id_divisi;
+                $tindakanAset->tanggal_expired   = $request->tanggal_expired;
+                $tindakanAset->spesifikasi       = $request->spesifikasi;
+                // $tindakanAset->gambar_aset       = $request->gambar_aset->store('public/gambar_aset');
+                $tindakanAset->save();
+                return \response()->json(['success' => 'Berhasil Menambahkan Data']);
+            }else{
+                $tindakanAset                    = TindakanAsetModel::find($request->id);
+                $tindakanAset->nama_aset         = $request->nama_aset;
+                $tindakanAset->tanggal_pembelian = $request->tanggal_pembelian;
+                $tindakanAset->id_tipe_asset     = $request->id_tipe_asset;
+                $tindakanAset->id_divisi         = $request->id_divisi;
+                $tindakanAset->tanggal_expired   = $request->tanggal_expired;
+                $tindakanAset->spesifikasi       = $request->spesifikasi;
+                $tindakanAset->save();
+                return \response()->json(['success' => 'Berhasil Merubah Data']);
+            }
+
+        
+
+        // $data = TindakanAsetModel::updateOrCreate([
+        //     'id' => $request->id
+        // ],
+        // [
+        //     'nama_aset' => $request->nama_aset,
+        //     'tanggal_pembelian' => $request->tanggal_pembelian,
+        //     'id_tipe_asset' => $request->id_tipe_asset,
+        //     'id_divisi' => $request->id_divisi,
+        //     'tanggal_expired' => $request->tanggal_expired,
+        //     'spesifikasi' => $request->spesifikasi,
+        // ]);
+
+        // return response()->json($data, 200);
     }
 
     /**
@@ -98,7 +131,22 @@ class TindakanAsetController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = DB::table('table_tindakan_aset')
+        ->join('tipe_asset', 'table_tindakan_aset.id_tipe_asset', '=', 'tipe_asset.id_tipe_asset')
+        ->join('divisi', 'table_tindakan_aset.id_divisi', '=', 'divisi.id_divisi')
+        ->select([
+            'table_tindakan_aset.id',
+            'table_tindakan_aset.nama_aset',
+            'table_tindakan_aset.tanggal_pembelian',
+            'tipe_asset.nama_tipe_asset as nama_tipe_asset', 
+            'divisi.nama_divisi as nama_divisi',
+            'table_tindakan_aset.tanggal_expired',
+            'table_tindakan_aset.spesifikasi'
+            ])
+            ->where('id', $id)
+            ->first();
+        // $data = TindakanAsetModel::where('id', $id)->first();
+        return response()->json($data, 200);
     }
 
     /**
@@ -137,6 +185,7 @@ class TindakanAsetController extends Controller
     {
         // $data = TindakanAsetModel::find($id);
         $data = TindakanAsetModel::where('id', $id)->delete();
+        // $data = DB::table('table_tindakan_aset')->where('id', $id)->delete();
 
         return response()->json($data, 200);
     }

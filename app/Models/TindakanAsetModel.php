@@ -18,8 +18,13 @@ class TindakanAsetModel extends Model
         'nama_tindakan',
         'id_divisi',
         'id_tipe_asset',
-        'user_id',
         'spesifikasi',
+        'gambar_aset',
         'tanggal_expired'
     ];
+
+    public function divisi()
+    {
+        return $this->belongsTo('App\Models\DivisiModel', 'id_divisi');
+    }
 }

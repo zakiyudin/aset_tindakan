@@ -133,7 +133,7 @@
                         }else if(data.status === 'error'){
                             swal({
                                 title: "Error!",
-                                text: "Data Divisi Gagal Ditambahkan",
+                                text: "Data Tipe Asset Gagal Ditambahkan",
                                 icon: "error",
                                 button: "OK",
                             });

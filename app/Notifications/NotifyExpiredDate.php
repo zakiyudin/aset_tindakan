@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\User;
 
 class NotifyExpiredDate extends Notification
 {
@@ -40,8 +41,9 @@ class NotifyExpiredDate extends Notification
      */
     public function toMail($notifiable)
     {
+        // $email = auth()->user()->email;
         return (new MailMessage)
-                    ->line('Ada Asset yang musti di maintenance guysss  😄😄')
+                    ->line('Ada Asset yang musti di maintenance guysss 👇👇😄😄')
                     ->action('Langsung ke Asset', url('http://localhost:8000/tindakan'))
                     ->line('TERIMA KASIH !! 😃');
     }

@@ -12,5 +12,11 @@ class DivisiModel extends Model
     protected $table = 'divisi';
     protected $primaryKey = 'id_divisi';
     protected $fillable = ['nama_divisi'];
+
+
+    public function aset()
+    {
+        return $this->hasMany(TindakanAsetModel::class);
+    }
     
 }

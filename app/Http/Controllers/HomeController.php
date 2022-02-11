@@ -36,6 +36,7 @@ class HomeController extends Controller
     {
         $tipe_aset = TipeAsetModel::count();
         $divisi = DivisiModel::count();
+        $aset = TindakanAsetModel::count();
         $expired_aset = DB::table('table_tindakan_aset')
         ->join('tipe_asset', 'table_tindakan_aset.id_tipe_asset', '=', 'tipe_asset.id_tipe_asset')
         ->join('divisi', 'table_tindakan_aset.id_divisi', '=', 'divisi.id_divisi')
@@ -49,24 +50,20 @@ class HomeController extends Controller
         ->where('tanggal_expired', '<=' ,Carbon::now())
         ->count();
 
-        return view('home', \compact('tipe_aset', 'divisi', 'expired_aset'));
+        return view('home', \compact('tipe_aset', 'divisi', 'expired_aset', 'aset'));
     }
 
     public function decrypt_pass()
     {
-        $password = User::where('id', 1)->first();
-        // dd($password->password);
-        try {
-            //code...
-            $decrypted = Crypt::decryptString($password->password);
-            dd($decrypted);
-        } catch (\Throwable $th) {
-            //throw $th;
-            dd($th);
-        }
+        $aset = TindakanAsetModel::all();
+        $divisi = $aset->divisi;
+        dd($divisi);
     }
 
     public function send(){
+
+        $email = auth()->user()->email;
+        return $email;
         // $tanggal_beli = TindakanAsetModel::where('tanggal_pembelian', '=', '2022-01-01')->first();
         $date_now = Carbon::now();
         // $expired_date = $tanggal_beli->tanggal_expired;

@@ -75,6 +75,67 @@
     </div>
 </div>
 
+
+<!-- Modal Detail Data -->
+<div class="modal fade animate__animated animate__bounce" id="modal-detail-data" tabindex="-1" aria-labelledby="modal-import" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-success bg-opacity-50">
+          <h5 class="modal-title " id="exampleModalLabel">Detail Data Aset</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-4">
+                        @if ($file_image === null)
+                            <img src="{{ asset('img/no-photos.png') }}" alt="" class="img-thumbnail rounded">
+                        @else
+                            image not found
+                        @endif
+                </div>
+                <div class="col-8">
+                    <form action="#">
+                        <table class="table">
+                            <tr>
+                                <h3 id="detail_nama_aset"></h1>
+                            </tr>
+                            <tr>
+                                <td>Divisi</td>
+                                <td>:</td>
+                                <td><p id="detail_divisi"></p></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Beli</td>
+                                <td>:</td>
+                                <td><p id="detail_tanggal_beli"></p></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Expired</td>
+                                <td>:</td>
+                                <td><p id="detail_tanggal_expired"></p></td>
+                            </tr>
+                            <tr>
+                                <td>Tipe Aset</td>
+                                <td>:</td>
+                                <td><p id="detail_tipe_aset"></p></td>
+                            </tr>
+                            <tr>
+                                <td>Spesifikasi</td>
+                                <td>:</td>
+                                <td><p id="detail_spesifikasi"></p></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
 <!-- Modal Tambah Tindakan-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -84,21 +145,29 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <form action="{{ route('tindakan-aset.store') }}" class="form-group" id="form-tambah-edit" method="POST">
+        <form action="{{ route('tindakan-aset.store') }}" class="form-group" id="form-tambah-edit" method="POST" enctype="multipart/form-data">
             @csrf
-              <input type="hidden" name="id" id="id">
-              <div class="form-group">
+            <input type="hidden" name="id" id="id">
+            <div class="form-group">
                 <label for="nama_aset" class="form-label"><b>Nama Aset</b></label>
                 <input type="text" name="nama_aset" id="nama_aset" class="form-control">
             </div>
+            <hr>
             <div class="form-group">
                 <label for="tanggal_pembelian" class="form-label"><b>Tanggal Beli</b></label>
                 <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control">
             </div>
+            <hr>
             <div class="form-group">
                 <label for="tanggal_expired" class="form-label"><b>Tanggal Expired</b></label>
                 <input type="date" name="tanggal_expired" id="tanggal_expired" class="form-control">
             </div>
+            <hr>
+            <div class="form-group">
+                <label for="gambar_aset" class="form-label"><b>Upload Gambar</b></label>
+                <input type="file" name="gambar_aset" id="gambar_aset" class="form-control">
+            </div>
+            <hr>
             <div class="form-group">
                 <label for="nama_divisi" class="form-label"><b>Divisi</b></label>
                 <select class="form-control" name="id_divisi" id="nama_divisi">
@@ -108,6 +177,7 @@
                     @endforeach
                 </select>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="nama_tipe_asset" class="form-label"><b>Tipe Aset</b></label>
                 <select class="form-control" name="id_tipe_asset" id="nama_tipe_asset">
@@ -117,6 +187,7 @@
                     @endforeach
                 </select>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="spesifikasi" class="form-label"><b>Spek</b></label>
                 <textarea class="form-control" name="spesifikasi" id="spesifikasi" cols="20" rows="5"></textarea>
@@ -180,7 +251,17 @@
                     $("#tambah-tindakan").html("Sending...");
                     
                     $.ajax({
-                        data: $('#form-tambah-edit').serialize(),
+                        // data: $('#form-tambah-edit').serialize(),
+                        data: {
+                            id : $('#id').val(),
+                            nama_aset: $('#nama_aset').val(),
+                            tanggal_pembelian: $('#tanggal_pembelian').val(),
+                            tanggal_expired: $('#tanggal_expired').val(),
+                            gambar_aset: $('#gambar_aset').val(),
+                            id_divisi: $('#nama_divisi').val(),
+                            id_tipe_asset: $('#nama_tipe_asset').val(),
+                            spesifikasi: $('#spesifikasi').val(),
+                        },
                         url: "{{ route('tindakan-aset.store') }}",
                         type: "POST",
                         dataType: 'json',
@@ -197,7 +278,7 @@
                             });
                         },
                         error: function (data) {
-                            console.log('Error:', data);
+                            console.log("error", data.responseJSON.message);
                             $('#tambah-tindakan').html('Tambah');
                             swal({
                                 title: "Gagal!",
@@ -210,6 +291,28 @@
                 }
             })
         }
+
+        $("body").on("click", ".detail_data", function(){
+            var id = $(this).data('id');
+            console.log(id);
+
+            $.ajax({
+                type: "GET",
+                url: "/tindakan-aset/" + id + "/detail",
+                data: {id: id},
+                dataType: "json",
+                success: function(data){
+                    console.log(data.spesifikasi.length);
+                    $("#detail_nama_aset").text(data.nama_aset);
+                    $("#detail_spesifikasi").text(data.spesifikasi);
+                    $("#detail_divisi").text(data.nama_divisi);
+                    $("#detail_tipe_aset").text(data.nama_tipe_asset);
+                    $("#detail_tanggal_expired").text(data.tanggal_expired);
+                    $("#detail_tanggal_beli").text(data.tanggal_pembelian);
+                    $("#modal-detail-data").modal("show");
+                }
+            })
+        })
 
 
         $("body").on("click", ".edit_data", function() {
@@ -268,10 +371,17 @@
                             button: "OK",
                         });
                         $(".tabel-aset-tindakan").DataTable().ajax.reload();
+                    },
+                    error: function(data){
+                        console.log(typeof(data));
+                        console.log(data.responseJSON.message);
                     }
                 })
             }
         });
         })
+
+
+        // CKEDITOR.replace('spesifikasi');
 </script>
 @endsection

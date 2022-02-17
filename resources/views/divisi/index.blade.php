@@ -38,16 +38,18 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table tabel-divisi hover stripe table-bordered table-striped cell-border">
-                                        <thead class="thead-light  bg-primary bg-opacity-50">
-                                            <tr>
-                                                {{-- <th>ID</th> --}}
-                                                <th width="">Code Divisi</th>
-                                                <th>Nama Divisi</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table tabel-divisi hover stripe table-bordered table-striped cell-border">
+                                            <thead class="thead-light  bg-primary bg-opacity-50">
+                                                <tr>
+                                                    {{-- <th>ID</th> --}}
+                                                    <th width="">Code Divisi</th>
+                                                    <th>Nama Divisi</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

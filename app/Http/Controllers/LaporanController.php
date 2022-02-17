@@ -74,6 +74,7 @@ class LaporanController extends Controller
 
    public function export_csv()
    {
-    return Excel::download(new TindakanExport, 'tindakan.xlsx');
+        $name = Carbon::now()->format('YmdHis');
+        return Excel::download(new TindakanExport, 'laporan_'.$name.'.xlsx');
    }
 }

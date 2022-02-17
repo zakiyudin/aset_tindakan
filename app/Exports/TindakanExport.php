@@ -27,10 +27,10 @@ class TindakanExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             ->join('table_tindakan_aset', 'tindakan.id', '=', 'table_tindakan_aset.id')
             ->select([
                 'tindakan.id_tindakan',
+                'table_tindakan_aset.nama_aset',
                 'tindakan.nama_tindakan',
                 'tindakan.tanggal_tindakan',
                 'tindakan.keterangan',
-                'table_tindakan_aset.nama_aset',
                 'table_tindakan_aset.tanggal_pembelian',
             ])
             ->orderBy('id_tindakan', 'asc')->get();
@@ -39,11 +39,11 @@ class TindakanExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
-            'ID',
+            '#',
+            'Nama Aset',
             'Nama Tindakan',
             'Tgl Tindakan',
             'Ket.',
-            'Nama Aset',
             'Tgl Pembelian',
         ];
     }

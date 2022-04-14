@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/send', [App\Http\Controllers\HomeController::class, 'send'])->name('send');
 Route::get('/pass', [App\Http\Controllers\HomeController::class, 'decrypt_pass'])->name('pass');
+Route::post('/coba', [App\Http\Controllers\HomeController::class, 'cobaup'])->name('coba-up');
 
 Route::prefix('laporan')->group(function () {
     Route::get('/', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
@@ -65,3 +66,75 @@ Route::prefix('tindakan')->group(function(){
     Route::get('{di}/edit', [App\Http\Controllers\TindakanController::class, 'edit'])->name('tindakan.edit');
     Route::post('/store', [App\Http\Controllers\TindakanController::class, 'store'])->name('tindakan.store');
 });
+
+Route::prefix('asuransi')->group(function(){
+    Route::get('/', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'index'])->name('asuransi.index');
+    Route::post('/store', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'store'])->name('asuransi.store');
+    Route::get('/{id}/edit', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'edit'])->name('asuransi.edit');
+    Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'destroy'])->name('asuransi.delete');
+});
+
+Route::prefix('pemakai_kendaraan')->group(function(){
+    Route::get('/', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'index'])->name('pemakai_kendaraan.index');
+    Route::post('/store', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'store'])->name('pemakai_kendaraan.store');
+    Route::get('/{id}/edit', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'edit'])->name('pemakai_kendaraan.edit');
+    Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'destroy'])->name('pemakai_kendaraan.delete');
+});
+
+Route::prefix('kendaraan')->group(function(){
+    Route::get('/', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'index'])->name('kendaraan.index');
+    Route::get('/create', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'create'])->name('kendaraan.create');
+    Route::post('/store', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'store'])->name('kendaraan.store');
+    Route::get('/{id}/edit', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'edit'])->name('kendaraan.edit');
+    Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'destroy'])->name('kendaraan.delete');
+    Route::get('/{id}/detail', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'show'])->name('kendaraan.detail');
+    Route::get('/pdf', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'download_pdf'])->name('kendaraan.pdf');
+    Route::get('/excel', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'export_excel'])->name('kendaraan.excel');
+    Route::post('/import-excel', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'import_excel'])->name('kendaraan.import-excel');
+    Route::get('/expired', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired'])->name('kendaraan.expired');
+});
+
+
+// Route::prefix('master')->group(function(){
+//     Route::get('/', [App\Http\Controllers\Kendaraan\MasterController::class, 'index'])->name('master.index');
+    
+//     Route::prefix('warna_kendaraan')->group(function(){
+//         Route::get('/', [App\Http\Controllers\Kendaraan\WarnaKendaraanController::class, 'index'])->name('warna_kendaraan.index');
+//         Route::post('/tambah_warna', [App\Http\Controllers\Kendaraan\WarnaKendaraanController::class, 'store'])->name('warna_kendaraan.store');
+//         Route::put('/{id}/update', [App\Http\Controllers\Kendaraan\WarnaKendaraanController::class, 'update'])->name('warna_kendaraan.update');
+//         Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\WarnaKendaraanController::class, 'destroy'])->name('warna_kendaraan.delete');
+//     });
+    
+//     Route::prefix('tahun_kendaraan')->group(function(){
+//         Route::get('/', [App\Http\Controllers\Kendaraan\TahunKendaraanController::class, 'index'])->name('tahun_kendaraan.index');
+//         Route::post('/store', [App\Http\Controllers\Kendaraan\TahunKendaraanController::class, 'store'])->name('tahun_kendaraan.store');
+//         Route::put('/{id}/update', [App\Http\Controllers\Kendaraan\TahunKendaraanController::class, 'update'])->name('tahun_kendaraan.update');
+//         Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\TahunKendaraanController::class, 'destroy'])->name('tahun_kendaraan.delete');
+//     });
+    
+//     Route::prefix('jenis_kendaraan')->group(function(){
+//         Route::get('/', [App\Http\Controllers\Kendaraan\JenisKendaraanController::class, 'index'])->name('jenis_kendaraan.index');
+//         Route::post('/store', [App\Http\Controllers\Kendaraan\JenisKendaraanController::class, 'store'])->name('jenis_kendaraan.store');
+//         Route::put('/{id}/update', [App\Http\Controllers\Kendaraan\JenisKendaraanController::class, 'update'])->name('jenis_kendaraan.update');
+//         Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\JenisKendaraanController::class, 'destroy'])->name('jenis_kendaraan.delete');
+//     });
+    
+//     Route::prefix('/asuransi')->group(function(){
+//         Route::get('/', [App\Http\Controllers\Kendaraan\AsuransiController::class, 'index'])->name('asuransi.index');
+//         Route::post('/store', [App\Http\Controllers\Kendaraan\AsuransiController::class, 'store'])->name('asuransi.store');
+//         Route::put('/{id}/update', [App\Http\Controllers\Kendaraan\AsuransiController::class, 'update'])->name('asuransi.update');
+//         Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\AsuransiController::class, 'destroy'])->name('asuransi.delete');
+//     });
+    
+//     Route::prefix('/pemakai')->group(function(){
+//         Route::get('/', [App\Http\Controllers\Kendaraan\PemakaiController::class, 'index'])->name('pemakai.index');
+//         Route::post('/store', [App\Http\Controllers\Kendaraan\PemakaiController::class, 'store'])->name('pemakai.store');
+//         Route::put('/{id}/update', [App\Http\Controllers\Kendaraan\PemakaiController::class, 'update'])->name('pemakai.update');
+//         Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\PemakaiController::class, 'destroy'])->name('pemakai.delete');
+//     });
+// });
+
+
+
+
+

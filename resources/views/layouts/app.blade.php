@@ -63,6 +63,11 @@
                             <a class="nav-link" href="{{ route('tindakan-aset.index') }}">Aset</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('kendaraan.index') }}">Kendaraan</a>
+                        </li>
+                        
+
                         <div class="nav-item dropdown">
                             <li class="nav-link" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                               Master
@@ -71,6 +76,8 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                               <a class="nav-link" href="{{ route('divisi.index') }}">Divisi</a>
                               <a class="nav-link" href="{{ route('tipe-aset.index') }}">Tipe Aset</a>
+                              <a class="nav-link" href="{{ route('asuransi.index') }}">Asuransi</a>
+                              <a class="nav-link" href="{{ route('pemakai_kendaraan.index') }}">Pemakai</a>
                             </div>
                         </div>
                     </ul>

@@ -2,28 +2,28 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use App\Models\TindakanAsetModel;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Carbon\Carbon;
 
-class TindakanAsetImport implements ToCollection
+class TindakanAsetImport implements ToModel, WithHeadingRow
 {
     /**
-    * @param Collection $collection
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function collection(Collection $collection)
+    public function model(array $row)
     {
-        foreach ($collection as $row) {
-            # code...
-            TindakanAsetModel::create([
-                'nama_aset'         => $row[0],
-                'tanggal_pembelian' => Carbon::parse($row[1]),
-                'tanggal_expired'   => Carbon::parse($row[2]),
-                'id_tipe_asset'     => $row[3],
-                'id_divisi'         => $row[4],
-                'spesifikasi'       => $row[5],
-            ]);
-        }
+        return new TindakanAsetModel([
+            'id' => $row['id'],
+            'nama_aset' => $row['nama_aset'],
+            'tanggal_pembelian' => Carbon::parse($row['tanggal_pembelian'])->format('Y-m-d'),
+            'tanggal_expired' => Carbon::parse($row['tanggal_expired'])->format('Y-m-d'),
+            'spesifikasi' => $row['spesifikasi'],
+            'id_divisi' => $row['id_divisi'],
+            'id_tipe_asset' => $row['id_tipe_asset'],
+        ]);
     }
 }

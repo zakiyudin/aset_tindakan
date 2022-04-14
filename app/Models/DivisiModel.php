@@ -13,6 +13,16 @@ class DivisiModel extends Model
     protected $primaryKey = 'id_divisi';
     protected $fillable = ['nama_divisi'];
 
+    /**
+     * Get the pemakaiKendaraan that owns the DivisiModel
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function pemakaiKendaraan(): BelongsTo
+    {
+        return $this->belongsTo(PemakaiKendaraan::class);
+    }
+
 
     public function aset()
     {

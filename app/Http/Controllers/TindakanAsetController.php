@@ -29,8 +29,9 @@ class TindakanAsetController extends Controller
     {
         $divisi = DivisiModel::all();
         $tipe_aset = TipeAsetModel::all();
-        $file_image = TindakanAsetModel::pluck('gambar_aset')->first();
-        // dd($file_image);
+        $file_image = TindakanAsetModel::where('gambar_aset', '!=', '')->get();
+        // $file_image->toArray();
+        // dd($file_image[0]['gambar_aset']);
 
         $data = DB::table('table_tindakan_aset')
         ->join('tipe_asset', 'table_tindakan_aset.id_tipe_asset', '=', 'tipe_asset.id_tipe_asset')
@@ -82,6 +83,9 @@ class TindakanAsetController extends Controller
     {
         // $path = Storage::putFile('public/gambar_aset', $request->file('gambar_aset'));
         // dd($path);
+        // $filename = $request->file('gambar_aset')->getClientOriginalName();
+
+        // dd($request->hasFile('gambar_aset'));
 
             if(empty($request->id)){
                 $tindakanAset                    = new TindakanAsetModel;
@@ -91,7 +95,11 @@ class TindakanAsetController extends Controller
                 $tindakanAset->id_divisi         = $request->id_divisi;
                 $tindakanAset->tanggal_expired   = $request->tanggal_expired;
                 $tindakanAset->spesifikasi       = $request->spesifikasi;
-                // $tindakanAset->gambar_aset       = $request->gambar_aset->store('public/gambar_aset');
+                if($request->hasFile('gambar_aset')){
+                    $filename = $request->file('gambar_aset')->getClientOriginalName();
+                    $tindakanAset->gambar_aset = $request->file('gambar_aset')->storeAs('public/gambar_aset', $filename);
+                }
+                // $tindakanAset->gambar_aset       = Storage::putFile('public/gambar_aset', $request->file('gambar_aset'));
                 $tindakanAset->save();
                 return \response()->json(['success' => 'Berhasil Menambahkan Data']);
             }else{
@@ -192,15 +200,23 @@ class TindakanAsetController extends Controller
 
     public function importExcel(Request $request)
     {
-        $validation = $request->validate([
-            'file_excel' => 'required|mimes:xls,xlsx'
+        $this->validate($request, [
+            'file_excel' => 'required|mimes:xls,xlsx',
         ]);
-        
-        $file = $request->file('file_excel');
-        $nama_file = rand().$file->getClientOriginalName();
-        $file->move('file_excel', $nama_file);
 
-        Excel::import(new TindakanAsetImport, public_path('/file_excel/'.$nama_file));
+        // $file = $request->file('file_excel');
+        // $nama_file = $file->hashName();
+        // $path = $file->storeAs('public/excel/', $nama_file);
+
+        
+        // $file = $request->file('file_excel');
+        // $nama_file = rand().$file->getClientOriginalName();
+        // $file->move('file_excel', $nama_file);
+
+        // Excel::import(new TindakanAsetImport, public_path('/file_excel/'.$nama_file));
+
+        Excel::import(new TindakanAsetImport, $request->file('file_excel'));
+        return 'sukses';
 
 
     }

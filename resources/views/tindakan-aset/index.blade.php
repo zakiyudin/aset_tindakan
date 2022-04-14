@@ -87,11 +87,12 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-4">
-                        @if ($file_image === null)
+                        {{-- @if ($file_image === null)
                             <img src="{{ asset('img/no-photos.png') }}" alt="" class="img-thumbnail rounded">
                         @else
                             image not found
-                        @endif
+                        @endif --}}
+                        {{-- <img src="{{ asset('gambar_aset/monitor.webp') }}" alt="" class="img-thumbnail rounded"> --}}
                 </div>
                 <div class="col-8">
                     <form action="#">
@@ -146,6 +147,7 @@
         </div>
         <div class="modal-body">
         <form action="{{ route('tindakan-aset.store') }}" class="form-group" id="form-tambah-edit" method="POST" enctype="multipart/form-data">
+            @method('POST')
             @csrf
             <input type="hidden" name="id" id="id">
             <div class="form-group">
@@ -210,7 +212,8 @@
         $.ajaxSetup({
             'headers': {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest',
+                'encType': 'multipart/form-data'
             }
         })
 
@@ -222,7 +225,7 @@
             ajax: "{{ route('tindakan-aset.index') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'nama_aset', name: 'nama_aset'},
+                {data: 'nama_aset', name: 'nama_aset', width: "25%"},
                 {data: 'nama_divisi', name: 'nama_divisi'},
                 {data: 'tanggal_pembelian', name: 'tanggal_pembelian'},
                 {data: 'nama_tipe_asset', name: 'nama_tipe_asset'},
@@ -249,19 +252,12 @@
                 submitHandler: function(form){
                     var actionType = $("#tambah-tindakan").val();
                     $("#tambah-tindakan").html("Sending...");
-                    
+                    var form = $('#form-tambah-edit')[0];
+                    var formData = new FormData(form);
                     $.ajax({
                         // data: $('#form-tambah-edit').serialize(),
-                        data: {
-                            id : $('#id').val(),
-                            nama_aset: $('#nama_aset').val(),
-                            tanggal_pembelian: $('#tanggal_pembelian').val(),
-                            tanggal_expired: $('#tanggal_expired').val(),
-                            gambar_aset: $('#gambar_aset').val(),
-                            id_divisi: $('#nama_divisi').val(),
-                            id_tipe_asset: $('#nama_tipe_asset').val(),
-                            spesifikasi: $('#spesifikasi').val(),
-                        },
+                        data: formData,
+                        enctype: 'multipart/form-data',
                         url: "{{ route('tindakan-aset.store') }}",
                         type: "POST",
                         dataType: 'json',
@@ -309,6 +305,7 @@
                     $("#detail_tipe_aset").text(data.nama_tipe_asset);
                     $("#detail_tanggal_expired").text(data.tanggal_expired);
                     $("#detail_tanggal_beli").text(data.tanggal_pembelian);
+                    // $("#img").attr("src", "{{ asset('storage/') }}" + "/" + data.foto);
                     $("#modal-detail-data").modal("show");
                 }
             })

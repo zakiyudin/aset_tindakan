@@ -9,7 +9,6 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-success bg-opacity-50">{{ __('Dashboard') }}</div>
                 <div class="card-body">
                     <div class="row justify-content-center mx-auto">
                         <div class="col-3">

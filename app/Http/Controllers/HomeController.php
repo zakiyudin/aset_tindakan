@@ -12,6 +12,7 @@ use App\Notifications\MyFirstNotification;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\Kendaraan\KendaraanModel;
 
 class HomeController extends Controller
 {
@@ -62,8 +63,8 @@ class HomeController extends Controller
 
     public function send(){
 
-        $email = auth()->user()->email;
-        return $email;
+        // $email = auth()->user()->email;
+        // return $email;
         // $tanggal_beli = TindakanAsetModel::where('tanggal_pembelian', '=', '2022-01-01')->first();
         $date_now = Carbon::now();
         // $expired_date = $tanggal_beli->tanggal_expired;
@@ -71,16 +72,90 @@ class HomeController extends Controller
         // $result = $date_now > $expired_date;
         // return $result;
 
-        $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
-        foreach ($tanggal_expired as $expired) {
-            if($expired < $date_now){
+        // $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
+        // foreach ($tanggal_expired as $expired) {
+        //     if($expired < $date_now){
+        //         //membuat unique code generator pengganti ID misalnya (DIV002)
+        //         echo $expired . " expired" . '<br>'; 
+        //         // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
+        //     }else{
+        //         echo $expired . " ini belum expired" . '<br>';
+        //     }
+        // }
+
+        // echo $date->diffInDays($future). ' days' . '<br>';
+        // dd($datesub);
+        echo '<br>';
+        $tgl_exp_asuransi = KendaraanModel::pluck('tgl_ex_asuransi');
+        $tgl_exp_stnk = KendaraanModel::pluck('tgl_ex_stnk');
+        $tgl_exp_pajak_stnk = KendaraanModel::pluck('tgl_ex_pajak_stnk');
+        $tgl_exp_kir = KendaraanModel::pluck('tgl_ex_kir');
+        foreach ($tgl_exp_asuransi as $exp_asuransi) {
+            // echo $date_now->diffInDays($exp_asuransi). ' days' . '<br>';
+            if($exp_asuransi < $date_now){
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $expired . " expired" . '<br>'; 
+                echo $exp_asuransi . " expired asuransi" . '<br>'; 
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
             }else{
-                echo $expired . " ini belum expired" . '<br>';
+                echo $exp_asuransi . " ini belum expired asuransi" . '<br>';
             }
         }
+        foreach ($tgl_exp_stnk as $exp_stnk) {
+            # code...
+            if($exp_stnk < $date_now){
+                //membuat unique code generator pengganti ID misalnya (DIV002)
+                echo $exp_stnk . " expired stnk" . '<br>'; 
+                // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
+            }else{
+                echo $exp_stnk . " ini belum expired stnk" . '<br>';
+            }
+        }
+        foreach ($tgl_exp_kir as $exp_kir) {
+            # code...
+            if($exp_kir < $date_now){
+                //membuat unique code generator pengganti ID misalnya (DIV002)
+                echo $exp_kir . " expired kir" . '<br>'; 
+                // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
+            }else{
+                echo $exp_kir . " ini belum expired kir" . '<br>';
+            }
+        }
+        foreach ($tgl_exp_pajak_stnk as $exp_pajak_stnk) {
+            # code...
+            if($exp_pajak_stnk < $date_now){
+                //membuat unique code generator pengganti ID misalnya (DIV002)
+                echo $exp_pajak_stnk . " expired pajak stnk" . '<br>'; 
+                // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
+            }else{
+                echo $exp_pajak_stnk . " ini belum expired pajak stnk" . '<br>';
+            }
+        }
+
+
+
+        // $tgl_exp_stnk = KendaraanModel::pluck('tgl_ex_stnk');
+        // $tgl_exp_asuransi = KendaraanModel::pluck('tgl_ex_asuransi');
+        // $tgl_exp_kir = KendaraanModel::pluck('tgl_ex_kir');
+        // $tgl_exp_pajak_stnk = KendaraanModel::pluck('tgl_ex_pajak_stnk');
+        // $arrayName = array($tgl_exp_kir, $tgl_exp_stnk, $tgl_exp_asuransi, $tgl_exp_pajak_stnk);
+        // // dd($arrayName[0]);
+        // echo $tgl_exp_asuransi;
+        // foreach ($arrayName as $value) {
+        //     # code...
+        //     foreach ($value as $val) {
+        //         # code...
+        //         if($val < $date_now){
+        //             //membuat unique code generator pengganti ID misalnya (DIV002)
+        //             echo $val . " expired" . '<br>'; 
+        //             // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
+        //         }else{
+        //             echo $val . " ini belum expired" . '<br>';
+        //         }
+        //     }
+        // }
+
+
+
 
         // $tanggal_expired = TindakanAsetModel::where('tanggal_expired', '>', $date_now)->get();
         // dd($tanggal_expired);
@@ -121,6 +196,11 @@ class HomeController extends Controller
         
         
         
+    }
+
+    public function cobaup(Request $request)
+    {
+        dd($request->file('img'));
     }
 
 }

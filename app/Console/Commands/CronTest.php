@@ -7,6 +7,11 @@ use App\Models\User;
 use App\Models\TindakanAsetModel;
 use Carbon\Carbon;
 use App\Notifications\NotifyExpiredDate;
+use App\Notifications\ExpiredAsuransiNotify;
+use App\Notifications\ExpiredKirNotify;
+use App\Notifications\ExpiredPajakStnkNotify;
+use App\Notifications\ExpiredStnkNotify;
+use App\Models\Kendaraan\KendaraanModel;
 
 class CronTest extends Command
 {
@@ -43,20 +48,76 @@ class CronTest extends Command
     {
         // $users = User::all();
         // foreach ($users as $user) {
+
             $date_now = Carbon::now();
-            $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
-            foreach ($tanggal_expired as $expired) {
-                if($expired < $date_now){
-                    \Log::info('Expired');
-                    $users = User::all();
-                    foreach ($users as $user) {
+            $tgl_exp_asuransi = KendaraanModel::pluck('tgl_ex_asuransi');
+            $tgl_exp_stnk = KendaraanModel::pluck('tgl_ex_stnk');
+            $tgl_exp_pajak_stnk = KendaraanModel::pluck('tgl_ex_pajak_stnk');
+            $tgl_exp_kir = KendaraanModel::pluck('tgl_ex_kir');
+            $user = User::all();
+            
+            foreach ($tgl_exp_asuransi as $exp_asuransi) {
+                if($exp_asuransi < $date_now){
+                    \Log::info("Expired Asuransi");
+                    foreach ($user as $user_email) {
                         # code...
-                        $user->notify(new NotifyExpiredDate($expired));
+                        $user_email->notify(new ExpiredAsuransiNotify($user_email));
                     }
                 }else{
-                    \Log::info('Not Expired');
+                    \Log::info("Not Expired asuransi");
                 }
             }
+            foreach ($tgl_exp_stnk as $exp_stnk) {
+                # code...
+                if($exp_stnk < $date_now){
+                    \Log::info("Expired STNK");
+                    foreach ($user as $user_email) {
+                        # code...
+                        $user_email->notify(new ExpiredStnkNotify($user_email));
+                    }
+                }else{
+                    \Log::info("Not Expired STNK");
+                }
+            }
+            foreach ($tgl_exp_kir as $exp_kir) {
+                # code...
+                if($exp_kir < $date_now){
+                    \Log::info("Expired KIR");
+                    foreach ($user as $user_email) {
+                        # code...
+                        $user_email->notify(new ExpiredKirNotify($user_email));
+                    }
+                }else{
+                    \Log::info("Not Expired KIR");
+                }
+            }
+            foreach ($tgl_exp_pajak_stnk as $exp_pajak_stnk) {
+                # code...
+                if($exp_pajak_stnk < $date_now){
+                    \Log::info("Expired PAJAK STNK");
+                    foreach ($user as $user_email) {
+                        # code...
+                        $user_email->notify(new ExpiredPajakStnkNotify($user_email));
+                    }
+                }else{
+                    \Log::info("Not Expired PAJAK STNK");
+                }
+            }
+
+            // $date_now = Carbon::now();
+            // $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
+            // foreach ($tanggal_expired as $expired) {
+            //     if($expired < $date_now){
+            //         \Log::info('Expired');
+            //         $users = User::all();
+            //         foreach ($users as $user) {
+            //             # code...
+            //             $user->notify(new NotifyExpiredDate($expired));
+            //         }
+            //     }else{
+            //         \Log::info('Not Expired');
+            //     }
+            // }
 
             // foreach ($tanggal_expired as $tgl => $value) {
             //     # code...

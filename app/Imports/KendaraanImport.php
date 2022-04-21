@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Kendaraan\KendaraanModel;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Carbon\Carbon;
 
 class KendaraanImport implements ToModel
 {
@@ -25,11 +26,11 @@ class KendaraanImport implements ToModel
             'atas_nama' => $row[7],
             'pemakai_kendaraan_id' => $row[8],
             'polis_asuransi' => $row[9],
-            'tgl_ex_asuransi' => $row[10],
+            'tgl_ex_asuransi' => Carbon::parse($row[10])->format('Y-m-d'),
             'asuransi_id' => $row[11],
-            'tgl_ex_stnk' => $row[12],
-            'tgl_ex_pajak_stnk' => $row[13],
-            'tgl_ex_kir' => $row[14],
+            'tgl_ex_stnk' => Carbon::parse($row[12])->format('Y-m-d'),
+            'tgl_ex_pajak_stnk' => Carbon::parse($row[13])->format('Y-m-d'),
+            'tgl_ex_kir' => Carbon::parse($row[14])->format('Y-m-d'),
             'keterangan' => $row[15],
         ]);
     }

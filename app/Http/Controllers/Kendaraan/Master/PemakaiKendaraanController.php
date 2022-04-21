@@ -22,14 +22,8 @@ class PemakaiKendaraanController extends Controller
     public function index(Request $request)
     {
         $divisi = DivisiModel::all();
-        $data = DB::table('pemakai_kendaraan')
-                ->join('divisi', 'pemakai_kendaraan.divisi_id', '=', 'divisi.id_divisi')
-                ->select([
-                    'pemakai_kendaraan.id_pemakai_kendaraan',
-                    'pemakai_kendaraan.nama_pemakai_kendaraan',
-                    'divisi.nama_divisi as nama_divisi'
-                ])
-                ->get();
+        $data = PemakaiKendaraanModel::with('divisi');
+        // dd($data->divisi->nama_divisi);
         // dd($data);
 
         if($request->ajax()){
@@ -40,7 +34,10 @@ class PemakaiKendaraanController extends Controller
                 $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id_pemakai_kendaraan.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data">Hapus</a>' ;
                 return $button;
             })
-            ->rawColumns(['action'])
+            ->addColumn('nama_divisi', function(PemakaiKendaraanModel $data){
+                return $data['divisi']['nama_divisi'];
+            })
+            ->rawColumns(['action', 'nama_divisi'])
             ->addIndexColumn()
             ->make(true);
         }

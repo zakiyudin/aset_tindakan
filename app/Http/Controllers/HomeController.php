@@ -35,6 +35,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $today = Carbon::now();
         $tipe_aset = TipeAsetModel::count();
         $divisi = DivisiModel::count();
         $aset = TindakanAsetModel::count();
@@ -50,8 +51,23 @@ class HomeController extends Controller
             ])
         ->where('tanggal_expired', '<=' ,Carbon::now())
         ->count();
+        $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
+                        ->where('tgl_ex_asuransi', '<=' ,$today)
+                        ->count();
+        $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
+                        ->where('tgl_ex_pajak_stnk', '<=' ,$today)
+                        ->count();
+        $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
+                        ->where('tgl_ex_stnk', '<=' ,$today)
+                        ->count();
+        $kir = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
+                        ->where('tgl_ex_kir', '<=' ,$today)
+                        ->count();
+        // dd($asuransi);
+        $kendaraan = KendaraanModel::count();
+        
 
-        return view('home', \compact('tipe_aset', 'divisi', 'expired_aset', 'aset'));
+        return view('home', \compact('asuransi', 'stnk', 'pajak_stnk', 'kir', 'kendaraan'));
     }
 
     public function decrypt_pass()
@@ -94,40 +110,40 @@ class HomeController extends Controller
             // echo $date_now->diffInDays($exp_asuransi). ' days' . '<br>';
             if($exp_asuransi < $date_now){
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_asuransi . " expired asuransi" . '<br>'; 
+                echo $exp_asuransi .   " expired asuransi " . '<br>'; 
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
             }else{
-                echo $exp_asuransi . " ini belum expired asuransi" . '<br>';
+                echo " ini belum expired asuransi" . '<br>';
             }
         }
         foreach ($tgl_exp_stnk as $exp_stnk) {
             # code...
             if($exp_stnk < $date_now){
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_stnk . " expired stnk" . '<br>'; 
+                echo $exp_stnk . " expired stnk " . '<br>'; 
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
             }else{
-                echo $exp_stnk . " ini belum expired stnk" . '<br>';
+                echo " ini belum expired stnk" . '<br>';
             }
         }
         foreach ($tgl_exp_kir as $exp_kir) {
             # code...
             if($exp_kir < $date_now){
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_kir . " expired kir" . '<br>'; 
+                echo $exp_kir . " expired kir " . '<br>'; 
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
             }else{
-                echo $exp_kir . " ini belum expired kir" . '<br>';
+                echo " ini belum expired kir" . '<br>';
             }
         }
         foreach ($tgl_exp_pajak_stnk as $exp_pajak_stnk) {
             # code...
             if($exp_pajak_stnk < $date_now){
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_pajak_stnk . " expired pajak stnk" . '<br>'; 
+                echo $exp_pajak_stnk . " expired pajak stnk " . '<br>'; 
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
             }else{
-                echo $exp_pajak_stnk . " ini belum expired pajak stnk" . '<br>';
+                echo " ini belum expired pajak stnk" . '<br>';
             }
         }
 

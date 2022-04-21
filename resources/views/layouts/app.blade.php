@@ -8,6 +8,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>ASET TINDAKAN | @yield('judul')</title>
+    <style>
+        *{
+            font-family: 'Roboto', sans-serif;
+            margin : 0;
+            padding : 0;
+        }
+    </style>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -55,13 +62,13 @@
                             <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('laporan.index') }}">Report Tindakan</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('tindakan-aset.index') }}">Aset</a>
-                        </li>
+                        </li> --}}
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('kendaraan.index') }}">Kendaraan</a>

@@ -42,6 +42,13 @@
             display: table-cell;
             vertical-align: inherit;
         }
+
+        tbody{
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -87,10 +94,10 @@
                     <td>{{ $item->no_mesin }}</td>
                     <td>{{ $item->tonase }}</td>
                     <td>{{ $item->atas_nama }}</td>
-                    <td>{{ $item->nama_pemakai_kendaraan }}</td>
+                    <td>{{ $item->pemakai_kendaraan['nama_pemakai_kendaraan'] }}</td>
                     <td>{{ $item->polis_asuransi }}</td>
                     <td>{{ $item->tgl_ex_asuransi }}</td>
-                    <td>{{ $item->nama_asuransi }}</td>
+                    <td>{{ $item->asuransi['nama_asuransi'] }}</td>
                     <td>{{ $item->tgl_ex_stnk }}</td>
                     <td>{{ $item->tgl_ex_pajak_stnk }}</td>
                     <td>{{ $item->tgl_ex_kir }}</td>

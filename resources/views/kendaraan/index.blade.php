@@ -23,10 +23,11 @@
             <thead>
                 <th scope="col">#</th>
                 <th scope="col">NO. POL</th>
-                <th scope="col">JENIS</ scope="col">
+                <th scope="col">JENIS</th>
+                <th scope="col">TAHUN</th>
                 <th scope="col">WARNA</th>
-                <th scope="col">NO. MESIN</th>
                 <th scope="col">NO. RANGKA</th>
+                <th scope="col">NO. MESIN</th>
                 <th scope="col">AKSI</th>
             </thead>
         </table>
@@ -42,103 +43,149 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <table width="100%" border="0">
-                <tr>
-                    <td>No. Pol</td>
-                    <td>:</td>
-                    <td id="detail_nopol"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>No. Polisi</p>
+                </div>
+                <div class="col-6">
+                    <strong><p id="detail_nopol"></p></strong>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Jenis Kendaraan</td>
-                    <td>:</td>
-                    <td id="detail_jenis_kendaraan"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Jenis Kendaraan</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_jenis_kendaraan"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Tahun Kendaraan</td>
-                    <td>:</td>
-                    <td id="detail_tahun_kendaraan"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Tahun</p>
+                </div>
+                <div class="col-6">
+                    <p id="detal_tahun_kendaraan"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Warna Kendaraan</td>
-                    <td>:</td>
-                    <td id="detail_warna_kendaraan"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Warna</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_warna_kendaraan"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>No. Rangka</td>
-                    <td>:</td>
-                    <td id="detail_no_rangka"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>No. Ranka</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_no_rangka"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>No. Mesin</td>
-                    <td>:</td>
-                    <td id="detail_no_mesin"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>No. Mesin</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_no_mesin"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Tonase</td>
-                    <td>:</td>
-                    <td id="detail_tonase"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Tonase</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_tonase"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Atas Nama</td>
-                    <td>:</td>
-                    <td id="detail_atas_nama"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Atas Nama</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_atas_nama"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Pemakai</td>
-                    <td>:</td>
-                    <td id="detail_pemakai_kendaraan"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Pemakai Kendaraan</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_pemakai_kendaraan"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Polis Asuransi</td>
-                    <td>:</td>
-                    <td id="detail_polis_asuransi"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Polis Asuransi</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_polis_asuransi"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Tgl. Exp Asuransi</td>
-                    <td>:</td>
-                    <td id="detail_tgl_ex_asuransi"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Tanggal Expired Asuransi</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_tgl_ex_asuransi"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Asuransi</td>
-                    <td>:</td>
-                    <td id="detail_asuransi"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Asuransi</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_asuransi"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Tgl. Exp STNK(5thn)</td>
-                    <td>:</td>
-                    <td id="detail_tgl_ex_stnk"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Tanggal Expired STNK(5thn)</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_tgl_ex_stnk"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Tgl. Exp Pajak STNK(1thn)</td>
-                    <td>:</td>
-                    <td id="detail_tgl_pajak_stnk"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Tanggal Expired STNK(1thn)</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_tgl_ex_pajak_stnk"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Tgl. Exp KIR</td>
-                    <td>:</td>
-                    <td id="detail_tgl_ex_kir"></td>
-                </tr>
+            <div class="row">
+                <div class="col-6">
+                    <p>Tanggal Expired KIR</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_tgl_ex_kir"></p>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Keterangan</td>
-                    <td>:</td>
-                    <td id="detail_keterangan"></td>
-                </tr>
-            </table>
+            <div class="row">
+                <div class="col-6">
+                    <p>Keterangan</p>
+                </div>
+                <div class="col-6">
+                    <p id="detail_keterangan"></p>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -149,7 +196,7 @@
 
   
 
-  <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+  {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -171,7 +218,7 @@
             </form>
       </div>
     </div>
-  </div>
+  </div> --}}
 
     <!-- Modal Tambah Data Kendaraan-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -322,8 +369,9 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'nopol', name: 'nopol'},
             {data: 'jenis_kendaraan', name: 'jenis_kendaraan'},
-            {data: 'tahun_kendaraan', name: 'tahun_kendaraan'},
             {data: 'warna_kendaraan', name: 'warna_kendaraan'},
+            {data: 'tahun_kendaraan', name: 'tahun_kendaraan'},
+            {data: 'no_rangka', name: 'no_rangka'},
             {data: 'no_mesin', name: 'no_mesin'},
             // {data: 'no_rangka', name: 'no_rangka'},
             // {data: 'tonase', name: 'tonase'},
@@ -388,6 +436,7 @@
             method: "GET",
             dataType: "JSON",
             success: function(data){
+                console.log(data);
                 $("#exampleModal").modal('show');
                 $("#tambah-kendaraan").html("Update Data")
                 $("#id_kendaraan").val(data.id_kendaraan);
@@ -455,6 +504,7 @@
             method: "GET",
             dataType: "JSON",
             success: function(data){
+                console.log(data.pemakai_kendaraan.nama_pemakai_kendaraan);
                 $(".modal-detail").modal('show');
                 $("#detail_nopol").html(data.nopol);
                 $("#detail_jenis_kendaraan").html(data.jenis_kendaraan);
@@ -464,14 +514,17 @@
                 $("#detail_no_mesin").html(data.no_mesin);
                 $("#detail_tonase").html(data.tonase);
                 $("#detail_atas_nama").html(data.atas_nama);
-                $("#detail_pemakai_kendaraan").html(data.nama_pemakai_kendaraan);
+                // $("#detail_pemakai_kendaraan").html(data.pemakai_kendaraan.nama_pemakai_kendaraan);
                 $("#detail_polis_asuransi").html(data.polis_asuransi);
                 $("#detail_tgl_ex_asuransi").html(data.tgl_ex_asuransi);
-                $("#detail_asuransi").html(data.nama_asuransi);
+                // $("#detail_asuransi").html(data.asuransi.nama_asuransi);
                 $("#detail_tgl_ex_stnk").html(data.tgl_ex_stnk);
-                $("#detail_tgl_pajak_stnk").html(data.tgl_ex_pajak_stnk);
+                $("#detail_tgl_ex_pajak_stnk").html(data.tgl_ex_pajak_stnk);
                 $("#detail_tgl_ex_kir").html(data.tgl_ex_kir);
                 $("#detail_keterangan").html(data.keterangan);
+            },
+            error: function(error){
+                console.log(error);
             }
         })
     })

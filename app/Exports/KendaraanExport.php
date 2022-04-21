@@ -18,11 +18,7 @@ class KendaraanExport implements FromView, WithStyles
 
     public function view(): View
     {
-        $data = DB::table('kendaraan')
-                    ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-                    ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-                    ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-                    ->get();
+        $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')->get();
         return view('kendaraan.export_excel', \compact('data'));
     }
 

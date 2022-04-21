@@ -4,6 +4,8 @@ namespace App\Models\Kendaraan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Kendaraan\AsuransiModel;
+use App\Models\Kendaraan\PemakaiKendaraanModel;
 
 class KendaraanModel extends Model
 {
@@ -30,4 +32,15 @@ class KendaraanModel extends Model
         'tgl_ex_kir',
         'keterangan'
     ];
+
+    public function asuransi()
+    {
+        return $this->belongsTo(AsuransiModel::class, 'asuransi_id');
+    }
+
+    public function pemakai_kendaraan()
+    {
+        return $this->belongsTo(PemakaiKendaraanModel::class, 'pemakai_kendaraan_id');
+    }
+
 }

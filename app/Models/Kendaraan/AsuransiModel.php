@@ -4,6 +4,7 @@ namespace App\Models\Kendaraan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Kendaraan\KendaraanModel;
 
 class AsuransiModel extends Model
 {
@@ -17,4 +18,9 @@ class AsuransiModel extends Model
         'no_telp_asuransi',
         'alamat_asuransi',
     ];
+
+    public function kendaraan()
+    {
+        return $this->hasOne(KendaraanModel::class, 'asuransi_id');
+    }
 }

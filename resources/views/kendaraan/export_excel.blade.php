@@ -68,10 +68,10 @@
                 <td>{{ $item->no_mesin }}</td>
                 <td>{{ $item->tonase }}</td>
                 <td>{{ $item->atas_nama }}</td>
-                <td>{{ $item->nama_pemakai_kendaraan }}</td>
+                <td>{{ $item->pemakai_kendaraan['nama_pemakai_kendaraan'] }}</td>
                 <td>{{ $item->polis_asuransi }}</td>
                 <td>{{ $item->tgl_ex_asuransi }}</td>
-                <td>{{ $item->nama_asuransi }}</td>
+                <td>{{ $item->asuransi['nama_asuransi'] }}</td>
                 <td>{{ $item->tgl_ex_stnk }}</td>
                 <td>{{ $item->tgl_ex_pajak_stnk }}</td>
                 <td>{{ $item->tgl_ex_kir }}</td>

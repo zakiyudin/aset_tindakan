@@ -31,13 +31,13 @@ class KendaraanController extends Controller
     {
         $pemakai_kendaraan = PemakaiKendaraanModel::all();
         $asuransi = AsuransiModel::all();
-        $kendaraan = DB::table('kendaraan')
-            ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-            ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-            ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-            ->get();
-
-        // dd($kendaraan);
+        // $kendaraan = DB::table('kendaraan')
+        //     ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
+        //     ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
+        //     ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
+        //     ->get();
+        $kendaraan = KendaraanModel::with('pemakai_kendaraan', 'asuransi')->get();
+;
         if($request->ajax()){
             return datatables()->of($kendaraan)
                 ->addColumn('action', function($data){
@@ -137,12 +137,8 @@ class KendaraanController extends Controller
      */
     public function show($id)
     {
-        $kendaraan = DB::table('kendaraan')
-            ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-            ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-            ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-            ->where('kendaraan.id_kendaraan', $id)
-            ->first();
+        $kendaraan = KendaraanModel::with('pemakai_kendaraan', 'asuransi')->findOrFail($id);
+        // $kendaraan = KendaraanModel::find($id);
         // dd($kendaraan);
         return response()->json($kendaraan);
     }
@@ -191,11 +187,7 @@ class KendaraanController extends Controller
     public function download_pdf()
     {
         $date_now = Carbon::now()->format('d-m-Y');
-        $data = DB::table('kendaraan')
-            ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-            ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-            ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-            ->get();
+        $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')->get();
         $pdf = PDF::loadView('kendaraan.kendaraan-pdf', compact('data', 'date_now'))
                         ->setPaper('legal', 'landscape')
                         ->setWarnings(false)
@@ -219,31 +211,18 @@ class KendaraanController extends Controller
     public function expired()
     {
         $date_now = Carbon::now();
-        $data = DB::table('kendaraan')
-            ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-            ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-            ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-            ->where('kendaraan.tgl_ex_pajak_stnk', '<=', $date_now)
-            ->get();
-        $data2 = DB::table('kendaraan')
-            ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-            ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-            ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-            ->where('kendaraan.tgl_ex_stnk', '<=', $date_now)
-            ->get();
-        $data3 = DB::table('kendaraan')
-            ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-            ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-            ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-            ->where('kendaraan.tgl_ex_asuransi', '<=', $date_now)
-            ->get();
-        $data4 = DB::table('kendaraan')
-            ->join('pemakai_kendaraan', 'kendaraan.pemakai_kendaraan_id', '=', 'pemakai_kendaraan.id_pemakai_kendaraan')
-            ->join('asuransi', 'kendaraan.asuransi_id', '=', 'asuransi.id_asuransi')
-            ->select('kendaraan.*', 'pemakai_kendaraan.nama_pemakai_kendaraan', 'asuransi.nama_asuransi')
-            ->where('kendaraan.tgl_ex_kir', '<=', $date_now)
-            ->get();
-            // dd($data);
+        $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
+                    ->where('tgl_ex_pajak_stnk', '<=', $date_now)
+                    ->get();
+        $data2 = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
+                    ->where('tgl_ex_stnk', '<=', $date_now)
+                    ->get();
+        $data3 = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
+                    ->where('tgl_ex_asuransi', '<=', $date_now)
+                    ->get();
+        $data4 = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
+                    ->where('tgl_ex_kir', '<=', $date_now)
+                    ->get();
         return view('kendaraan.expired', compact('data', 'data2', 'data3', 'data4'));
     }
 }

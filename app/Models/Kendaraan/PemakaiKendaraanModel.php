@@ -22,8 +22,14 @@ class PemakaiKendaraanModel extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function divisi(): HasMany
+
+    public function kendaraan()
     {
-        return $this->hasMany(Divisi::class);
+        return $this->hasMany(KendaraanModel::class, 'pemakai_kendaraan_id');
+    }
+
+    public function divisi()
+    {
+        return $this->belongsTo(DivisiModel::class, 'divisi_id');
     }
 }

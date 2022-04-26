@@ -514,10 +514,10 @@
                 $("#detail_no_mesin").html(data.no_mesin);
                 $("#detail_tonase").html(data.tonase);
                 $("#detail_atas_nama").html(data.atas_nama);
-                // $("#detail_pemakai_kendaraan").html(data.pemakai_kendaraan.nama_pemakai_kendaraan);
+                $("#detail_pemakai_kendaraan").html(data.pemakai_kendaraan.nama_pemakai_kendaraan);
                 $("#detail_polis_asuransi").html(data.polis_asuransi);
                 $("#detail_tgl_ex_asuransi").html(data.tgl_ex_asuransi);
-                // $("#detail_asuransi").html(data.asuransi.nama_asuransi);
+                $("#detail_asuransi").html(data.asuransi.nama_asuransi);
                 $("#detail_tgl_ex_stnk").html(data.tgl_ex_stnk);
                 $("#detail_tgl_ex_pajak_stnk").html(data.tgl_ex_pajak_stnk);
                 $("#detail_tgl_ex_kir").html(data.tgl_ex_kir);

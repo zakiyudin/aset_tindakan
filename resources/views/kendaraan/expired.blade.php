@@ -29,6 +29,9 @@
                                     <td>{{ $kendaraan->warna_kendaraan }}</td>
                                     <td>{{ $kendaraan->no_mesin }}</td>
                                     <td>{{ $kendaraan->no_rangka }}</td>
+                                    <td>
+                                        <a href="#">Tindak</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -65,6 +68,9 @@
                                     <td>{{ $kendaraan->warna_kendaraan }}</td>
                                     <td>{{ $kendaraan->no_mesin }}</td>
                                     <td>{{ $kendaraan->no_rangka }}</td>
+                                    <td>
+                                        <a href="#">Tindak</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -101,6 +107,9 @@
                                     <td>{{ $kendaraan->warna_kendaraan }}</td>
                                     <td>{{ $kendaraan->no_mesin }}</td>
                                     <td>{{ $kendaraan->no_rangka }}</td>
+                                    <td>
+                                        <a href="#">Tindak</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -137,6 +146,9 @@
                                     <td>{{ $kendaraan->warna_kendaraan }}</td>
                                     <td>{{ $kendaraan->no_mesin }}</td>
                                     <td>{{ $kendaraan->no_rangka }}</td>
+                                    <td>
+                                        <a href="#">Tindak</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

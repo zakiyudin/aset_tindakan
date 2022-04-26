@@ -79,71 +79,85 @@ class HomeController extends Controller
 
     public function send(){
 
-        // $email = auth()->user()->email;
-        // return $email;
-        // $tanggal_beli = TindakanAsetModel::where('tanggal_pembelian', '=', '2022-01-01')->first();
         $date_now = Carbon::now();
-        // $expired_date = $tanggal_beli->tanggal_expired;
 
-        // $result = $date_now > $expired_date;
-        // return $result;
-
-        // $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
-        // foreach ($tanggal_expired as $expired) {
-        //     if($expired < $date_now){
-        //         //membuat unique code generator pengganti ID misalnya (DIV002)
-        //         echo $expired . " expired" . '<br>'; 
-        //         // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
-        //     }else{
-        //         echo $expired . " ini belum expired" . '<br>';
-        //     }
-        // }
-
-        // echo $date->diffInDays($future). ' days' . '<br>';
-        // dd($datesub);
         echo '<br>';
         $tgl_exp_asuransi = KendaraanModel::pluck('tgl_ex_asuransi');
         $tgl_exp_stnk = KendaraanModel::pluck('tgl_ex_stnk');
         $tgl_exp_pajak_stnk = KendaraanModel::pluck('tgl_ex_pajak_stnk');
         $tgl_exp_kir = KendaraanModel::pluck('tgl_ex_kir');
+
+        $data = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
+                        ->where('tgl_ex_asuransi', '<=' ,$date_now)
+                        ->orWhere('tgl_ex_stnk', '<=' ,$date_now)
+                        ->orWhere('tgl_ex_pajak_stnk', '<=' ,$date_now)
+                        ->orWhere('tgl_ex_kir', '<=' ,$date_now)
+                        ->get();
+        dd($data);
+        
+        
+        foreach ($tgl_exp_asuransi as $date_exp_asuransi) {
+            # code...
+            if($date_exp_asuransi != null){
+                $date_exp = new Carbon($date_exp_asuransi);
+                // dd($date_exp);
+                \date_sub($date_exp, \date_interval_create_from_date_string('7 days'));
+                // dd($date_exp);
+                echo $date_exp->format('Y-m-d') .  '<br>';
+            }else{
+                echo 'null' . '<br>';
+            }
+        }
+
+
+        echo "------------------------------------------------- <br>";
+
         foreach ($tgl_exp_asuransi as $exp_asuransi) {
-            // echo $date_now->diffInDays($exp_asuransi). ' days' . '<br>';
+            
             if($exp_asuransi < $date_now){
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_asuransi .   " expired asuransi " . '<br>'; 
-                // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
-            }else{
-                echo " ini belum expired asuransi" . '<br>';
+                if($exp_asuransi != null){
+                    echo $exp_asuransi .   " expired asuransi " . '<br>'; 
+                }else{
+                    echo "tgl asuransi kosong" . '<br>';
+                }
             }
         }
         foreach ($tgl_exp_stnk as $exp_stnk) {
             # code...
             if($exp_stnk < $date_now){
+                if($exp_stnk != null){
+                    echo $exp_stnk .   " expired stnk " . '<br>';
+                }else{
+                    echo "tgl stnk kosong" . '<br>';
+                }
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_stnk . " expired stnk " . '<br>'; 
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
-            }else{
-                echo " ini belum expired stnk" . '<br>';
             }
         }
         foreach ($tgl_exp_kir as $exp_kir) {
             # code...
             if($exp_kir < $date_now){
+                if($exp_kir != null){
+                    echo $exp_kir . " expired kir " . '<br>'; 
+                }else{
+                    echo "tgl kir kosong" . '<br>';
+                }
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_kir . " expired kir " . '<br>'; 
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
-            }else{
-                echo " ini belum expired kir" . '<br>';
             }
         }
         foreach ($tgl_exp_pajak_stnk as $exp_pajak_stnk) {
             # code...
             if($exp_pajak_stnk < $date_now){
+                if($exp_pajak_stnk != null){
+                    echo $exp_pajak_stnk . " expired pajak stnk " . '<br>';
+                }else{
+                    echo "tgl pajak stnk kosong" . '<br>';
+                }
                 //membuat unique code generator pengganti ID misalnya (DIV002)
-                echo $exp_pajak_stnk . " expired pajak stnk " . '<br>'; 
+
                 // echo 'DIV'.str_pad(1 + 1, 3, "0", STR_PAD_LEFT) . "</br>";
-            }else{
-                echo " ini belum expired pajak stnk" . '<br>';
             }
         }
 

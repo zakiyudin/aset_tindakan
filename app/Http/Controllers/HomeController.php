@@ -93,8 +93,16 @@ class HomeController extends Controller
                         ->orWhere('tgl_ex_pajak_stnk', '<=' ,$date_now)
                         ->orWhere('tgl_ex_kir', '<=' ,$date_now)
                         ->get();
-        dd($data);
-        
+
+        foreach ($data as $item) {
+            # code...
+            if($item->tgl_ex_asuransi <= $date_now && $item->tgl_ex_asuransi != null){
+                echo "Asuransi : " . $item->tgl_ex_asuransi . "<br>"; 
+            }
+            // echo $item->nopol . "-" . $item->jenis_kendaraan . '<br>';
+        }
+
+        echo ".............................................. <br>";
         
         foreach ($tgl_exp_asuransi as $date_exp_asuransi) {
             # code...

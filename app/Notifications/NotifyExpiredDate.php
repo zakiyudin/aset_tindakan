@@ -53,30 +53,31 @@ class NotifyExpiredDate extends Notification
                     ->get();
         $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_asuransi', '<=' ,$date_now)
-                    ->get();
+                    ->get()->count();
         $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_pajak_stnk', '<=' ,$date_now)
-                    ->get();
+                    ->get()->count();
         $kir = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_kir', '<=' ,$date_now)
-                    ->get();
+                    ->get()->count();
         $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_stnk', '<=' ,$date_now)
-                    ->get();
+                    ->get()->count();
+
+        $image = asset('img/unnamed.png');
+
         return (new MailMessage)
                     ->subject('Pemberitahuan Pemakaian Kendaraan')
                     ->greeting('Hai '.$notifiable->name)
                     ->line('Berikut ini adalah daftar kendaraan yang akan kadaluarsa pada tanggal '.$date_now)
+                    ->line('Jumlah kendaraan yang akan kadaluarsa asuransi : '.$asuransi)
+                    ->line('Jumlah kendaraan yang akan kadaluarsa pajak stnk : '.$pajak_stnk)
+                    ->line('Jumlah kendaraan yang akan kadaluarsa kir : '.$kir)
+                    ->line('Jumlah kendaraan yang akan kadaluarsa stnk : '.$stnk)
                     ->line('Silahkan login ke aplikasi untuk melakukan pembayaran')
+                    ->theme('default')
                     ->action('Login', url('http://localhost:8000/login'))
-                    ->line('Terima Kasih telah menggunakan aplikasi kami');
-    
-        // return (new MailMessage)
-        //             ->subject('Pemberitahuan Kadaluarsa')
-        //             ->greeting('Hai, '.$notifiable->name)
-        //             ->line('Berikut ini adalah kendaraan yang kadaluarsa:')
-        //             ->view('emails.reminder-expired', compact('data', 'email', 'asuransi', 'pajak_stnk', 'kir', 'stnk'))
-        //             ->line('Terima kasih telah menggunakan aplikasi ini!');
+                    ->markdown('vendor.notifications.email', compact('data', 'email', 'asuransi', 'pajak_stnk', 'kir', 'stnk', 'image'));
                     
     }
 

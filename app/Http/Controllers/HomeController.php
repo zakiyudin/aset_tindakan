@@ -97,7 +97,17 @@ class HomeController extends Controller
         foreach ($data as $item) {
             # code...
             if($item->tgl_ex_asuransi <= $date_now && $item->tgl_ex_asuransi != null){
+                // echo 
                 echo "Asuransi : " . $item->tgl_ex_asuransi . "<br>"; 
+            }
+            if($item->tgl_ex_stnk <= $date_now && $item->tgl_ex_stnk != null){
+                echo "STNK : " . $item->tgl_ex_stnk . "<br>";
+            }
+            if($item->tgl_ex_pajak_stnk <= $date_now && $item->tgl_ex_pajak_stnk != null){
+                echo "Pajak STNK : " . $item->tgl_ex_pajak_stnk . "<br>";
+            }
+            if($item->tgl_ex_kir <= $date_now && $item->tgl_ex_kir != null){
+                echo "KIR : " . $item->tgl_ex_kir . "<br>";
             }
             // echo $item->nopol . "-" . $item->jenis_kendaraan . '<br>';
         }

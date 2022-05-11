@@ -53,31 +53,25 @@ class NotifyExpiredDate extends Notification
                     ->get();
         $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_asuransi', '<=' ,$date_now)
-                    ->get()->count();
+                    ->get();
         $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_pajak_stnk', '<=' ,$date_now)
-                    ->get()->count();
+                    ->get();
         $kir = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_kir', '<=' ,$date_now)
-                    ->get()->count();
+                    ->get();
         $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                     ->where('tgl_ex_stnk', '<=' ,$date_now)
-                    ->get()->count();
+                    ->get();
 
         $image = asset('img/unnamed.png');
 
         return (new MailMessage)
                     ->subject('Pemberitahuan Pemakaian Kendaraan')
                     ->greeting('Hai '.$notifiable->name)
-                    ->line('Berikut ini adalah daftar kendaraan yang akan kadaluarsa pada tanggal '.$date_now)
-                    ->line('Jumlah kendaraan yang akan kadaluarsa asuransi : '.$asuransi)
-                    ->line('Jumlah kendaraan yang akan kadaluarsa pajak stnk : '.$pajak_stnk)
-                    ->line('Jumlah kendaraan yang akan kadaluarsa kir : '.$kir)
-                    ->line('Jumlah kendaraan yang akan kadaluarsa stnk : '.$stnk)
                     ->line('Silahkan login ke aplikasi untuk melakukan pembayaran')
-                    ->theme('default')
-                    ->action('Login', url('http://localhost:8000/login'))
-                    ->markdown('vendor.notifications.email', compact('data', 'email', 'asuransi', 'pajak_stnk', 'kir', 'stnk', 'image'));
+                    ->action('Selengkapnya !!', url('http://localhost:8000/kendaraan/expired'))
+                    ->markdown('vendor.notifications.email', compact('asuransi', 'email', 'data', 'pajak_stnk', 'kir', 'stnk', 'image'));
                     
     }
 

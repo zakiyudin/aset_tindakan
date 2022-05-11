@@ -13,14 +13,14 @@
                     <div class="row justify-content-center mx-auto">
                         <div class="col-3">
                           <div class="card text-black bg-warning bg-opacity-25 mb-3" style="max-width: 18rem;">
-                            <div class="card-header">KENDARAAN</div>
+                            <div class="card-header">ASURANSI</div>
                             <div class="card-body">
                               <div class="row">
                                 <div class="col-sm-6">
                                   <img src="{{ asset('img/every-user-svgrepo-com.svg') }}" alt="">
                                 </div>
                                 <div class="col-sm-6">
-                                  <h5 class="card-title">{{ $kendaraan }}</h5>
+                                  <h5 class="card-title">{{ $asuransi }}</h5>
                                 </div>
                               </div>
                             </div>

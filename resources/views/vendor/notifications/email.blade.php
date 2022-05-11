@@ -16,10 +16,35 @@
 
 @endforeach
 
-    {{-- Body --}}
-    This is your logo 
-    ![Some option text][logo]
-    [logo]: {{ $image }} "Logo" 
+@component('mail::table')
+
+| Nopol              | Jenis                        | Tgl Asuransi                 |
+| :----------------: |:----------------------------:| :--------------------------: |
+@foreach ($asuransi as $raw)
+| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_asuransi }} |
+@endforeach
+
+
+| Nopol              | Jenis                        | Tgl Pajak STNK               |
+| :----------------: |:----------------------------:| :--------------------------: |
+@foreach ($pajak_stnk as $raw)
+| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_pajak_stnk }} |
+@endforeach
+
+
+| Nopol              | Jenis                        | Tgl STNK               |
+| :----------------: |:----------------------------:| :--------------------------: |
+@foreach ($stnk as $raw)
+| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_stnk }} |
+@endforeach
+
+
+| Nopol              | Jenis                        | Tgl KIR                      |
+| :----------------: |:----------------------------:| :--------------------------: |
+@foreach ($kir as $raw)
+| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_kir }} |
+@endforeach
+@endcomponent
 
 {{-- Action Button --}}
 @isset($actionText)

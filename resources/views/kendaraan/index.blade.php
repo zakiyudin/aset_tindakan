@@ -15,6 +15,7 @@
                     <a href="#" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#importModal" id="btn-import">Import Excel</a>
                     <a href="{{ route('kendaraan.excel') }}" class="btn btn-outline-dark">Export Excel</a>
                     <a href="{{ route('kendaraan.expired') }}" class="btn btn-outline-danger">Expired</a>
+                    <a href="{{ route('kendaraan.delete_date') }}" class="btn btn-outline-danger">fixing</a>
                 </div>
             </tr>
         </table>
@@ -33,7 +34,7 @@
         </table>
     </div>
 
-    {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -55,7 +56,7 @@
                 </form>
           </div>
         </div>
-      </div> --}}
+      </div>
 
     {{-- Modal Detail Kendaraan --}}
   <div class="modal fade modal-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -426,6 +427,46 @@
           }
       })
     }
+
+    $(".btn-fix").click(function(){
+        swal({
+            title: "Apakah anda yakin?",
+            text: "Data ini akan diubah!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "{{ route('kendaraan.delete_date') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    success: function(response){
+                        if(response.success === true){
+                            swal({
+                                title: "Sukses!",
+                                text: response.message,
+                                icon: "success",
+                                button: "Tutup",
+                            });
+                            $(".table-kendaraan").DataTable().ajax.reload();
+                            $("#exampleModal").modal("hide");
+                        }
+                    },
+                    error: function(xhr, status, error){
+                        var error = xhr.responseJSON;
+                        if($.isEmptyObject(error) == false){
+                            $.each(error.errors, function(key, value){
+                                $("."+key).text(value);
+                            });
+                        }
+                    }
+                });
+            } else {
+                swal("Data tidak jadi diubah!");
+            }
+        });
+    })
 
     $("body").on("click", ".edit", function(e){
         e.preventDefault();

@@ -205,8 +205,50 @@ class KendaraanController extends Controller
     public function import_excel(Request $request)
     {
         // dd($request->file("import_file"));
-        // Excel::import(new KendaraanImport, $request->file("import_file"));
         Excel::import(new KendaraanImport, $request->file("import_file"));
+        return back();
+    }
+
+    // method yang ubah data tgl dari 1970-01-01 menjadi null ketika setelah import
+    public function delete_date()
+    {
+        $update = KendaraanModel::where('tgl_ex_asuransi', '=', '1970-01-01')
+                                ->orWhere('tgl_ex_stnk', '=', '1970-01-01')
+                                ->orWhere('tgl_ex_pajak_stnk', '=', '1970-01-01')
+                                ->orWhere('tgl_ex_kir', '=', '1970-01-01')
+                                ->get();
+        foreach ($update as $key) {
+            # code...
+            $asuransi = $key->tgl_ex_asuransi == '1970-01-01';
+            $stnk = $key->tgl_ex_stnk == '1970-01-01';
+            $pajak = $key->tgl_ex_pajak_stnk == '1970-01-01';
+            $kir = $key->tgl_ex_kir == '1970-01-01';
+
+            if($asuransi){
+                $key->update([
+                    'tgl_ex_asuransi' => null
+                ]);
+            }
+
+            if($stnk){
+                $key->update([
+                    'tgl_ex_stnk' => null
+                ]);
+            }
+
+            if($pajak){
+                $key->update([
+                    'tgl_ex_pajak_stnk' => null
+                ]);
+            }
+
+            if($kir){
+                $key->update([
+                    'tgl_ex_kir' => null
+                ]);
+            }
+        }
+
         return back();
     }
 

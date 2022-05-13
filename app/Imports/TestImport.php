@@ -4,9 +4,10 @@ namespace App\Imports;
 
 use App\Models\Kendaraan\KendaraanModel;
 use Maatwebsite\Excel\Concerns\ToModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Carbon\Carbon;
 
-class KendaraanImport implements ToModel
+class TestImport implements ToModel
 {
     /**
     * @param array $row

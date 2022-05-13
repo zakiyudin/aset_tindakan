@@ -33,6 +33,29 @@
         </table>
     </div>
 
+    {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">TAMBAH DATA KENDARAAN</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('kendaraan.import-excel') }}" class="form-group" enctype="multipart/form-data" method="POST">
+                    @method('POST')
+                    @csrf
+                    <div class="form-group">
+                        <label for="">Import</label>
+                        <input type="file" name="import_file" class="form-control" id="import_file">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </div>
+                </form>
+          </div>
+        </div>
+      </div> --}}
 
     {{-- Modal Detail Kendaraan --}}
   <div class="modal fade modal-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -43,149 +66,151 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col-6">
-                    <p>No. Polisi</p>
+            <form class="form-group">
+                <div class="row">
+                    <div class="col-6">
+                        <p>No. Polisi</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_nopol">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <strong><p id="detail_nopol"></p></strong>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Jenis Kendaraan</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_jenis_kendaraan">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Jenis Kendaraan</p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Tahun</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_tahun_kendaraan">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p id="detail_jenis_kendaraan"></p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Warna</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_warna_kendaraan">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Tahun</p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>No. Ranka</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_no_rangka">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p id="detal_tahun_kendaraan"></p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>No. Mesin</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_no_mesin">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Warna</p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Tonase</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_tonase">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p id="detail_warna_kendaraan"></p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Atas Nama</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_atas_nama">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>No. Ranka</p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Pemakai Kendaraan</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_pemakai_kendaraan">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p id="detail_no_rangka"></p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Polis Asuransi</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_polis_asuransi">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>No. Mesin</p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Tanggal Expired Asuransi</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_tgl_ex_asuransi">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p id="detail_no_mesin"></p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Asuransi</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_asuransi">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Tonase</p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Tanggal Expired STNK(5thn)</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_tgl_ex_stnk">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p id="detail_tonase"></p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Tanggal Expired STNK(1thn)</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_tgl_ex_pajak_stnk">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Atas Nama</p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Tanggal Expired KIR</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_tgl_ex_kir">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p id="detail_atas_nama"></p>
+    
+                <div class="row">
+                    <div class="col-6">
+                        <p>Keterangan</p>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" disabled id="detail_keterangan">
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Pemakai Kendaraan</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_pemakai_kendaraan"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Polis Asuransi</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_polis_asuransi"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Tanggal Expired Asuransi</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_tgl_ex_asuransi"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Asuransi</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_asuransi"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Tanggal Expired STNK(5thn)</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_tgl_ex_stnk"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Tanggal Expired STNK(1thn)</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_tgl_ex_pajak_stnk"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Tanggal Expired KIR</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_tgl_ex_kir"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <p>Keterangan</p>
-                </div>
-                <div class="col-6">
-                    <p id="detail_keterangan"></p>
-                </div>
-            </div>
+            </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -195,30 +220,6 @@
   </div>
 
   
-
-  {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">TAMBAH DATA KENDARAAN</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="{{ route('kendaraan.import-excel') }}" class="form-group" enctype="multipart/form-data" method="POST">
-                @method('POST')
-                @csrf
-                <div class="form-group">
-                    <label for="">Import</label>
-                    <input type="file" name="import_file" class="form-control" id="import_file">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Import</button>
-                </div>
-            </form>
-      </div>
-    </div>
-  </div> --}}
 
     <!-- Modal Tambah Data Kendaraan-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -504,24 +505,26 @@
             method: "GET",
             dataType: "JSON",
             success: function(data){
-                console.log(data.pemakai_kendaraan.nama_pemakai_kendaraan);
+                const pemakai = data.pemakai_kendaraan ? data.pemakai_kendaraan.nama_pemakai_kendaraan : "-";
+                const asuransi = data.asuransi ? data.asuransi.nama_asuransi : "-";
+                console.log(data);
                 $(".modal-detail").modal('show');
-                $("#detail_nopol").html(data.nopol);
-                $("#detail_jenis_kendaraan").html(data.jenis_kendaraan);
-                $("#detail_tahun_kendaraan").html(data.tahun_kendaraan);
-                $("#detail_warna_kendaraan").html(data.warna_kendaraan);
-                $("#detail_no_rangka").html(data.no_rangka);
-                $("#detail_no_mesin").html(data.no_mesin);
-                $("#detail_tonase").html(data.tonase);
-                $("#detail_atas_nama").html(data.atas_nama);
-                $("#detail_pemakai_kendaraan").html(data.pemakai_kendaraan.nama_pemakai_kendaraan);
-                $("#detail_polis_asuransi").html(data.polis_asuransi);
-                $("#detail_tgl_ex_asuransi").html(data.tgl_ex_asuransi);
-                $("#detail_asuransi").html(data.asuransi.nama_asuransi);
-                $("#detail_tgl_ex_stnk").html(data.tgl_ex_stnk);
-                $("#detail_tgl_ex_pajak_stnk").html(data.tgl_ex_pajak_stnk);
-                $("#detail_tgl_ex_kir").html(data.tgl_ex_kir);
-                $("#detail_keterangan").html(data.keterangan);
+                $("#detail_nopol").val(data.nopol);
+                $("#detail_jenis_kendaraan").val(data.jenis_kendaraan);
+                $("#detail_tahun_kendaraan").val(data.tahun_kendaraan);
+                $("#detail_warna_kendaraan").val(data.warna_kendaraan);
+                $("#detail_no_rangka").val(data.no_rangka);
+                $("#detail_no_mesin").val(data.no_mesin);
+                $("#detail_tonase").val(data.tonase);
+                $("#detail_atas_nama").val(data.atas_nama);
+                $("#detail_pemakai_kendaraan").val(pemakai);
+                $("#detail_polis_asuransi").val(data.polis_asuransi);
+                $("#detail_tgl_ex_asuransi").val(data.tgl_ex_asuransi);
+                $("#detail_asuransi").val(asuransi);
+                $("#detail_tgl_ex_stnk").val(data.tgl_ex_stnk);
+                $("#detail_tgl_ex_pajak_stnk").val(data.tgl_ex_pajak_stnk);
+                $("#detail_tgl_ex_kir").val(data.tgl_ex_kir);
+                $("#detail_keterangan").val(data.keterangan);
             },
             error: function(error){
                 console.log(error);

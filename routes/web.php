@@ -81,7 +81,7 @@ Route::prefix('pemakai_kendaraan')->group(function(){
     Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'destroy'])->name('pemakai_kendaraan.delete');
 });
 
-Route::prefix('kendaraan')->group(function(){
+Route::prefix('kendaraan')->middleware('admin')->group(function(){
     Route::get('/', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'index'])->name('kendaraan.index');
     Route::get('/create', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'create'])->name('kendaraan.create');
     Route::post('/store', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'store'])->name('kendaraan.store');

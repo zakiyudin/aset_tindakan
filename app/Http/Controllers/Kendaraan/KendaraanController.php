@@ -13,6 +13,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Exports\KendaraanExport;
 use App\Imports\KendaraanImport;
+use App\Imports\TestImport;
 use Excel;
 
 class KendaraanController extends Controller
@@ -204,6 +205,7 @@ class KendaraanController extends Controller
     public function import_excel(Request $request)
     {
         // dd($request->file("import_file"));
+        // Excel::import(new KendaraanImport, $request->file("import_file"));
         Excel::import(new KendaraanImport, $request->file("import_file"));
         return back();
     }

@@ -69,10 +69,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('tindakan-aset.index') }}">Aset</a>
                         </li> --}}
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('kendaraan.index') }}">Kendaraan</a>
-                        </li>
+                        @can('isAdmin')                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('kendaraan.index') }}">Kendaraan</a>
+                            </li>
+                        @endcan
                         
 
                         <div class="nav-item dropdown">

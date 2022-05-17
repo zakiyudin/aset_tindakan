@@ -34,7 +34,7 @@
         </table>
     </div>
 
-    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+    {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -56,7 +56,7 @@
                 </form>
           </div>
         </div>
-      </div>
+      </div> --}}
 
     {{-- Modal Detail Kendaraan --}}
   <div class="modal fade modal-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

@@ -17,9 +17,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+// Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 Route::get('/send', [App\Http\Controllers\HomeController::class, 'send'])->name('send');
 Route::get('/pass', [App\Http\Controllers\HomeController::class, 'decrypt_pass'])->name('pass');
 Route::post('/coba', [App\Http\Controllers\HomeController::class, 'cobaup'])->name('coba-up');
@@ -81,7 +82,7 @@ Route::prefix('pemakai_kendaraan')->group(function(){
     Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'destroy'])->name('pemakai_kendaraan.delete');
 });
 
-Route::prefix('kendaraan')->middleware('admin')->group(function(){
+Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
     Route::get('/', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'index'])->name('kendaraan.index');
     Route::get('/create', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'create'])->name('kendaraan.create');
     Route::post('/store', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'store'])->name('kendaraan.store');

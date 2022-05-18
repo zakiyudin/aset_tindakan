@@ -12,6 +12,7 @@ use App\Notifications\ExpiredKirNotify;
 use App\Notifications\ExpiredPajakStnkNotify;
 use App\Notifications\ExpiredStnkNotify;
 use App\Models\Kendaraan\KendaraanModel;
+use Illuminate\Support\Facades\Gate;
 
 class CronTest extends Command
 {
@@ -62,13 +63,17 @@ class CronTest extends Command
                         ->orWhere('tgl_ex_pajak_stnk', '<=' ,$date_now)
                         ->orWhere('tgl_ex_kir', '<=' ,$date_now)
                         ->get();
+
             
             if($data !== null){
                 \Log::info('ada data yang expired');
                 foreach ($user as $user_email) {
                     # code...
-                    \Log::info('email terkirim ke '.$user_email->email);
-                    $user_email->notify(new NotifyExpiredDate($data));
+                    // send email to a few users
+                    if($user_email->role == 'admin'){
+                        \Log::info('email terkirim ke '.$user_email->email);
+                        $user_email->notify(new NotifyExpiredDate($data));
+                    }
                 }
             }else{
                 \Log::info('tidak ada data yang expired');

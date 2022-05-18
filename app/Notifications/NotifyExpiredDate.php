@@ -66,14 +66,12 @@ class NotifyExpiredDate extends Notification
 
         $image = asset('img/unnamed.png');
 
-        if(Gate::allows('isAdmin')){
             return (new MailMessage)
                         ->subject('Pemberitahuan Pemakaian Kendaraan')
                         ->greeting('Hai '.$notifiable->name)
                         ->line('Silahkan login ke aplikasi untuk melakukan pembayaran')
                         ->action('Selengkapnya !!', url('http://localhost:8000/kendaraan/expired'))
                         ->markdown('vendor.notifications.expired', compact('asuransi', 'email', 'data', 'pajak_stnk', 'kir', 'stnk', 'image'));
-        }
                     
     }
 

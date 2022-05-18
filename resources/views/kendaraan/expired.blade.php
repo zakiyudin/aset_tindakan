@@ -2,160 +2,107 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row my-5">
         <div class="col">
             <div class="card">
                 <div class="card-header">
                     <h3>Kendaraan Exp Pajak STNK</h3>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table asuransi">
                         <thead>
                             <tr>
                                 <th>No. Pol</th>
                                 <th>Jenis</th>
                                 <th>Tahun</th>
                                 <th>Warna</th>
-                                <th>No. Mesin</th>
                                 <th>No. Rangka</th>
+                                <th>No. Mesin</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($data as $kendaraan)
-                                <tr>
-                                    <td>{{ $kendaraan->nopol }}</td>
-                                    <td>{{ $kendaraan->jenis_kendaraan }}</td>
-                                    <td>{{ $kendaraan->tahun_kendaraan }}</td>
-                                    <td>{{ $kendaraan->warna_kendaraan }}</td>
-                                    <td>{{ $kendaraan->no_mesin }}</td>
-                                    <td>{{ $kendaraan->no_rangka }}</td>
-                                    <td>
-                                        <a href="#">Tindak</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row my-5">
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <h3>Kendaraan Exp STNK</h3>
+                    <h3>Kendaraan Exp Pajak STNK</h3>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table stnk">
                         <thead>
                             <tr>
                                 <th>No. Pol</th>
                                 <th>Jenis</th>
                                 <th>Tahun</th>
                                 <th>Warna</th>
-                                <th>No. Mesin</th>
                                 <th>No. Rangka</th>
+                                <th>No. Mesin</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($data2 as $kendaraan)
-                                <tr>
-                                    <td>{{ $kendaraan->nopol }}</td>
-                                    <td>{{ $kendaraan->jenis_kendaraan }}</td>
-                                    <td>{{ $kendaraan->tahun_kendaraan }}</td>
-                                    <td>{{ $kendaraan->warna_kendaraan }}</td>
-                                    <td>{{ $kendaraan->no_mesin }}</td>
-                                    <td>{{ $kendaraan->no_rangka }}</td>
-                                    <td>
-                                        <a href="#">Tindak</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Kendaraan Exp Asuransi</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No. Pol</th>
-                                <th>Jenis</th>
-                                <th>Tahun</th>
-                                <th>Warna</th>
-                                <th>No. Mesin</th>
-                                <th>No. Rangka</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data3 as $kendaraan)
-                                <tr>
-                                    <td>{{ $kendaraan->nopol }}</td>
-                                    <td>{{ $kendaraan->jenis_kendaraan }}</td>
-                                    <td>{{ $kendaraan->tahun_kendaraan }}</td>
-                                    <td>{{ $kendaraan->warna_kendaraan }}</td>
-                                    <td>{{ $kendaraan->no_mesin }}</td>
-                                    <td>{{ $kendaraan->no_rangka }}</td>
-                                    <td>
-                                        <a href="#">Tindak</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Kendaraan Exp KIR</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No. Pol</th>
-                                <th>Jenis</th>
-                                <th>Tahun</th>
-                                <th>Warna</th>
-                                <th>No. Mesin</th>
-                                <th>No. Rangka</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data4 as $kendaraan)
-                                <tr>
-                                    <td>{{ $kendaraan->nopol }}</td>
-                                    <td>{{ $kendaraan->jenis_kendaraan }}</td>
-                                    <td>{{ $kendaraan->tahun_kendaraan }}</td>
-                                    <td>{{ $kendaraan->warna_kendaraan }}</td>
-                                    <td>{{ $kendaraan->no_mesin }}</td>
-                                    <td>{{ $kendaraan->no_rangka }}</td>
-                                    <td>
-                                        <a href="#">Tindak</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+        $(".asuransi").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('kendaraan.expired') }}",
+                type: 'GET',
+            },
+            columns: [
+                { data: 'nopol', name: 'nopol' },
+                { data: 'jenis_kendaraan', name: 'jenis_kendaraan' },
+                { data: 'tahun_kendaraan', name: 'tahun_kendaraan' },
+                { data: 'warna_kendaraan', name: 'warna_kendaraan' },
+                { data: 'no_rangka', name: 'no_rangka' },
+                { data: 'no_mesin', name: 'no_mesin' },
+                { data: 'action', name: 'action'}
+            ]
+        });
+
+        $(".stnk").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('kendaraan.expired_stnk') }}",
+                type: 'GET',
+            },
+            columns: [
+                { data: 'nopol', name: 'nopol' },
+                { data: 'jenis_kendaraan', name: 'jenis_kendaraan' },
+                { data: 'tahun_kendaraan', name: 'tahun_kendaraan' },
+                { data: 'warna_kendaraan', name: 'warna_kendaraan' },
+                { data: 'no_rangka', name: 'no_rangka' },
+                { data: 'no_mesin', name: 'no_mesin' },
+                { data: 'action', name: 'action'}
+            ]
+        });
+    });
+
+    $("body").on('click', '.tindak', function(e){
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        console.log(id);
+    })
+</script>
 @endsection

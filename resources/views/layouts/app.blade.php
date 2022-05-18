@@ -88,6 +88,7 @@
                               <a class="nav-link" href="{{ route('pemakai_kendaraan.index') }}">Pemakai</a>
                             </div>
                         </div>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->

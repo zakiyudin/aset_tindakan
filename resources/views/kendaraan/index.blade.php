@@ -10,9 +10,9 @@
         <table>
             <tr>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                    <a href="#" type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" id="tambah-btn-modal">Tambah</a>
+                    <a href="#" type="button" class="btn btn-outline-success" id="tambah-btn-modal">Tambah</a>
                     <a href="{{ route('kendaraan.pdf') }}" class="btn btn-outline-warning">Download PDF</a>
-                    <a href="#" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#importModal" id="btn-import">Import Excel</a>
+                    <a href="#" type="button" class="btn btn-outline-secondary" id="btn-import">Import Excel</a>
                     <a href="{{ route('kendaraan.excel') }}" class="btn btn-outline-dark">Export Excel</a>
                     <a href="{{ route('kendaraan.expired') }}" class="btn btn-outline-danger">Expired</a>
                     <a href="{{ route('kendaraan.delete_date') }}" class="btn btn-outline-danger">fixing</a>
@@ -34,29 +34,8 @@
         </table>
     </div>
 
-    {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">TAMBAH DATA KENDARAAN</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('kendaraan.import-excel') }}" class="form-group" enctype="multipart/form-data" method="POST">
-                    @method('POST')
-                    @csrf
-                    <div class="form-group">
-                        <label for="">Import</label>
-                        <input type="file" name="import_file" class="form-control" id="import_file">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Import</button>
-                    </div>
-                </form>
-          </div>
-        </div>
-      </div> --}}
+  
+    
 
     {{-- Modal Detail Kendaraan --}}
   <div class="modal fade modal-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -342,6 +321,33 @@
     </div>
   </div>
 
+  <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">TAMBAH DATA KENDARAAN</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('kendaraan.import-excel') }}" class="form-group" enctype="multipart/form-data" method="POST">
+                @method('POST')
+                @csrf
+                <div class="form-group">
+                    <label for="">Import</label>
+                    <input type="file" name="import_file" class="form-control" id="import_file">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Import</button>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+
+
+  
+
 
   
 
@@ -391,8 +397,16 @@
     });
   });
 
+  $("#btn-import").click(function(){
+    $("#importModal").modal("show");
+  });
+
   $("#tambah-btn-modal").click(function(){
+    $("#tambah-kendaraan").val("create");
+    $("#modal-title").text("TAMBAH DATA KENDARAAN");
+    $("#tambah-kendaraan").text("Simpan");
     $("#form-tambah-edit").trigger("reset");
+    $("#exampleModal").modal("show");
   });
 
   if($("#form-tambah-edit").length > 0){
@@ -481,6 +495,8 @@
                 console.log(data);
                 $("#exampleModal").modal('show');
                 $("#tambah-kendaraan").html("Update Data")
+                $("#modal-title").text("EDIT DATA KENDARAAN");
+                $("#tambah-kendaraan").val("update");
                 $("#id_kendaraan").val(data.id_kendaraan);
                 $("#nopol").val(data.nopol);
                 $("#jenis_kendaraan").val(data.jenis_kendaraan);
@@ -548,6 +564,13 @@
             success: function(data){
                 const pemakai = data.pemakai_kendaraan ? data.pemakai_kendaraan.nama_pemakai_kendaraan : "-";
                 const asuransi = data.asuransi ? data.asuransi.nama_asuransi : "-";
+                const tonase = data.tonase ? data.tonase : "-";
+                const polis = data.polis_asuransi ? data.polis_asuransi : "-";
+                const tgl_asuransi = data.tgl_ex_asuransi ? data.tgl_ex_asuransi : "-";
+                const tgl_stnk = data.tgl_ex_stnk ? data.tgl_ex_stnk : "-";
+                const tgl_pajak_stnk = data.tgl_ex_pajak_stnk ? data.tgl_ex_pajak_stnk : "-";
+                const tgl_kir = data.tgl_ex_kir ? data.tgl_ex_kir : "-";
+
                 console.log(data);
                 $(".modal-detail").modal('show');
                 $("#detail_nopol").val(data.nopol);
@@ -556,15 +579,15 @@
                 $("#detail_warna_kendaraan").val(data.warna_kendaraan);
                 $("#detail_no_rangka").val(data.no_rangka);
                 $("#detail_no_mesin").val(data.no_mesin);
-                $("#detail_tonase").val(data.tonase);
+                $("#detail_tonase").val(tonase);
                 $("#detail_atas_nama").val(data.atas_nama);
                 $("#detail_pemakai_kendaraan").val(pemakai);
-                $("#detail_polis_asuransi").val(data.polis_asuransi);
-                $("#detail_tgl_ex_asuransi").val(data.tgl_ex_asuransi);
+                $("#detail_polis_asuransi").val(polis);
+                $("#detail_tgl_ex_asuransi").val(tgl_asuransi);
                 $("#detail_asuransi").val(asuransi);
-                $("#detail_tgl_ex_stnk").val(data.tgl_ex_stnk);
-                $("#detail_tgl_ex_pajak_stnk").val(data.tgl_ex_pajak_stnk);
-                $("#detail_tgl_ex_kir").val(data.tgl_ex_kir);
+                $("#detail_tgl_ex_stnk").val(tgl_stnk);
+                $("#detail_tgl_ex_pajak_stnk").val(tgl_pajak_stnk);
+                $("#detail_tgl_ex_kir").val(tgl_kir);
                 $("#detail_keterangan").val(data.keterangan);
             },
             error: function(error){

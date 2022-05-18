@@ -252,21 +252,42 @@ class KendaraanController extends Controller
         return back();
     }
 
-    public function expired()
+    public function expired(Request $request)
     {
         $date_now = Carbon::now();
         $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
-                    ->where('tgl_ex_pajak_stnk', '<=', $date_now)
-                    ->get();
-        $data2 = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
-                    ->where('tgl_ex_stnk', '<=', $date_now)
-                    ->get();
-        $data3 = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
-                    ->where('tgl_ex_asuransi', '<=', $date_now)
-                    ->get();
-        $data4 = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
-                    ->where('tgl_ex_kir', '<=', $date_now)
-                    ->get();
-        return view('kendaraan.expired', compact('data', 'data2', 'data3', 'data4'));
+                                ->where('tgl_ex_asuransi', '<=', $date_now)
+                                ->get();
+        if($request->ajax()){
+            return datatables()->of($data)
+                        ->addColumn('action', function($data){
+                            $button = '<button type="button" name="edit" id="'.$data->id_kendaraan.'" class="edit btn btn-outline-primary btn-sm">Tindak</button>';
+                            return $button;
+                        })
+                        ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+
+        }
+        return view('kendaraan.expired');
+    }
+
+    public function expired_stnk(Request $request){
+        $date_now = Carbon::now();
+        $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
+                                ->where('tgl_ex_stnk', '<=', $date_now)
+                                ->get();
+        if($request->ajax()){
+            return datatables()->of($data)
+                        ->addColumn('action', function($data){
+                            $button = '<button type="button" name="edit" id="'.$data->id_kendaraan.'" class="tindak btn btn-outline-primary btn-sm">Tindak</button>';
+                            return $button;
+                        })
+                        ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+
+        }
+        return view('kendaraan.expired');
     }
 }

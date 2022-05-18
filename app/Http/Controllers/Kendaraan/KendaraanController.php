@@ -202,11 +202,16 @@ class KendaraanController extends Controller
         return Excel::download(new KendaraanExport, 'kendaraan.xlsx');
     }
 
+    public function import_page()
+    {
+        return view('kendaraan.import');
+    }
+
     public function import_excel(Request $request)
     {
         // dd($request->file("import_file"));
         Excel::import(new KendaraanImport, $request->file("import_file"));
-        return back();
+        return redirect()->route('kendaraan.index')->with('success', 'Data berhasil diimport');
     }
 
     // method yang ubah data tgl dari 1970-01-01 menjadi null ketika setelah import

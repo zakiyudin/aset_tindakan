@@ -6,13 +6,19 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">
+                <button type="button" class="close" data-bs-dismiss="alert">x</button>
+                {{ session('success') }}
+            </div>
+        @endif
         <h1>Kendaraan</h1>
         <table>
             <tr>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
                     <a href="#" type="button" class="btn btn-outline-success" id="tambah-btn-modal">Tambah</a>
                     <a href="{{ route('kendaraan.pdf') }}" class="btn btn-outline-warning">Download PDF</a>
-                    <a href="#" type="button" class="btn btn-outline-secondary" id="btn-import">Import Excel</a>
+                    <a href="{{ route('kendaraan.import') }}" type="button" class="btn btn-outline-secondary">Import Excel</a>
                     <a href="{{ route('kendaraan.excel') }}" class="btn btn-outline-dark">Export Excel</a>
                     <a href="{{ route('kendaraan.expired') }}" class="btn btn-outline-danger">Expired</a>
                     <a href="{{ route('kendaraan.delete_date') }}" class="btn btn-outline-danger">fixing</a>
@@ -321,7 +327,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+  {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -343,7 +349,7 @@
             </form>
       </div>
     </div>
-  </div>
+  </div> --}}
 
 
   
@@ -570,6 +576,7 @@
                 const tgl_stnk = data.tgl_ex_stnk ? data.tgl_ex_stnk : "-";
                 const tgl_pajak_stnk = data.tgl_ex_pajak_stnk ? data.tgl_ex_pajak_stnk : "-";
                 const tgl_kir = data.tgl_ex_kir ? data.tgl_ex_kir : "-";
+                const keterangan = data.keterangan ? data.keterangan : "-";
 
                 console.log(data);
                 $(".modal-detail").modal('show');
@@ -588,7 +595,7 @@
                 $("#detail_tgl_ex_stnk").val(tgl_stnk);
                 $("#detail_tgl_ex_pajak_stnk").val(tgl_pajak_stnk);
                 $("#detail_tgl_ex_kir").val(tgl_kir);
-                $("#detail_keterangan").val(data.keterangan);
+                $("#detail_keterangan").val(keterangan);
             },
             error: function(error){
                 console.log(error);

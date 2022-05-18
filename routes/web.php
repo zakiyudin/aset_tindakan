@@ -92,6 +92,7 @@ Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
     Route::get('/pdf', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'download_pdf'])->name('kendaraan.pdf');
     Route::get('/excel', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'export_excel'])->name('kendaraan.excel');
     Route::post('/import-excel', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'import_excel'])->name('kendaraan.import-excel');
+    Route::get('/import', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'import_page'])->name('kendaraan.import');
     Route::get('/expired', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired'])->name('kendaraan.expired');
     Route::get('/expired_stnk', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired_stnk'])->name('kendaraan.expired_stnk');
     Route::get('/delete_date_null', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'delete_date'])->name('kendaraan.delete_date');

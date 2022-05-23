@@ -12,6 +12,14 @@
                 {{ session('success') }}
             </div>
         @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-bs-dismiss="alert">x</button>
+                {{ session('error') }}
+            </div>
+            
+        @endif
         <h1>Kendaraan</h1>
         <table>
             <tr>

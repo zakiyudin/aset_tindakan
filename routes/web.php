@@ -95,6 +95,8 @@ Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
     Route::get('/import', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'import_page'])->name('kendaraan.import');
     Route::get('/expired', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired'])->name('kendaraan.expired');
     Route::get('/expired_stnk', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired_stnk'])->name('kendaraan.expired_stnk');
+    Route::get('/expired_pajak_stnk', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired_pajak_stnk'])->name('kendaraan.expired_pajak_stnk');
+    Route::get('/expired_kir', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired_kir'])->name('kendaraan.expired_kir');
     Route::get('/delete_date_null', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'delete_date'])->name('kendaraan.delete_date');
 });
 

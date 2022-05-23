@@ -210,7 +210,14 @@ class KendaraanController extends Controller
     public function import_excel(Request $request)
     {
         // dd($request->file("import_file"));
-        Excel::import(new KendaraanImport, $request->file("import_file"));
+        try {
+            //code...
+            Excel::import(new KendaraanImport, $request->file("import_file"));
+        } catch (NotTypeDetectedException $e) {
+            // dd($e);
+            return back()->with($e->getMessage()->withInput());
+
+        }
         return redirect()->route('kendaraan.index')->with('success', 'Data berhasil diimport');
     }
 
@@ -266,7 +273,7 @@ class KendaraanController extends Controller
         if($request->ajax()){
             return datatables()->of($data)
                         ->addColumn('action', function($data){
-                            $button = '<button type="button" name="edit" id="'.$data->id_kendaraan.'" class="edit btn btn-outline-primary btn-sm">Tindak</button>';
+                            $button = '<button type="button" name="edit" data-id="'.$data->id_kendaraan.'" class="tindak btn btn-outline-primary btn-sm">Tindak</button>';
                             return $button;
                         })
                         ->rawColumns(['action'])
@@ -285,13 +292,51 @@ class KendaraanController extends Controller
         if($request->ajax()){
             return datatables()->of($data)
                         ->addColumn('action', function($data){
-                            $button = '<button type="button" name="edit" id="'.$data->id_kendaraan.'" class="tindak btn btn-outline-primary btn-sm">Tindak</button>';
+                            $button = '<button type="button" name="edit" data-id="'.$data->id_kendaraan.'" class="tindak btn btn-outline-primary btn-sm">Tindak</button>';
                             return $button;
                         })
                         ->rawColumns(['action'])
                         ->addIndexColumn()
                         ->make(true);
 
+        }
+        return view('kendaraan.expired');
+    }
+
+    public function expired_pajak_stnk(Request $request)
+    {
+        $date_now = Carbon::now();
+        $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
+                                ->where('tgl_ex_pajak_stnk', '<=', $date_now)
+                                ->get();
+
+        if($request->ajax()){
+            return datatables()->of($data)
+                        ->addColumn('action', function($data){
+                            $button = '<button type="button" name="edit" data-id="'.$data->id_kendaraan.'" class="tindak btn btn-outline-primary btn-sm">Tindak</button>';
+                            return $button;
+                        })
+                        ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+    }
+
+    public function expired_kir(Request $request)
+    {
+        $date_now = Carbon::now();
+        $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')
+                                ->where('tgl_ex_kir', '<=', $date_now)
+                                ->get();
+        if($request->ajax()){
+            return datatables()->of($data)
+                        ->addColumn('action', function($data){
+                            $button = '<button type="button" name="edit" data-id="'.$data->id_kendaraan.'" class="tindak btn btn-outline-primary btn-sm">Tindak</button>';
+                            return $button;
+                        })
+                        ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
         }
         return view('kendaraan.expired');
     }

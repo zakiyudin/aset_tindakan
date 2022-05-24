@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Kendaraan\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kendaraan\AsuransiModel;
+use Excel;
+use App\Imports\AsuransiImport;
 
 class AsuransiController extends Controller
 {
@@ -145,5 +147,25 @@ class AsuransiController extends Controller
             'status' => 'success',
             'message' => 'Data Asuransi Berhasil Dihapus'
         ]);
+    }
+
+    public function import_page()
+    {
+        return view('kendaraan.master.asuransi.import');
+    }
+
+    public function importExcel(Request $request)
+    {
+        // 
+        $this->validate($request, [
+            'import_file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('import_file');
+        $nama_file = rand().$file->getClientOriginalName();
+        $file->move('file_import', $nama_file);
+
+        Excel::import(new AsuransiImport, public_path('/file_import/'.$nama_file));
+        return back()->with(['success' => 'Berhasil Import Data']);
     }
 }

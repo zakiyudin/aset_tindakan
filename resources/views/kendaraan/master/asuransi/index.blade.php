@@ -25,6 +25,7 @@
                                             <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Tambah
                                               </button>
+                                              <a href="{{ route('asuransi.import') }}" class="btn btn-sm btn-success float-end">Import Data</a>
                                         </div>
                                     </div>
                                 </div>

@@ -14,7 +14,6 @@ class PemakaiKendaraanModel extends Model
     protected $primaryKey = 'id_pemakai_kendaraan';
     protected $fillable = [
         'nama_pemakai_kendaraan',
-        'divisi_id'
     ];
 
     /**

@@ -25,6 +25,8 @@
                                             <button type="button" id="tombol-tambah" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Tambah
                                               </button>
+                                              <a href="{{ route('pemakai_kendaraan.import') }}" class="btn btn-success btn-sm float-end">Import Excel</a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +36,6 @@
                                             <tr>
                                                 <th>NO.</th>
                                                 <th>PEMAKAI</th>
-                                                <th>DIVISI</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -65,13 +66,6 @@
             <label for="nama_pemakai_kendaraan" class="form-label"><b>Nama Pemakai</b></label>
             <input type="text" name="nama_pemakai_kendaraan" id="nama_pemakai_kendaraan" class="form-control">
 
-            <label for="divisi_id" class="form-label"><b>Divisi</b></label>
-            <select name="divisi_id" id="divisi_id" class="form-control">
-                <option value="">.:: Pilih Divisi ::.</option>
-                @foreach ($divisi as $item)
-                    <option value="{{ $item->id_divisi }}">{{ $item->nama_divisi }}</option>
-                @endforeach
-            </select>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -98,7 +92,6 @@
             columns: [
                 { data: 'id_pemakai_kendaraan', name: 'id_pemakai_kendaraan' },
                 { data: 'nama_pemakai_kendaraan', name: 'nama_pemakai_kendaraan' },
-                { data: 'nama_divisi', name: 'nama_divisi' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });
@@ -164,7 +157,6 @@
                 $('#form-tambah-edit')[0].reset();
                 $('#id_pemakai_kendaraan').val(data.id_pemakai_kendaraan);
                 $('#nama_pemakai_kendaraan').val(data.nama_pemakai_kendaraan);
-                $('#divisi_id').val(data.divisi_id);
                 $("#exampleModal").modal('show');
             },
             error: function(data){

@@ -210,6 +210,10 @@ class KendaraanController extends Controller
     public function import_excel(Request $request)
     {
         // dd($request->file("import_file"));
+
+        $this->validate($request, [
+            'import_file' => 'required|mimes:xls,xlsx'
+        ]);
         try {
             //code...
             Excel::import(new KendaraanImport, $request->file("import_file"));

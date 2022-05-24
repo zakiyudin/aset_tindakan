@@ -47,8 +47,6 @@ class CronTest extends Command
      */
     public function handle()
     {
-        // $users = User::all();
-        // foreach ($users as $user) {
 
             $date_now = Carbon::now();
             $tgl_exp_asuransi = KendaraanModel::pluck('tgl_ex_asuransi');
@@ -78,96 +76,6 @@ class CronTest extends Command
             }else{
                 \Log::info('tidak ada data yang expired');
             }
-            
-            // foreach ($tgl_exp_asuransi as $exp_asuransi) {
-            //     if($exp_asuransi < $date_now){
-            //         if($exp_asuransi != null){
-            //             \Log::info("Expired Asuransi");
-            //             foreach ($user as $user_email) {
-            //                 # code...
-            //                 $user_email->notify(new ExpiredAsuransiNotify($user_email));
-            //             }
-            //         }else{
-            //             \Log::info("Tgl Asuransi Kosong");
-            //         }
-            //     }
-            // }
-            // foreach ($tgl_exp_stnk as $exp_stnk) {
-            //     # code...
-            //     if($exp_stnk < $date_now){
-            //         if($exp_stnk != null){
-            //             \Log::info("Expired STNK");
-            //             foreach ($user as $user_email) {
-            //                 # code...
-            //                 $user_email->notify(new ExpiredStnkNotify($user_email));
-            //             }
-            //         }else{
-            //             \Log::info("Tgl STNK Kosong");
-            //         }
-            //     }
-            // }
-            // foreach ($tgl_exp_kir as $exp_kir) {
-            //     # code...
-            //     if($exp_kir < $date_now){
-            //         if($exp_kir != null){
-            //             \Log::info("Expired KIR");
-            //             foreach ($user as $user_email) {
-            //                 # code...
-            //                 $user_email->notify(new ExpiredKirNotify($user_email));
-            //             }
-            //         }else{
-            //             \Log::info("Tgl KIR Kosong");
-            //         }
-            //     }
-            // }
-            // foreach ($tgl_exp_pajak_stnk as $exp_pajak_stnk) {
-            //     # code...
-            //     if($exp_pajak_stnk < $date_now){
-            //         if($exp_pajak_stnk != null){
-            //             \Log::info("Expired PAJAK STNK");
-            //             foreach ($user as $user_email) {
-            //                 # code...
-            //                 $user_email->notify(new ExpiredPajakStnkNotify($user_email));
-            //             }
-            //         }else{
-            //             \Log::info("Tgl PAJAK STNK Kosong");
-            //         }
-            //     }
-            // }
-
-            // $date_now = Carbon::now();
-            // $tanggal_expired = TindakanAsetModel::pluck('tanggal_expired');
-            // foreach ($tanggal_expired as $expired) {
-            //     if($expired < $date_now){
-            //         \Log::info('Expired');
-            //         $users = User::all();
-            //         foreach ($users as $user) {
-            //             # code...
-            //             $user->notify(new NotifyExpiredDate($expired));
-            //         }
-            //     }else{
-            //         \Log::info('Not Expired');
-            //     }
-            // }
-
-            // foreach ($tanggal_expired as $tgl => $value) {
-            //     # code...
-            //     // return $value->tanggal_expired;
-            //     if($value->tanggal_pembelian < $value->tanggal_expired){
-            //         \Log::info("expired");
-            //         $users = User::all();
-            //         foreach ($users as $user) {
-            //             # code...
-            //             $user->notify(new NotifyExpiredDate($value));
-            //         }
-            //     }else{
-            //         \Log::info("not expired");
-            //     }
-            // }
-           
-            
-        
-        // }
         
         \Log::info('Cron Is Working');
     }

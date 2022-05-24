@@ -73,6 +73,8 @@ Route::prefix('asuransi')->group(function(){
     Route::post('/store', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'store'])->name('asuransi.store');
     Route::get('/{id}/edit', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'edit'])->name('asuransi.edit');
     Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'destroy'])->name('asuransi.delete');
+    Route::get('/import', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'import_page'])->name('asuransi.import');
+    Route::post('/import_excel', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'importExcel'])->name('asuransi.import-excel');
 });
 
 Route::prefix('pemakai_kendaraan')->group(function(){
@@ -80,6 +82,8 @@ Route::prefix('pemakai_kendaraan')->group(function(){
     Route::post('/store', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'store'])->name('pemakai_kendaraan.store');
     Route::get('/{id}/edit', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'edit'])->name('pemakai_kendaraan.edit');
     Route::delete('/{id}/delete', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'destroy'])->name('pemakai_kendaraan.delete');
+    Route::get('/import', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'import_page'])->name('pemakai_kendaraan.import');
+    Route::post('/import_excel', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'import'])->name('pemakai_kendaraan.import-excel');
 });
 
 Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){

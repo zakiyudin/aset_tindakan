@@ -19,6 +19,15 @@ class KendaraanExport implements FromView, WithStyles
     public function view(): View
     {
         $data = KendaraanModel::with('pemakai_kendaraan', 'asuransi')->get();
+        foreach ($data as $key) {
+            # code...
+            // if nama_pemakai_kendaraan == null
+            if($key->pemakai_kendaraan_id == null){
+                $key->nama_pemakai_kendaraan->update([
+                    'nama_pemakai_kendaraan' => '-',
+                ]);
+            }
+        }
         return view('kendaraan.export_excel', \compact('data'));
     }
 

@@ -8,9 +8,12 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\Importable;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use App\Models\Kendaraan\AsuransiModel;
+use App\Models\Kendaraan\PemakaiKendaraanModel;
 
 class KendaraanImport implements ToModel
 {
+
     /**
     * @param array $row
     *
@@ -18,6 +21,8 @@ class KendaraanImport implements ToModel
     */
     public function model(array $row)
     {
+        $asuransi = AsuransiModel::where('id_asuransi', $row[11])->first();
+        $pemakai_kendaraan = PemakaiKendaraanModel::where('id_pemakai_kendaraan', $row[8])->first();
         return new KendaraanModel([
             'nopol' => $row[0],
             'jenis_kendaraan' => $row[1],
@@ -31,7 +36,6 @@ class KendaraanImport implements ToModel
             'polis_asuransi' => $row[9],
             'tgl_ex_asuransi' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])) ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10]))->format('Y-m-d') : null,
             'asuransi_id' => $row[11],
-            // 'tgl_ex_stnk' => $row[12],
             'tgl_ex_stnk' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])) ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12]))->format('Y-m-d') : null,
             'tgl_ex_pajak_stnk' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[13])) ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[13]))->format('Y-m-d') : null,
             'tgl_ex_kir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[14])) ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[14]))->format('Y-m-d') : null,

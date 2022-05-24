@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Kendaraan\PemakaiKendaraanModel;
 use App\Models\DivisiModel;
 use DB;
+use Excel;
+use App\Imports\PemakaiImport;
+use App\Imports\ImportSheets;
 
 class PemakaiKendaraanController extends Controller
 {
@@ -21,8 +24,7 @@ class PemakaiKendaraanController extends Controller
      */
     public function index(Request $request)
     {
-        $divisi = DivisiModel::all();
-        $data = PemakaiKendaraanModel::with('divisi');
+        $data = PemakaiKendaraanModel::all();
         // dd($data->divisi->nama_divisi);
         // dd($data);
 
@@ -34,15 +36,12 @@ class PemakaiKendaraanController extends Controller
                 $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id_pemakai_kendaraan.'" data-original-title="Hapus" class="hapus btn btn-danger btn-sm hapus_data">Hapus</a>' ;
                 return $button;
             })
-            ->addColumn('nama_divisi', function(PemakaiKendaraanModel $data){
-                return $data['divisi']['nama_divisi'];
-            })
             ->rawColumns(['action', 'nama_divisi'])
             ->addIndexColumn()
             ->make(true);
         }
 
-        return view('kendaraan.master.pemakai_kendaraan.index', compact('divisi'));
+        return view('kendaraan.master.pemakai_kendaraan.index');
     }
 
     /**
@@ -68,7 +67,6 @@ class PemakaiKendaraanController extends Controller
             if(empty($request->id_pemakai_kendaraan)){
                 $pemakai = new PemakaiKendaraanModel;
                 $pemakai->nama_pemakai_kendaraan = $request->nama_pemakai_kendaraan;
-                $pemakai->divisi_id = $request->divisi_id;
                 $pemakai->save();
                 return response()->json([
                     'status' => 'success',
@@ -77,7 +75,6 @@ class PemakaiKendaraanController extends Controller
             }else{
                 $pemakai = PemakaiKendaraanModel::find($request->id_pemakai_kendaraan);
                 $pemakai->nama_pemakai_kendaraan = $request->nama_pemakai_kendaraan;
-                $pemakai->divisi_id = $request->divisi_id;
                 $pemakai->save();
                 return response()->json([
                     'status' => 'success',
@@ -141,5 +138,24 @@ class PemakaiKendaraanController extends Controller
             'status' => 'success',
             'pesan' => 'Berhasil Menghapus Data'
         ]);
+    }
+
+    public function import_page()
+    {
+        return view('kendaraan.master.pemakai_kendaraan.import');
+    }
+
+    public function import(Request $request)
+    {
+        $this->validate($request, [
+            'import_file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('import_file');
+        $nama_file = rand().$file->getClientOriginalName();
+        $file->move('file_import', $nama_file);
+
+        Excel::import(new PemakaiImport, public_path('/file_import/'.$nama_file));
+        return back()->with(['success' => 'Berhasil Import Data']);
     }
 }

@@ -162,7 +162,7 @@
         var id_asuransi = $(this).data("id");
         // console.log(id);
         $.ajax({
-            url: "/asuransi/" +id_asuransi+ "/edit",
+            url: "{{ url('asuransi') }}" + "/" + id_asuransi + "/edit",
             method: "GET",
             data: {id_asuransi: id_asuransi},
             dataType: "json",

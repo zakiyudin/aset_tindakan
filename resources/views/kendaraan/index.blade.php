@@ -502,7 +502,7 @@
         console.log(id);
 
         $.ajax({
-            url: "/kendaraan/"+id+"/edit",
+            url: "{{ url('kendaraan') }}" + '/' + id + "/edit",
             method: "GET",
             dataType: "JSON",
             success: function(data){
@@ -572,7 +572,7 @@
         // console.log(id);
 
         $.ajax({
-            url: "/kendaraan/"+id+"/detail",
+            url: "{{ url('kendaraan') }}" + '/' + id + "/detail",
             method: "GET",
             dataType: "JSON",
             success: function(data){

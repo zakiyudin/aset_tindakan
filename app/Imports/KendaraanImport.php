@@ -21,8 +21,6 @@ class KendaraanImport implements ToModel
     */
     public function model(array $row)
     {
-        $asuransi = AsuransiModel::where('id_asuransi', $row[11])->first();
-        $pemakai_kendaraan = PemakaiKendaraanModel::where('id_pemakai_kendaraan', $row[8])->first();
         return new KendaraanModel([
             'nopol' => $row[0],
             'jenis_kendaraan' => $row[1],
@@ -43,43 +41,6 @@ class KendaraanImport implements ToModel
         ]);
     }
 
-    // public function rules(): array
-    // {
-    //     // $asuransi = ''
-    //     return [
-    //         'nopol' => 'required',
-    //         'jenis_kendaraan' => 'required',
-    //         'tahun_kendaraan' => 'required',
-    //         'warna_kendaraan' => 'required',
-    //         'no_rangka' => 'required',
-    //         'no_mesin' => 'required',
-    //         'tonase' => 'required',
-    //         'atas_nama' => 'required',
-    //         'pemakai_kendaraan_id' => 'required',
-    //         'polis_asuransi' => 'required',
-    //         'tgl_ex_asuransi' => function($atrr, $value, $onFailure) {
-    //             if ($value == null) {
-    //                 $onFailure('Tgl. Ex. Asuransi tidak boleh kosong');
-    //             }
-    //         },
-    //         'asuransi_id' => 'required',
-    //         'tgl_ex_stnk' => function($atrr, $value, $onFailure) {
-    //             if ($value == null) {
-    //                 $onFailure('Tgl. Ex STNK tidak boleh kosong');
-    //             }
-    //         },
-    //         'tgl_ex_pajak_stnk' => function($atrr, $value, $onFailure) {
-    //             if ($value == null) {
-    //                 $onFailure('Tgl. Ex Pajak STNK tidak boleh kosong');
-    //             }
-    //         },
-    //         'tgl_ex_kir' => function($atrr, $value, $onFailure) {
-    //             if ($value == null) {
-    //                 $onFailure('Tgl. Ex Kir tidak boleh kosong');
-    //             }
-    //         },
-    //         'keterangan' => 'required',
-    //     ];
-    // }
+    
 
 }

@@ -147,7 +147,7 @@
         console.log(id_pemakai_kendaraan);
         
         $.ajax({
-            url: "/pemakai_kendaraan/"+id_pemakai_kendaraan+"/edit",
+            url: "{{ url('pemakai_kendaraan') }}" + "/" +id_pemakai_kendaraan+"/edit",
             method: "GET",
             dataType: "JSON",
             data: {

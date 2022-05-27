@@ -82,8 +82,8 @@
                             </li>
                           
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                              <a class="nav-link" href="{{ route('divisi.index') }}">Divisi</a>
-                              <a class="nav-link" href="{{ route('tipe-aset.index') }}">Tipe Aset</a>
+                              {{-- <a class="nav-link" href="{{ route('divisi.index') }}">Divisi</a>
+                              <a class="nav-link" href="{{ route('tipe-aset.index') }}">Tipe Aset</a> --}}
                               <a class="nav-link" href="{{ route('asuransi.index') }}">Asuransi</a>
                               <a class="nav-link" href="{{ route('pemakai_kendaraan.index') }}">Pemakai</a>
                             </div>

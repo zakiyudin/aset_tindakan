@@ -70,7 +70,7 @@ class NotifyExpiredDate extends Notification
                         ->subject('Pemberitahuan Pemakaian Kendaraan')
                         ->greeting('Hai '.$notifiable->name)
                         ->line('Silahkan login ke aplikasi untuk melakukan pembayaran')
-                        ->action('Selengkapnya !!', url('http://localhost:8000/kendaraan/expired'))
+                        ->action('Selengkapnya !!', route('kendaraan.expired'))
                         ->markdown('vendor.notifications.expired', compact('asuransi', 'email', 'data', 'pajak_stnk', 'kir', 'stnk', 'image'));
                     
     }

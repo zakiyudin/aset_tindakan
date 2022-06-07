@@ -68,7 +68,7 @@ Route::prefix('tindakan')->group(function(){
     Route::post('/store', [App\Http\Controllers\TindakanController::class, 'store'])->name('tindakan.store');
 });
 
-Route::prefix('asuransi')->group(function(){
+Route::prefix('asuransi')->middleware(['admin', 'verified'])->group(function(){
     Route::get('/', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'index'])->name('asuransi.index');
     Route::post('/store', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'store'])->name('asuransi.store');
     Route::get('/{id}/edit', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'edit'])->name('asuransi.edit');
@@ -77,7 +77,7 @@ Route::prefix('asuransi')->group(function(){
     Route::post('/import_excel', [App\Http\Controllers\Kendaraan\Master\AsuransiController::class, 'importExcel'])->name('asuransi.import-excel');
 });
 
-Route::prefix('pemakai_kendaraan')->group(function(){
+Route::prefix('pemakai_kendaraan')->middleware(['admin', 'verified'])->group(function(){
     Route::get('/', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'index'])->name('pemakai_kendaraan.index');
     Route::post('/store', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'store'])->name('pemakai_kendaraan.store');
     Route::get('/{id}/edit', [App\Http\Controllers\Kendaraan\Master\PemakaiKendaraanController::class, 'edit'])->name('pemakai_kendaraan.edit');

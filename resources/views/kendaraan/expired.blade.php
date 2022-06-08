@@ -18,6 +18,7 @@
                                 <th>Warna</th>
                                 <th>No. Rangka</th>
                                 <th>No. Mesin</th>
+                                <th>Tgl Ex Asuransi</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -44,6 +45,7 @@
                                 <th>Warna</th>
                                 <th>No. Rangka</th>
                                 <th>No. Mesin</th>
+                                <th>Tgl Ex STNK</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -71,6 +73,7 @@
                                 <th>Warna</th>
                                 <th>No. Rangka</th>
                                 <th>No. Mesin</th>
+                                <th>Tgl Ex Pajak STNK</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -97,6 +100,7 @@
                                 <th>Warna</th>
                                 <th>No. Rangka</th>
                                 <th>No. Mesin</th>
+                                <th>Tgl Ex KIR</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -129,6 +133,7 @@
                 { data: 'warna_kendaraan', name: 'warna_kendaraan' },
                 { data: 'no_rangka', name: 'no_rangka' },
                 { data: 'no_mesin', name: 'no_mesin' },
+                { data: 'tgl_ex_asuransi', name : 'tgl_asuransi' },
                 { data: 'action', name: 'action'}
             ]
         });
@@ -147,6 +152,7 @@
                 { data: 'warna_kendaraan', name: 'warna_kendaraan' },
                 { data: 'no_rangka', name: 'no_rangka' },
                 { data: 'no_mesin', name: 'no_mesin' },
+                { data: 'tgl_ex_stnk', name: 'tgl_ex_stnk' },
                 { data: 'action', name: 'action'}
             ]
         });
@@ -165,6 +171,7 @@
                 { data: 'warna_kendaraan', name: 'warna_kendaraan' },
                 { data: 'no_rangka', name: 'no_rangka' },
                 { data: 'no_mesin', name: 'no_mesin' },
+                { data: 'tgl_ex_pajak_stnk', name: 'tgl_ex_pajak_stnk' },
                 { data: 'action', name: 'action'}
             ]
         });
@@ -183,6 +190,7 @@
                 { data: 'warna_kendaraan', name: 'warna_kendaraan' },
                 { data: 'no_rangka', name: 'no_rangka' },
                 { data: 'no_mesin', name: 'no_mesin' },
+                { data: 'tgl_ex_kir', name: 'tgl_ex_kir' },
                 { data: 'action', name: 'action'}
             ]
         })

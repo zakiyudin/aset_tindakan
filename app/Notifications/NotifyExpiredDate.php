@@ -45,33 +45,18 @@ class NotifyExpiredDate extends Notification
     {
         $email = $notifiable->email;
         $date_now = Carbon::now();
-        $data = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                    ->where('tgl_ex_asuransi', '<=' ,$date_now)
-                    ->orWhere('tgl_ex_stnk', '<=' ,$date_now)
-                    ->orWhere('tgl_ex_pajak_stnk', '<=' ,$date_now)
-                    ->orWhere('tgl_ex_kir', '<=' ,$date_now)
-                    ->get();
-        $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                    ->where('tgl_ex_asuransi', '<=' ,$date_now)
-                    ->get();
-        $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                    ->where('tgl_ex_pajak_stnk', '<=' ,$date_now)
-                    ->get();
-        $kir = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                    ->where('tgl_ex_kir', '<=' ,$date_now)
-                    ->get();
-        $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                    ->where('tgl_ex_stnk', '<=' ,$date_now)
-                    ->get();
+        $dateNowParse = Carbon::parse($date_now);
 
-        $image = asset('img/unnamed.png');
+        $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
+        $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
+        $kir = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
+        $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
 
             return (new MailMessage)
                         ->subject('Pemberitahuan Pemakaian Kendaraan')
                         ->greeting('Hai '.$notifiable->name)
-                        ->line('Silahkan login ke aplikasi untuk melakukan pembayaran')
                         ->action('Selengkapnya !!', route('kendaraan.expired'))
-                        ->markdown('vendor.notifications.expired', compact('asuransi', 'email', 'data', 'pajak_stnk', 'kir', 'stnk', 'image'));
+                        ->markdown('vendor.notifications.expired', compact('asuransi', 'email', 'pajak_stnk', 'kir', 'stnk'));
                     
     }
 

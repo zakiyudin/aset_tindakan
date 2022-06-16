@@ -1,50 +1,84 @@
+@inject('carbon', 'Carbon\Carbon')
 @component('mail::message')
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}
-@else
-@if ($level === 'error')
-# @lang('Whoops!')
-@else
-# @lang('Hello!')
-@endif
 @endif
 
-{{-- Intro Lines --}}
-@foreach ($introLines as $line)
-{{ $line }}
+@if (! empty($introLine))
+    {{ $introLine }}
+@else
+    
+@endif
 
-@endforeach
-
-@component('mail::table')
-
-| Nopol              | Jenis                        | Tgl Asuransi                 |
-| :----------------: |:----------------------------:| :--------------------------: |
+<h2>Asuransi</h2>
+<br>
 @foreach ($asuransi as $raw)
-| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_asuransi }} |
+@php
+$dateNow = $carbon->parse($carbon->now());
+$tglExAsuransi = $carbon->parse($raw->tgl_ex_asuransi);
+$diffDaysAsuransi = $tglExAsuransi->diffInDays($dateNow);
+$dateFormat = $carbon->parse($raw->tgl_ex_asuransi)->format('d-m-Y');
+@endphp
+@if ($diffDaysAsuransi <= 50 && $tglExAsuransi >= $dateNow && $raw->tgl_ex_asuransi != null)
+<ul>
+<li>
+{{ $raw->nopol }} - {{ $raw->jenis_kendaraan }} dengan tanggal asuransi {{ $raw->tgl_ex_asuransi }} akan berakhir dalam {{ $diffDaysAsuransi }}
+</li>
+</ul>
+@endif
 @endforeach
 
-
-| Nopol              | Jenis                        | Tgl Pajak STNK               |
-| :----------------: |:----------------------------:| :--------------------------: |
+<h2>Pajak STNK(1thn)</h2>
 @foreach ($pajak_stnk as $raw)
-| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_pajak_stnk }} |
+@php
+$dateNow = $carbon->parse($carbon->now());
+$tglPajakStnk = $carbon->parse($raw->tgl_ex_pajak_stnk);
+$diffDaysPajakStnk = $tglPajakStnk->diffInDays($dateNow);
+$dateFormat = $carbon->parse($raw->tgl_ex_pajak_stnk)->format('d-m-Y');
+@endphp
+@if ($diffDaysPajakStnk <= 50 && $tglPajakStnk >= $dateNow && $raw->tgl_ex_pajak_stnk != null)
+<ul>
+<li>
+{{ $raw->nopol }} - {{ $raw->jenis_kendaraan }} dengan tanggal Pajak {{ $dateFormat }} akan berakhir dalam {{ $diffDaysPajakStnk }} hari.
+</li>
+</ul>
+@endif
 @endforeach
 
-
-| Nopol              | Jenis                        | Tgl STNK               |
-| :----------------: |:----------------------------:| :--------------------------: |
+<h2>Pajak STNK(5thn)</h2>
 @foreach ($stnk as $raw)
-| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_stnk }} |
+@php
+$dateNow = $carbon->parse($carbon->now());
+$tglStnk = $carbon->parse($raw->tgl_ex_stnk);
+$diffDayStnk = $tglStnk->diffInDays($dateNow);
+$dateFormat = $carbon->parse($raw->tgl_ex_stnk)->format('d-m-Y');
+@endphp
+@if ($diffDayStnk <= 50 && $tglStnk >= $dateNow && $raw->tgl_ex_stnk != null)
+<ul>
+<li>
+{{ $raw->nopol }} - {{ $raw->jenis_kendaraan }} dengan tanggal Pajak STNK 5thn {{ $dateFormat }} akan berakhir dalam {{ $diffDayStnk }} hari.
+</li>
+</ul>
+@endif
 @endforeach
 
-
-| Nopol              | Jenis                        | Tgl KIR                      |
-| :----------------: |:----------------------------:| :--------------------------: |
+<h2>Pajak KIR(6bln)</h2>
 @foreach ($kir as $raw)
-| {{ $raw->nopol }} | {{ $raw->jenis_kendaraan }} | {{ $raw->tgl_ex_kir }} |
+@php
+$dateNow = $carbon->parse($carbon->now());
+$tglKir = $carbon->parse($raw->tgl_ex_kir);
+$diffDaysKir = $tglKir->diffInDays($dateNow);
+$dateFormat = $carbon->parse($raw->tgl_ex_kir)->format('d-m-Y');
+@endphp
+@if ($diffDaysKir <= 50 && $tglKir >= $dateNow && $raw->tgl_ex_kir != null)
+<ul>
+<li>
+{{ $raw->nopol }} - {{ $raw->jenis_kendaraan }} dengan tanggal KIR {{ $dateFormat }} akan berakhir dalam {{ $diffDaysKir }} hari.
+</li>
+</ul>
+@endif
 @endforeach
-@endcomponent
 
 {{-- Action Button --}}
 @isset($actionText)

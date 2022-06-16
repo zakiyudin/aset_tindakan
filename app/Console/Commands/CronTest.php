@@ -55,12 +55,13 @@ class CronTest extends Command
             $tgl_exp_kir = KendaraanModel::pluck('tgl_ex_kir');
             $user = User::all();
 
-            $data = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                        ->where('tgl_ex_asuransi', '<=' ,$date_now)
-                        ->orWhere('tgl_ex_stnk', '<=' ,$date_now)
-                        ->orWhere('tgl_ex_pajak_stnk', '<=' ,$date_now)
-                        ->orWhere('tgl_ex_kir', '<=' ,$date_now)
-                        ->get();
+            // $data = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
+            //             ->where('tgl_ex_asuransi', '<=' ,$date_now)
+            //             ->orWhere('tgl_ex_stnk', '<=' ,$date_now)
+            //             ->orWhere('tgl_ex_pajak_stnk', '<=' ,$date_now)
+            //             ->orWhere('tgl_ex_kir', '<=' ,$date_now)
+            //             ->get();
+            $data = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
 
             
             if($data !== null){

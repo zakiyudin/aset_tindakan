@@ -104,6 +104,13 @@ Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
     Route::get('/delete_date_null', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'delete_date'])->name('kendaraan.delete_date');
 });
 
+Route::prefix('kendaraan_expired')->middleware(['admin', 'verified'])->group(function(){
+    Route::get('/asuransi_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'asuransi_expired'])->name('kendaraan_expired.asuransi_expired');
+    Route::get('/pajak_stnk_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'pajak_stnk_expired'])->name('kendaraan_expired.pajak_stnk_expired');
+    Route::get('/stnk_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'stnk_expired'])->name('kendaraan_expired.stnk_expired');
+    Route::get('/kir_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'kir_expired'])->name('kendaraan_expired.kir_expired');
+});
+
 
 
 // Route::prefix('master')->group(function(){

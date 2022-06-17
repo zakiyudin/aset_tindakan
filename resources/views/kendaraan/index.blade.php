@@ -28,7 +28,7 @@
                     <a href="{{ route('kendaraan.pdf') }}" class="btn btn-outline-warning">Download PDF</a>
                     <a href="{{ route('kendaraan.import') }}" type="button" class="btn btn-outline-secondary">Import Excel</a>
                     <a href="{{ route('kendaraan.excel') }}" class="btn btn-outline-dark">Export Excel</a>
-                    <a href="{{ route('kendaraan.expired') }}" class="btn btn-outline-danger">Expired</a>
+                    {{-- <a href="{{ route('kendaraan.expired') }}" class="btn btn-outline-danger">Expired</a> --}}
                     <a href="{{ route('kendaraan.delete_date') }}" class="btn btn-outline-danger">fixing</a>
                 </div>
             </tr>

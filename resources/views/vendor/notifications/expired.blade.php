@@ -20,7 +20,7 @@ $tglExAsuransi = $carbon->parse($raw->tgl_ex_asuransi);
 $diffDaysAsuransi = $tglExAsuransi->diffInDays($dateNow);
 $dateFormat = $carbon->parse($raw->tgl_ex_asuransi)->format('d-m-Y');
 @endphp
-@if ($diffDaysAsuransi <= 50 && $tglExAsuransi >= $dateNow && $raw->tgl_ex_asuransi != null)
+@if ($diffDaysAsuransi <= 50 && $tglExAsuransi <= $dateNow && $raw->tgl_ex_asuransi != null)
 <ul>
 <li>
 {{ $raw->nopol }} - {{ $raw->jenis_kendaraan }} dengan tanggal asuransi {{ $raw->tgl_ex_asuransi }} akan berakhir dalam {{ $diffDaysAsuransi }}

@@ -74,6 +74,22 @@
                                 <a class="nav-link" href="{{ route('kendaraan.index') }}">Kendaraan</a>
                             </li>
                         @endcan
+                        @can('isAdmin')    
+                        <div class="nav-item dropdown">
+                            <li class="nav-link" id="dropDownExpired" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Kendaraan Expired
+                            </li>
+                        
+                            <div class="dropdown-menu" aria-labelledby="dropDownExpired">
+                            {{-- <a class="nav-link" href="{{ route('divisi.index') }}">Divisi</a>
+                            <a class="nav-link" href="{{ route('tipe-aset.index') }}">Tipe Aset</a> --}}
+                            <a class="nav-link" href="{{ route('kendaraan_expired.asuransi_expired') }}">Asuransi</a>
+                            <a class="nav-link" href="{{ route('kendaraan_expired.pajak_stnk_expired') }}">Pajak STNK(1thn)</a>
+                            <a class="nav-link" href="{{ route('kendaraan_expired.stnk_expired') }}">Pajak STNK(5thn)</a>
+                            <a class="nav-link" href="{{ route('kendaraan_expired.kir_expired') }}">Pajak KIR(6bln)</a>
+                            </div>
+                        </div>
+                        @endcan
                         
                         @can('isAdmin')    
                             <div class="nav-item dropdown">

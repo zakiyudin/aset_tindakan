@@ -280,6 +280,11 @@ class KendaraanController extends Controller
                             $button = '<button type="button" name="edit" data-id="'.$data->id_kendaraan.'" class="tindak btn btn-outline-primary btn-sm">Tindak</button>';
                             return $button;
                         })
+                        ->editColumn('tgl_ex_asuransi', function($data){
+                            $date_now_parse = Carbon::parse(Carbon::now());
+                            $date_asuransi = Carbon::parse($data->tgl_ex_asuransi);
+                            return $date_asuransi->format('d-m-Y');
+                        })
                         ->rawColumns(['action'])
                         ->addIndexColumn()
                         ->make(true);

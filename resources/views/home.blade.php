@@ -20,7 +20,7 @@
                                   <img src="{{ asset('img/every-user-svgrepo-com.svg') }}" alt="">
                                 </div>
                                 <div class="col-sm-6">
-                                  <h5 class="card-title">{{ $asuransi }}</h5>
+                                  <h5 class="card-title">{{ $jumlah_kendaraan }}</h5>
                                 </div>
                               </div>
                             </div>

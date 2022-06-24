@@ -36,21 +36,8 @@ class HomeController extends Controller
     public function index()
     {
         $today = Carbon::now();
-        $tipe_aset = TipeAsetModel::count();
-        $divisi = DivisiModel::count();
-        $aset = TindakanAsetModel::count();
-        $expired_aset = DB::table('table_tindakan_aset')
-        ->join('tipe_asset', 'table_tindakan_aset.id_tipe_asset', '=', 'tipe_asset.id_tipe_asset')
-        ->join('divisi', 'table_tindakan_aset.id_divisi', '=', 'divisi.id_divisi')
-        ->select([
-            'table_tindakan_aset.id',
-            'table_tindakan_aset.nama_aset',
-            'table_tindakan_aset.tanggal_pembelian',
-            'tipe_asset.nama_tipe_asset as nama_tipe_asset', 
-            'divisi.nama_divisi as nama_divisi'
-            ])
-        ->where('tanggal_expired', '<=' ,Carbon::now())
-        ->count();
+        
+        $jumlah_kendaraan = KendaraanModel::count();
         $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                         ->where('tgl_ex_asuransi', '<=' ,$today)
                         ->count();
@@ -67,7 +54,7 @@ class HomeController extends Controller
         $kendaraan = KendaraanModel::count();
         
 
-        return view('home', \compact('asuransi', 'stnk', 'pajak_stnk', 'kir', 'kendaraan'));
+        return view('home', \compact('jumlah_kendaraan', 'asuransi', 'stnk', 'pajak_stnk', 'kir', 'kendaraan'));
     }
 
     public function decrypt_pass()
@@ -83,6 +70,7 @@ class HomeController extends Controller
         // $dateSubtract = Carbon::now()->subDays(7);
         // dd($dateSubtract);
         $dateNow = Carbon::parse(Carbon::now());
+        // dd($dateNow->addDays(7));
         $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
         foreach ($pajak_stnk as $date_expired_pajak_stnk) {
             # code...
@@ -91,84 +79,45 @@ class HomeController extends Controller
             if($date_diff_days < 25 && $date_expired >= $dateNow && $date_expired_pajak_stnk->tgl_ex_pajak_stnk != null){
                 // jika diff in days kosong
                 echo $date_expired_pajak_stnk->nopol. ' - ' . $date_expired_pajak_stnk->jenis_kendaraan . ' kendaraan ini akan expired Pajak STNK-nya dalam jangka ' . $date_diff_days . ' Hari' . ' dengan tanggal ' . $date_expired_pajak_stnk->tgl_ex_pajak_stnk . '<br>';
+            }else if($date_expired <= $dateNow){
+                echo $date_expired_pajak_stnk->nopol . ' - ' . $date_expired_pajak_stnk->tgl_ex_pajak_stnk . ' kendaraan ini sudah expired dalam ' . $date_diff_days . ' Hari yang lalu' . ' dengan tanggal ' . $date_expired_pajak_stnk->tgl_ex_pajak_stnk . '<br>';
             }
         }
 
-        $dataArray = [
-            '2022-06-07',
-            '2022-06-08',
-            '2022-06-09',
-            '2022-06-10',
-            '2022-06-11',
-            '2022-06-12',
-            '2022-06-13',
-            '2022-06-14',
-            '2022-06-15',
-            '2022-06-16',
-            '2022-06-17',
-            '2022-06-18',
-            '2022-06-21',
-            '2022-06-20',
-            '2022-06-19',
-            '2022-06-18',
-            '2022-06-25',
-            '2022-06-24',
-            '2022-06-30',
-            '2022-06-29'
-        ];
-        foreach($dataArray as $date){
-            $dateParse = Carbon::parse($date);
-            if($dateParse->diffInDays($dateNow) < 7 && $date > $dateNow)
-            {
-                echo $date . ' tanggal ini akan expired dalam ' . $dateParse->diffIndays($dateNow) . '<br>';
-            }else if($date < $dateNow){
-                echo $date . ' tanggal ini sudah expired<br>';
-            }
-        }
-
-
-        // $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
-        // foreach ($asuransi as $key) {
-        //     # code...
-        //     if($key->tgl_ex_asuransi >= $dateSubtract){
-        //         echo $key->tgl_ex_asuransi . '<br>';
-        //     }
-        // }
-        
-
-        
-        // // dd($tglExpAsuransi);
-
-        // foreach($asuransi as $item){
-        //     $tglExpAsuransi = Carbon::parse($item->tgl_ex_asuransi);
-        //     $diffDaysAsuransi = $tglExpAsuransi->diffInDays($dateNow);
-        //     if($diffDaysAsuransi <= 100 && $item->tgl_ex_asuransi != null){
-        //         echo $item->jenis_kendaraan . ' | ' . $item->tgl_ex_asuransi . ' | ' . $diffDaysAsuransi . " hari" . '<br>';
-        //     }
-        // }
-
-        // $data = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
-        // dd($data);
-        // foreach($data as $d)
-        // {
-        //     $date_now = Carbon::parse(Carbon::now());
-        //     $date_stnk = Carbon::parse($d->tgl_ex_stnk);
-        //     $date_pajak_stnk = Carbon::parse($d->tgl_ex_pajak_stnk);
-        //     $date_kir = Carbon::parse($d->tgl_ex_kir);
-        //     $date_asuransi = Carbon::parse($d->tgl_ex_asuransi);
-
-        //     $diffDaysAsuransi = $date_asuransi->diffInDays($date_now);
-        //     $diffDaysStnk = $date_stnk->diffInDays($date_now);
-        //     $diffDaysPajakStnk = $date_pajak_stnk->diffInDays($date_now);
-        //     $diffDaysKir = $date_kir->diffInDays($date_now);
-
-        //     if($diffDaysAsuransi <= 7 && $diffDaysStnk <= 7 && $diffDaysPajakStnk <= 7 && $diffDaysKir <= 7)
+        // $dataArray = [
+        //     '2022-06-07',
+        //     '2022-06-08',
+        //     '2022-06-09',
+        //     '2022-06-10',
+        //     '2022-06-11',
+        //     '2022-06-12',
+        //     '2022-06-13',
+        //     '2022-06-14',
+        //     '2022-06-15',
+        //     '2022-06-16',
+        //     '2022-06-17',
+        //     '2022-06-18',
+        //     '2022-06-21',
+        //     '2022-06-20',
+        //     '2022-06-19',
+        //     '2022-06-18',
+        //     '2022-06-25',
+        //     '2022-06-24',
+        //     '2022-06-30',
+        //     '2022-06-29'
+        // ];
+        // foreach($dataArray as $date){
+        //     $dateParse = Carbon::parse($date);
+        //     if($dateParse->diffInDays($dateNow) < 7 && $date > $dateNow)
         //     {
-        //         echo $d->jenis_kendaraan . " | " . $d->nopol . '<br>';
+        //         echo $date . ' tanggal ini akan expired dalam ' . $dateParse->diffIndays($dateNow) . '<br>';
+        //     }else if($date < $dateNow){
+        //         echo $date . ' tanggal ini sudah expired<br>';
         //     }
-            
         // }
+
     }
+
 
     public function cobaup(Request $request)
     {

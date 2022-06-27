@@ -16,6 +16,7 @@ use App\Models\Kendaraan\KendaraanModel;
 
 class HomeController extends Controller
 {
+    public $date_now;
     /**
      * Create a new controller instance.
      *
@@ -41,9 +42,7 @@ class HomeController extends Controller
         $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                         ->where('tgl_ex_asuransi', '<=' ,$today)
                         ->count();
-        $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                        ->where('tgl_ex_pajak_stnk', '<=' ,$today)
-                        ->count();
+        $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->count();
         $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
                         ->where('tgl_ex_stnk', '<=' ,$today)
                         ->count();
@@ -70,7 +69,7 @@ class HomeController extends Controller
         // $dateSubtract = Carbon::now()->subDays(7);
         // dd($dateSubtract);
         $dateNow = Carbon::parse(Carbon::now());
-        // dd($dateNow->addDays(7));
+        // dd($dateNow->addYear(1));
         $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
         foreach ($pajak_stnk as $date_expired_pajak_stnk) {
             # code...
@@ -78,6 +77,7 @@ class HomeController extends Controller
             $date_diff_days = $date_expired->diffInDays($dateNow);
             if($date_diff_days < 25 && $date_expired >= $dateNow && $date_expired_pajak_stnk->tgl_ex_pajak_stnk != null){
                 // jika diff in days kosong
+                echo $date_expired->addYear(1)->format('d-m-Y') . '<br>';
                 echo $date_expired_pajak_stnk->nopol. ' - ' . $date_expired_pajak_stnk->jenis_kendaraan . ' kendaraan ini akan expired Pajak STNK-nya dalam jangka ' . $date_diff_days . ' Hari' . ' dengan tanggal ' . $date_expired_pajak_stnk->tgl_ex_pajak_stnk . '<br>';
             }else if($date_expired <= $dateNow){
                 echo $date_expired_pajak_stnk->nopol . ' - ' . $date_expired_pajak_stnk->tgl_ex_pajak_stnk . ' kendaraan ini sudah expired dalam ' . $date_diff_days . ' Hari yang lalu' . ' dengan tanggal ' . $date_expired_pajak_stnk->tgl_ex_pajak_stnk . '<br>';

@@ -70,10 +70,11 @@
                                     <h3><u class="badge bg-danger">Berikut data yang sudah expired tetapi belum ter-update</u></h3>
                                 </div>
                                 <div class="p-2 bd-highlight">
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('update_pajak_stnk_otomatis') }}" method="POST">
                                         @csrf
                                         <button class="btn btn-outline-danger">UPDATE OTOMATIS</button>
                                     </form>
+                                    {{-- <a href="{{ route('update_pajak_stnk_otomatis') }}" class="btn btn-outline-danger">UPDATE OTOMATIS</a> --}}
                                 </div>
                               </div>
                             <thead>

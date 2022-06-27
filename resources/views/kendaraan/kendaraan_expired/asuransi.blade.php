@@ -72,7 +72,10 @@
                                         <h3><u class="badge bg-danger">Berikut data yang sudah expired tetapi belum ter-update</u></h3>
                                     </div>
                                     <div class="p-2 bd-highlight">
-                                        <a href="{{ route('update_asuransi_otomatis') }}" class="btn btn-outline-danger">UPDATE OTOMATIS</a>
+                                        <form action="{{ route('update_asuransi_otomatis') }}" method="POST">
+                                            <button class="btn btn-outline-danger">UPDATE OTOMATIS</button>
+                                        </form>
+                                        {{-- <a href="{{ route('update_asuransi_otomatis') }}" class="btn btn-outline-danger">UPDATE OTOMATIS</a> --}}
                                     </div>
                                   </div>
                                 <thead>

@@ -1,3 +1,4 @@
+@inject('carbon', 'Carbon\Carbon')
 @extends('layouts.app')
 
 @section('judul')

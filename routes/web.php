@@ -102,13 +102,16 @@ Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
     Route::get('/expired_pajak_stnk', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired_pajak_stnk'])->name('kendaraan.expired_pajak_stnk');
     Route::get('/expired_kir', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'expired_kir'])->name('kendaraan.expired_kir');
     Route::get('/delete_date_null', [App\Http\Controllers\Kendaraan\KendaraanController::class, 'delete_date'])->name('kendaraan.delete_date');
-    
+
     Route::prefix('kendaraan_expired')->middleware(['admin', 'verified'])->group(function(){
         Route::get('/asuransi_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'asuransi_expired'])->name('kendaraan_expired.asuransi_expired');
         Route::get('/pajak_stnk_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'pajak_stnk_expired'])->name('kendaraan_expired.pajak_stnk_expired');
         Route::get('/stnk_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'stnk_expired'])->name('kendaraan_expired.stnk_expired');
         Route::get('/kir_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'kir_expired'])->name('kendaraan_expired.kir_expired');
         Route::get('/asuransi_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_asuransi_otomatis'])->name('update_asuransi_otomatis');
+        Route::post('/pajak_stnk_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_pajak_stnk_otomatis'])->name('update_pajak_stnk_otomatis');
+        Route::get('/stnk_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_stnk_otomatis'])->name('update_stnk_otomatis');
+        Route::get('/kir_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_kir_otomatis'])->name('update_kir_otomatis');
     });
 });
 

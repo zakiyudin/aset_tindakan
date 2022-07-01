@@ -28,7 +28,7 @@ $dateFormat = $carbon->parse($raw->tgl_ex_asuransi)->format('d-m-Y');
 </ul>
 @endif
 @endforeach
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/kendaraan_expired/asuransi_expired'])
+@component('mail::button', ['url' => url('kendaraan_expired/asuransi_expired')])
 Lihat Asuransi
 @endcomponent
 

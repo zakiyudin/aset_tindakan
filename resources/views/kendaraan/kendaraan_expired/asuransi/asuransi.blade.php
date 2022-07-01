@@ -41,7 +41,7 @@
                                             $diffDaysAsuransi = $tglExAsuransi->diffInDays($dateNow);
                                             $dateFormat = $carbon->parse($item->tgl_ex_asuransi)->format('d-m-Y');
                                         @endphp
-                                        @if ($diffDaysAsuransi <= 14 && $tglExAsuransi >= $dateNow && $item->tgl_ex_asuransi != null)
+                                        @if ($diffDaysAsuransi <= 100 && $tglExAsuransi >= $dateNow && $item->tgl_ex_asuransi != null)
                                             <tr>
                                                 <td>{{ $item->nopol }}</td>
                                                 <td>{{ $item->jenis_kendaraan }}</td>
@@ -50,7 +50,7 @@
                                                     Dalam <span class="text text-danger">{{ $diffDaysAsuransi }} Hari</span>
                                                 </td>
                                                 <td>
-                                                    <a href="#" class="btn btn-primary btn-sm">Lihat</a>
+                                                    <a href="{{ route('detail_asuransi', [$item->id_kendaraan]) }}" class="btn btn-primary btn-sm">Lihat</a>
                                                 </td>
                                             </tr>        
                                         @endif

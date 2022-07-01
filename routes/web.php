@@ -112,6 +112,10 @@ Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
         Route::post('/pajak_stnk_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_pajak_stnk_otomatis'])->name('update_pajak_stnk_otomatis');
         Route::get('/stnk_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_stnk_otomatis'])->name('update_stnk_otomatis');
         Route::get('/kir_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_kir_otomatis'])->name('update_kir_otomatis');
+        Route::get('/detail_asuransi/{id}', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'detail_asuransi'])->name('detail_asuransi');
+        Route::get('/detail_pajak_stnk/{id}', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'detail_pajak_stnk'])->name('detail_pajak_stnk');
+        Route::get('/detail_stnk/{id}', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'detail_stnk'])->name('detail_stnk');
+        Route::get('/detail_kir/{id}', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'detail_kir'])->name('detail_kir');
     });
 });
 

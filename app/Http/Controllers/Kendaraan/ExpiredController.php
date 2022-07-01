@@ -23,27 +23,58 @@ class ExpiredController extends Controller
     {
         $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
         // dd($asuransi);
-        return view('kendaraan.kendaraan_expired.asuransi', compact('asuransi'));
+        return view('kendaraan.kendaraan_expired.asuransi.asuransi', compact('asuransi'));
     }
 
     public function pajak_stnk_expired()
     {
         $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
         // dd($pajak_stnk);
-        return view('kendaraan.kendaraan_expired.pajak_stnk', compact('pajak_stnk'));
+        return view('kendaraan.kendaraan_expired.pajak_stnk.pajak_stnk', compact('pajak_stnk'));
     }
 
     public function stnk_expired()
     {
         $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
-        return view('kendaraan.kendaraan_expired.stnk', compact('stnk'));
+        return view('kendaraan.kendaraan_expired.stnk.stnk', compact('stnk'));
     }
 
     public function kir_expired()
     {
         $kir = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->get();
-        return view('kendaraan.kendaraan_expired.kir', compact('kir'));
+        return view('kendaraan.kendaraan_expired.kir.kir', compact('kir'));
     }
+
+    public function detail_asuransi($id)
+    {
+        $detail_asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->where('id_kendaraan', $id)->first();
+
+        // dd($detail_asuransi->pemakai_kendaraan);
+        return view('kendaraan.kendaraan_expired.asuransi.detail_asuransi', compact('detail_asuransi'));
+    }
+
+    public function detail_pajak_stnk($id, Request $req)
+    {
+        // dd($reque);
+        if(empty($id)){
+            return view('kendaraan.kendaraan_expired.pajak_stnk.pajak_stnk');
+        }else{
+            $detail_pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->where('id_kendaraan', $id)->first();
+            return view('kendaraan.kendaraan_expired.pajak_stnk.detail_pajak_stnk', compact('detail_pajak_stnk'));
+        }
+    }
+
+    public function detail_stnk($id){
+        $detail_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->where('id_kendaraan', $id)->first();
+        return view('kendaraan.kendaraan_expired.stnk.detail_stnk', compact('detail_stnk'));
+    }
+
+    public function detail_kir($id){
+        $detail_kir =KendaraanModel::with('asuransi', 'pemakai_kendaraan')->where('id_kendaraan', $id)->first();
+        // dd($detail_kir);
+        return view('kendaraan.kendaraan_expired.kir.detail_kir', compact('detail_kir'));
+    }
+
 
     public function update_asuransi_otomatis()
     {

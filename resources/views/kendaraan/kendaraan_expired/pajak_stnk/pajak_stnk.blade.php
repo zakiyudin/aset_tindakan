@@ -50,7 +50,7 @@
                                                 Dalam <span class="text text-danger">{{ $diffDaysPajakStnk }} Hari</span>
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-primary btn-sm">Lihat</a>
+                                                <a href="{{ route('detail_pajak_stnk', [$item->id_kendaraan]) }}" class="btn btn-primary btn-sm">Lihat</a>
                                             </td>
                                         </tr>        
                                     @endif

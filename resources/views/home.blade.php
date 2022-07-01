@@ -21,8 +21,9 @@
                                   <img src="{{ asset('img/every-user-svgrepo-com.svg') }}" alt="">
                                 </div>
                                 <div class="col-sm-6">
-                                  <h5 class="card-title">{{ $jumlah_kendaraan }}</h5>
+                                  <h5 class="card-title">{{ $asuransi }}</h5>
                                 </div>
+                                <a href="{{ route('kendaraan_expired.asuransi_expired') }}" class="btn btn-success btn-sm mt-3">selengkapnya</a>
                               </div>
                             </div>
                           </div>
@@ -38,6 +39,7 @@
                                 <div class="col-sm-6">
                                   <h5 class="card-title">{{ $pajak_stnk }}</h5>
                                 </div>
+                                <a href="{{ route('kendaraan_expired.pajak_stnk_expired') }}" class="btn btn-success btn-sm mt-3">selengkapnya</a>
                               </div>
                               
                             </div>
@@ -54,6 +56,7 @@
                                 <div class="col-sm-6">
                                   <h5 class="card-title">{{ $stnk }}</h5>
                                 </div>
+                                <a href="{{ route('kendaraan_expired.stnk_expired') }}" class="btn btn-success btn-sm mt-3">selengkapnya</a>
                               </div>
                             </div>
                           </div>
@@ -69,6 +72,7 @@
                                 <div class="col-sm-6">
                                   <h5 class="card-title">{{ $kir }}</h5>
                                 </div>
+                                <a href="{{ route('kendaraan_expired.kir_expired') }}" class="btn btn-success btn-sm mt-3">selengkapnya</a>
                               </div>
                             </div>
                           </div>

@@ -37,23 +37,17 @@ class HomeController extends Controller
     public function index()
     {
         $today = Carbon::now();
-        
-        $jumlah_kendaraan = KendaraanModel::count();
+        $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
+                                    ->whereRaw('DATEDIFF(tgl_ex_pajak_stnk, Now()) < 14 AND tgl_ex_pajak_stnk > Now()')->count();
         $asuransi = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                        ->where('tgl_ex_asuransi', '<=' ,$today)
-                        ->count();
-        $pajak_stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')->count();
+                                    ->whereRaw('DATEDIFF(tgl_ex_asuransi, Now()) < 14 AND tgl_ex_asuransi > Now()')->count();
         $stnk = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                        ->where('tgl_ex_stnk', '<=' ,$today)
-                        ->count();
+                                    ->whereRaw('DATEDIFF(tgl_ex_stnk, Now()) < 14 AND tgl_ex_stnk > Now()')->count();
         $kir = KendaraanModel::with('asuransi', 'pemakai_kendaraan')
-                        ->where('tgl_ex_kir', '<=' ,$today)
-                        ->count();
-        // dd($asuransi);
-        $kendaraan = KendaraanModel::count();
+                                    ->whereRaw('DATEDIFF(tgl_ex_kir, Now()) < 14 AND tgl_ex_kir > Now()')->count();
         
 
-        return view('home', \compact('jumlah_kendaraan', 'asuransi', 'stnk', 'pajak_stnk', 'kir', 'kendaraan'));
+        return view('home', \compact('asuransi', 'stnk', 'pajak_stnk', 'kir'));
     }
 
     public function decrypt_pass()

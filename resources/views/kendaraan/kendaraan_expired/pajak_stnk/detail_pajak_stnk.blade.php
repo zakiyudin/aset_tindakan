@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="col-6">
                                             <input type="text" class="form-control" value="{{ $detail_pajak_stnk->keterangan }}">
-                                            <a href="{{ route('kendaraan_expired.pajak_stnk_expired') }}">Kembali</a>
+                                            <a href="{{ route('kendaraan_expired.pajak_stnk_expired') }}" class="btn btn-success">Kembali</a>
                                         </div>
                                     </div>
                                 </div>

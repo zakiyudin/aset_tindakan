@@ -41,7 +41,7 @@
                                             $diffDaysAsuransi = $tglExAsuransi->diffInDays($dateNow);
                                             $dateFormat = $carbon->parse($item->tgl_ex_asuransi)->format('d-m-Y');
                                         @endphp
-                                        @if ($diffDaysAsuransi <= 100 && $tglExAsuransi >= $dateNow && $item->tgl_ex_asuransi != null)
+                                        @if ($diffDaysAsuransi <= 14 && $tglExAsuransi >= $dateNow && $item->tgl_ex_asuransi != null)
                                             <tr>
                                                 <td>{{ $item->nopol }}</td>
                                                 <td>{{ $item->jenis_kendaraan }}</td>
@@ -95,7 +95,7 @@
                                             $diffDaysAsuransi = $tglExAsuransi->diffInDays($dateNow);
                                             $dateFormat = $carbon->parse($item->tgl_ex_asuransi)->format('d-m-Y');
                                         @endphp
-                                        @if ($diffDaysAsuransi <= 7 && $tglExAsuransi <= $dateNow && $item->tgl_ex_asuransi != null)
+                                        @if ($diffDaysAsuransi <= 14 && $tglExAsuransi <= $dateNow && $item->tgl_ex_asuransi != null)
                                             <tr>
                                                 <td>{{ $item->nopol }}</td>
                                                 <td>{{ $item->jenis_kendaraan }}</td>

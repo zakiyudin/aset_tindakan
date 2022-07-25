@@ -20,6 +20,9 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 // Auth::routes(['verify' => true]);
 
+Route::get('/forgot_password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'forgotPassword'])->name('forgot-password');
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 Route::get('/send', [App\Http\Controllers\HomeController::class, 'send'])->name('send');
 Route::get('/pass', [App\Http\Controllers\HomeController::class, 'decrypt_pass'])->name('pass');
@@ -110,7 +113,7 @@ Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
         Route::get('/kir_expired', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'kir_expired'])->name('kendaraan_expired.kir_expired');
         Route::get('/asuransi_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_asuransi_otomatis'])->name('update_asuransi_otomatis');
         Route::post('/pajak_stnk_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_pajak_stnk_otomatis'])->name('update_pajak_stnk_otomatis');
-        Route::get('/stnk_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_stnk_otomatis'])->name('update_stnk_otomatis');
+        Route::post('/stnk_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_stnk_otomatis'])->name('update_stnk_otomatis');
         Route::get('/kir_expired/update_otomatis', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'update_kir_otomatis'])->name('update_kir_otomatis');
         Route::get('/detail_asuransi/{id}', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'detail_asuransi'])->name('detail_asuransi');
         Route::get('/detail_pajak_stnk/{id}', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'detail_pajak_stnk'])->name('detail_pajak_stnk');
@@ -118,6 +121,12 @@ Route::prefix('kendaraan')->middleware(['admin', 'verified'])->group(function(){
         Route::get('/detail_kir/{id}', [App\Http\Controllers\Kendaraan\ExpiredController::class, 'detail_kir'])->name('detail_kir');
     });
 });
+
+Route::get('/user', [App\Http\Controllers\Kendaraan\Master\UserController::class, 'index'])->name('user.index');
+
+Route::get('/karyawan', function(){
+    return view('karyawan.index');
+})->name('karyawan')->middleware(['admin', 'verified']);
 
 
 

@@ -90,6 +90,12 @@
                             </div>
                         </div>
                         @endcan
+
+                        @can('isAdmin')                            
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('karyawan') }}">Karyawan</a>
+                        </li>
+                        @endcan
                         
                         @can('isAdmin')    
                             <div class="nav-item dropdown">
@@ -102,6 +108,7 @@
                                 <a class="nav-link" href="{{ route('tipe-aset.index') }}">Tipe Aset</a> --}}
                                 <a class="nav-link" href="{{ route('asuransi.index') }}">Asuransi</a>
                                 <a class="nav-link" href="{{ route('pemakai_kendaraan.index') }}">Pemakai</a>
+                                <a class="nav-link" href="{{ route('user.index') }}">User</a>
                                 </div>
                             </div>
                         @endcan

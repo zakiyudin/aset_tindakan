@@ -104,9 +104,9 @@ class ExpiredController extends Controller
         foreach($pajak_stnk_1_thn as $item){
             $date_expired = Carbon::parse($item->tgl_ex_pajak_stnk);
             $date_diff_days = $date_expired->diffInDays($date_now);
-            if($date_diff_days < 7 && $date_expired < $date_now && $item->tgl_ex_pajak_stnk != null){
+            if($date_diff_days < 14 && $date_expired < $date_now && $item->tgl_ex_pajak_stnk != null){
                 $item->update([
-                    'tgl_ex_pajak_stnk' => '1970-01-01'
+                    'tgl_ex_pajak_stnk' => $date_expired->addYear(),
                 ]);
             }
         }
@@ -123,12 +123,14 @@ class ExpiredController extends Controller
         foreach($pajak_stnk_5_thn as $item){
             $date_expired = Carbon::parse($item->tgl_ex_stnk);
             $date_diff_days = $date_expired->diffInDays($date_now);
-            if($date_diff_days < 7 && $date_expired < $date_now && $item->tgl_ex_stnk != null){
+            if($date_diff_days < 14 && $date_expired < $date_now && $item->tgl_ex_stnk != null){
                 $item->update([
                     'tgl_ex_stnk' => $date_expired->addYear(5)->format('Y-m-d')
                 ]);
             }
         }
+
+        return \back();
     }
 
     public function update_kir_otomatis()
